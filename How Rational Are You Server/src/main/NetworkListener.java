@@ -88,7 +88,21 @@ public class NetworkListener extends Listener{
 					connection.getP2().sendTCP(cancelResponse);
 				connections.remove(sessionID);
 			}
+		}
+		if(o instanceof Packet7Ready){
+			int sessionID = ((Packet.Packet7Ready)o).sessionID;
+			int player = ((Packet.Packet7Ready)o).player;
+			ConnectionObject connection = connections.get(sessionID);
+			if(player == 1)
+			{
+				connection.getP2().sendTCP(o);
+			}
+			else if(player == 2)
+			{
+				connection.getP1().sendTCP(o);
+			}
 			
 		}
+		
 	}
 }

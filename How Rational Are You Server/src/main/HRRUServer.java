@@ -17,7 +17,7 @@ public class HRRUServer {
 		registerPackets();
 		server.addListener(new NetworkListener());
 		server.start();
-		server.bind(54555, 54777);
+		server.bind(9991, 9992);
 	}
 	
 	private void registerPackets(){
@@ -31,6 +31,7 @@ public class HRRUServer {
 		kryo.register(Packet4ConnectionEstablished.class);
 		kryo.register(Packet5CancelRequest.class);
 		kryo.register(Packet6CancelRequestResponse.class);
+		kryo.register(Packet7Ready.class);
 	}
 	
 	public static void main(String[] args)

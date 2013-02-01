@@ -38,7 +38,6 @@ public class ConnectionObject {
 		return sessionID;
 	}
 
-	
 	public String getPassword() {
 		return password;
 	}
@@ -47,11 +46,9 @@ public class ConnectionObject {
 		this.established = true;
 	}
 
-
 	public boolean isEstablished() {
 		return established;
 	}
-
 	
 	public String getP1name() {
 		return p1name;

@@ -7,5 +7,6 @@ public class Packet {
 	public static class Packet3JoinAnswer{ String player1Name; boolean accepted = false; int sessionID; String password; }
 	public static class Packet4ConnectionEstablished { String player2Name; }
 	public static class Packet5CancelRequest { int sessionID; }
-	public static class Packet6CancelRequestResponse { }
+	public static class Packet6CancelRequestResponse { String message; }
+	public static class Packet7Ready { int sessionID; int player; }
 }
