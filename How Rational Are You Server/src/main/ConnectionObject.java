@@ -61,6 +61,5 @@ public class ConnectionObject {
 	public void setP2name(String p2name) {
 		this.p2name = p2name;
 	}
-	
 
 }

@@ -101,7 +101,12 @@ public class NetworkListener extends Listener{
 			{
 				connection.getP1().sendTCP(o);
 			}
-			
+		}
+		if(o instanceof Packet8Start){
+			int sessionID = ((Packet.Packet8Start)o).sessionID;
+			ConnectionObject connection = connections.get(sessionID);
+			connection.getP1().sendTCP(o);
+			connection.getP2().sendTCP(o);
 		}
 		
 	}

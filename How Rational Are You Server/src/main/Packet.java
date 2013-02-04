@@ -9,4 +9,5 @@ public class Packet {
 	public static class Packet5CancelRequest { int sessionID; }
 	public static class Packet6CancelRequestResponse { String message; }
 	public static class Packet7Ready { int sessionID; int player; }
+	public static class Packet8Start { int sessionID; }
 }
