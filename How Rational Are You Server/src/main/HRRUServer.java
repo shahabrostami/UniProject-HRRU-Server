@@ -33,6 +33,7 @@ public class HRRUServer {
 		kryo.register(Packet6CancelRequestResponse.class);
 		kryo.register(Packet7Ready.class);
 		kryo.register(Packet8Start.class);
+		kryo.register(Packet9CharacterSelect.class);
 	}
 	
 	public static void main(String[] args)

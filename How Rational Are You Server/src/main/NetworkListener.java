@@ -12,6 +12,7 @@ public class NetworkListener extends Listener{
 	
 	int sessionID = 0;
 	HashMap<Integer, ConnectionObject> connections = new HashMap<Integer, ConnectionObject> ();
+	HashMap<Connection, Connection> playerConnections = new HashMap<Connection, Connection> ();
 
 	
 	public void connected(Connection c) {
@@ -19,7 +20,13 @@ public class NetworkListener extends Listener{
 	}
 
 	public void disconnected(Connection c) {
-		Log.info("[SERVER] Someone has disconnected.");		
+		Log.info("[SERVER] Someone has disconnected.");
+		Connection otherPlayer = playerConnections.get(c);
+		if(!(otherPlayer == null))
+		{
+			Packet6CancelRequestResponse cancelResponse = new Packet6CancelRequestResponse();
+			otherPlayer.sendTCP(cancelResponse);
+		}
 	}
 
 	public void received(Connection c, Object o) {
@@ -51,7 +58,8 @@ public class NetworkListener extends Listener{
 					joinServer.setP2(c);
 					joinServer.isEstablished();
 					connections.put(joinAnswer.sessionID, joinServer);
-					
+					playerConnections.put(connections.get(joinAnswer.sessionID).getP1() , c);
+					playerConnections.put(c, connections.get(joinAnswer.sessionID).getP1());
 					joinAnswer.accepted = true;
 					joinAnswer.player1Name = joinServer.getP1name();
 					joinAnswer.sessionID =  joinServer.getSessionID();
@@ -107,6 +115,22 @@ public class NetworkListener extends Listener{
 			ConnectionObject connection = connections.get(sessionID);
 			connection.getP1().sendTCP(o);
 			connection.getP2().sendTCP(o);
+		}
+		if(o instanceof Packet9CharacterSelect){
+			int sessionID = ((Packet.Packet9CharacterSelect)o).sessionID;
+			int characterID = ((Packet.Packet9CharacterSelect)o).characterID;
+			int player = ((Packet.Packet9CharacterSelect)o).player;
+			
+			if(player == 1)
+			{
+				connections.get(sessionID).setP1characterID(characterID);
+				connections.get(sessionID).getP2().sendTCP(o);
+			}
+	        else if(player == 2)
+	        {
+	        	connections.get(sessionID).setP2characterID(characterID);
+				connections.get(sessionID).getP1().sendTCP(o);
+	        }
 		}
 		
 	}

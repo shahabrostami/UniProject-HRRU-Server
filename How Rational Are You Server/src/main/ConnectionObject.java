@@ -7,6 +7,8 @@ public class ConnectionObject {
 	private Connection p2;
 	private String p1name;
 	private String p2name;
+	private int p1characterID;
+	private int p2characterID;
 	private String password;
 	private int sessionID;
 	private boolean established;
@@ -60,6 +62,15 @@ public class ConnectionObject {
 
 	public void setP2name(String p2name) {
 		this.p2name = p2name;
+	}
+
+	
+	public void setP1characterID(int p1characterID) {
+		this.p1characterID = p1characterID;
+	}
+
+	public void setP2characterID(int p2characterID) {
+		this.p2characterID = p2characterID;
 	}
 
 }
