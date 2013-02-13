@@ -7,8 +7,10 @@ public class ConnectionObject {
 	private Connection p2;
 	private String p1name;
 	private String p2name;
-	private int p1characterID;
-	private int p2characterID;
+	private int p1characterID = 0;
+	private int p2characterID = 0;
+	private int p1position;
+	private int p2position;
 	private String password;
 	private int sessionID;
 	private boolean established;
@@ -71,6 +73,22 @@ public class ConnectionObject {
 
 	public void setP2characterID(int p2characterID) {
 		this.p2characterID = p2characterID;
+	}
+
+	public int getP1position() {
+		return p1position;
+	}
+
+	public void updateP1position(int p1position) {
+		this.p1position += p1position;
+	}
+
+	public int getP2position() {
+		return p2position;
+	}
+
+	public void updateP2position(int p2position) {
+		this.p2position += p2position;
 	}
 
 }

@@ -111,10 +111,32 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet8Start){
+			int size = 36;
+			int[] tileOrder = new int[size];
+			double tile_random_number = 0;
+			tileOrder[0] = 0;
+			
+			// calculate order of tiletypes
+			for(int i = 0; i < size; i++)
+			{
+				tile_random_number = Math.random();
+				if(tile_random_number <= 0.2)
+					tileOrder[i] = 1;
+				else if(tile_random_number <= 0.4)
+					tileOrder[i] = 2;
+				else if(tile_random_number <= 0.6)
+					tileOrder[i] = 3;
+				else tileOrder[i] = 0;
+			}
 			int sessionID = ((Packet.Packet8Start)o).sessionID;
 			ConnectionObject connection = connections.get(sessionID);
-			connection.getP1().sendTCP(o);
-			connection.getP2().sendTCP(o);
+			
+			Packet8Start startPacket = new Packet8Start();
+			startPacket.sessionID = sessionID;
+			startPacket.board = tileOrder;
+			
+			connection.getP1().sendTCP(startPacket);
+			connection.getP2().sendTCP(startPacket);
 		}
 		if(o instanceof Packet9CharacterSelect){
 			int sessionID = ((Packet.Packet9CharacterSelect)o).sessionID;
@@ -131,6 +153,29 @@ public class NetworkListener extends Listener{
 	        	connections.get(sessionID).setP2characterID(characterID);
 				connections.get(sessionID).getP1().sendTCP(o);
 	        }
+		}
+		if(o instanceof Packet10ChatMessage)
+		{
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
+		}
+		if(o instanceof Packet11TurnMessage)
+		{
+			int player = ((Packet11TurnMessage)o).playerID;
+			int moves = ((Packet11TurnMessage)o).moves;
+			int sessionID = ((Packet11TurnMessage)o).sessionID;
+			ConnectionObject connection = connections.get(sessionID);
+			Connection otherPlayer = playerConnections.get(c);
+			if(player == 1)
+			{
+				connection.updateP1position(moves);
+				otherPlayer.sendTCP(o);
+			}
+			if(player == 2)
+			{
+				connection.updateP2position(moves);
+				otherPlayer.sendTCP(o);
+			}
 		}
 		
 	}

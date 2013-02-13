@@ -34,6 +34,9 @@ public class HRRUServer {
 		kryo.register(Packet7Ready.class);
 		kryo.register(Packet8Start.class);
 		kryo.register(Packet9CharacterSelect.class);
+		kryo.register(Packet10ChatMessage.class);
+		kryo.register(Packet11TurnMessage.class);
+		kryo.register(int[].class);
 	}
 	
 	public static void main(String[] args)
