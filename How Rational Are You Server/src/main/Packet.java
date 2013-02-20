@@ -13,4 +13,6 @@ public class Packet {
 	public static class Packet9CharacterSelect { public int sessionID;  public int player; public int characterID; }
 	public static class Packet10ChatMessage { public int playerID; public String message; }
 	public static class Packet11TurnMessage { public int sessionID; public int playerID; public int moves; public int tile; }
+	public static class Packet12PlayReady { public int sessionID; public int player; }
+	public static class Packet13Play { public int activity; public int activity_id; }
 }

@@ -1,7 +1,9 @@
 package main;
 
 import java.util.HashMap;
+import java.util.Random;
 
+import main.Packet.Packet11TurnMessage;
 import main.Packet.*;
 
 import com.esotericsoftware.kryonet.Connection;
@@ -13,7 +15,11 @@ public class NetworkListener extends Listener{
 	int sessionID = 0;
 	HashMap<Integer, ConnectionObject> connections = new HashMap<Integer, ConnectionObject> ();
 	HashMap<Connection, Connection> playerConnections = new HashMap<Connection, Connection> ();
-
+	
+	private final QuestionList question_list = HRRUServer.question_list;
+	private final Question[] questions = question_list.getQuestion_list();
+	private final int no_of_questions = question_list.getNumberOfQuestions();
+	private Random rand = new Random();
 	
 	public void connected(Connection c) {
 		Log.info("[SERVER] Someone has connected.");
@@ -120,7 +126,7 @@ public class NetworkListener extends Listener{
 			for(int i = 0; i < size; i++)
 			{
 				tile_random_number = Math.random();
-				if(tile_random_number <= 0.2)
+				if(tile_random_number <= 1)
 					tileOrder[i] = 1;
 				else if(tile_random_number <= 0.4)
 					tileOrder[i] = 2;
@@ -135,8 +141,10 @@ public class NetworkListener extends Listener{
 			startPacket.sessionID = sessionID;
 			startPacket.board = tileOrder;
 			
+			synchronized ( this ) {
 			connection.getP1().sendTCP(startPacket);
 			connection.getP2().sendTCP(startPacket);
+			}
 		}
 		if(o instanceof Packet9CharacterSelect){
 			int sessionID = ((Packet.Packet9CharacterSelect)o).sessionID;
@@ -164,19 +172,68 @@ public class NetworkListener extends Listener{
 			int player = ((Packet11TurnMessage)o).playerID;
 			int moves = ((Packet11TurnMessage)o).moves;
 			int sessionID = ((Packet11TurnMessage)o).sessionID;
+			int tile = ((Packet11TurnMessage)o).tile;
 			ConnectionObject connection = connections.get(sessionID);
 			Connection otherPlayer = playerConnections.get(c);
+			
 			if(player == 1)
 			{
 				connection.updateP1position(moves);
+				connection.setP1tile(tile);
 				otherPlayer.sendTCP(o);
 			}
 			if(player == 2)
 			{
+				Packet11TurnMessage o_copy = new Packet11TurnMessage();
+				((Packet11TurnMessage) o_copy).moves = 0;
+				((Packet11TurnMessage) o_copy).playerID = player;
 				connection.updateP2position(moves);
+				connection.setP2tile(tile);
+				synchronized ( this ) {
 				otherPlayer.sendTCP(o);
+				c.sendTCP(o_copy);
+				}
 			}
 		}
-		
+		if(o instanceof Packet12PlayReady)
+		{
+			int sessionID = ((Packet12PlayReady)o).sessionID;
+			int player = ((Packet12PlayReady)o).player;
+			
+			ConnectionObject connection = connections.get(sessionID);
+			Connection otherPlayer = playerConnections.get(c);
+			
+			int player1tile = connection.getP1tile();
+			int player2tile = connection.getP2tile();
+			
+			Packet13Play playMessage = new Packet13Play();
+			
+			System.out.println(player);
+			
+			if(player == 1)
+				connection.setP1ReadyToPlay(true);
+			else
+				connection.setP2ReadyToPlay(true);
+			
+			System.out.println(connection.getP1ReadyToPlay() + "---" + connection.getP2ReadyToPlay());
+			
+			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
+			{
+				if(player1tile == player2tile)
+				{
+					if(player1tile == 1)
+					{
+						int question_id = rand.nextInt(no_of_questions);
+						playMessage.activity = 1;
+						playMessage.activity_id = question_id;
+						
+						synchronized(this){
+							otherPlayer.sendTCP(playMessage);
+							c.sendTCP(playMessage);
+						}
+					}
+				}
+			}
+		}
 	}
 }

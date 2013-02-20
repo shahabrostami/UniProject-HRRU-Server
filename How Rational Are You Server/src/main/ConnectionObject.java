@@ -7,13 +7,16 @@ public class ConnectionObject {
 	private Connection p2;
 	private String p1name;
 	private String p2name;
-	private int p1characterID = 0;
-	private int p2characterID = 0;
 	private int p1position;
 	private int p2position;
+	private int p1tile;
+	private int p2tile;
+	private boolean p1ReadyToPlay;
+	private boolean p2ReadyToPlay;
 	private String password;
 	private int sessionID;
 	private boolean established;
+	private int[] question_list_check;
 	
 	public ConnectionObject(Connection p1, String p1name, int sessionID, String password)
 	{
@@ -24,6 +27,8 @@ public class ConnectionObject {
 		this.password = password;
 		this.sessionID = sessionID;
 		this.established = false;
+		this.question_list_check = new int[HRRUServer.question_list.getNumberOfQuestions()];
+		
 	}
 	
 	public Connection getP1() {
@@ -65,14 +70,11 @@ public class ConnectionObject {
 	public void setP2name(String p2name) {
 		this.p2name = p2name;
 	}
-
 	
 	public void setP1characterID(int p1characterID) {
-		this.p1characterID = p1characterID;
 	}
 
 	public void setP2characterID(int p2characterID) {
-		this.p2characterID = p2characterID;
 	}
 
 	public int getP1position() {
@@ -89,6 +91,39 @@ public class ConnectionObject {
 
 	public void updateP2position(int p2position) {
 		this.p2position += p2position;
+	}
+
+	public int getP1tile() {
+		return p1tile;
+	}
+
+	public void setP1tile(int p1tile) {
+		this.p1tile = p1tile;
+	}
+
+	public int getP2tile() {
+		return p2tile;
+	}
+
+	public void setP2tile(int p2tile) {
+		this.p2tile = p2tile;
+	}
+
+	
+	public void setP1ReadyToPlay(boolean b) {
+		this.p1ReadyToPlay = true;
+	}
+	
+	public boolean getP1ReadyToPlay() {
+		return this.p1ReadyToPlay;
+	}
+	
+	public void setP2ReadyToPlay(boolean b) {
+		this.p2ReadyToPlay = true;
+	}
+	
+	public boolean getP2ReadyToPlay() {
+		return this.p2ReadyToPlay;
 	}
 
 }
