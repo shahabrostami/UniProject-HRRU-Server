@@ -10,6 +10,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
+
 public class HRRUServer {
 	
 	private Server server;
@@ -52,6 +53,7 @@ public class HRRUServer {
 		kryo.register(Packet11TurnMessage.class);
 		kryo.register(Packet12PlayReady.class);
 		kryo.register(Packet13Play.class);
+		kryo.register(Packet14QuestionComplete.class);
 		kryo.register(int[].class);
 	}
 	

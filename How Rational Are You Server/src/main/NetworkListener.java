@@ -230,10 +230,24 @@ public class NetworkListener extends Listener{
 						synchronized(this){
 							otherPlayer.sendTCP(playMessage);
 							c.sendTCP(playMessage);
+							connection.setP1ReadyToPlay(false);
+							connection.setP2ReadyToPlay(false);
 						}
 					}
 				}
 			}
 		}
+		if(o instanceof Packet14QuestionComplete)
+		{
+			int sessionID = ((Packet14QuestionComplete)o).sessionID;
+			int player = ((Packet14QuestionComplete)o).player;
+			int question_difficulty = ((Packet14QuestionComplete)o).difficulty;
+			int elapsedtime = ((Packet14QuestionComplete)o).elapsedtime;
+			int points = ((Packet14QuestionComplete)o).points;
+			Connection otherPlayer = playerConnections.get(c);
+
+			otherPlayer.sendTCP(o);
+		}
+		
 	}
 }
