@@ -18,6 +18,7 @@ public class NetworkListener extends Listener{
 	
 	private final QuestionList question_list = HRRUServer.question_list;
 	private final Question[] questions = question_list.getQuestion_list();
+	
 	private final int no_of_questions = question_list.getNumberOfQuestions();
 	private Random rand = new Random();
 	
@@ -224,8 +225,25 @@ public class NetworkListener extends Listener{
 					if(player1tile == 1)
 					{
 						int question_id = rand.nextInt(no_of_questions);
+						int question_list_check1[] = connection.getQuestion_list_check1();
+						int question_list_check2[] = connection.getQuestion_list_check2();
+						int question_check_counter = 0;
+						while(question_list_check1[question_id] == 1 && question_list_check2[question_id] == 1)
+						{
+							question_id = rand.nextInt(no_of_questions);
+							question_check_counter++;
+							if(question_check_counter > (no_of_questions*2))
+								for(int i = 0; i<no_of_questions; i++)
+								{
+									connection.getQuestion_list_check1()[question_id] = 0;
+									connection.getQuestion_list_check2()[question_id] = 0;
+								}
+						}
+						connection.getQuestion_list_check1()[question_id] = 1;
+						connection.getQuestion_list_check2()[question_id] = 1;
 						playMessage.activity = 1;
 						playMessage.activity_id = question_id;
+						System.out.println(question_id);
 						
 						synchronized(this){
 							otherPlayer.sendTCP(playMessage);
@@ -239,14 +257,31 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet14QuestionComplete)
 		{
-			int sessionID = ((Packet14QuestionComplete)o).sessionID;
-			int player = ((Packet14QuestionComplete)o).player;
-			int question_difficulty = ((Packet14QuestionComplete)o).difficulty;
-			int elapsedtime = ((Packet14QuestionComplete)o).elapsedtime;
-			int points = ((Packet14QuestionComplete)o).points;
 			Connection otherPlayer = playerConnections.get(c);
-
 			otherPlayer.sendTCP(o);
+		}
+		if(o instanceof Packet00SyncMessage)
+		{
+			int sessionID = ((Packet00SyncMessage)o).sessionID;
+			int player = ((Packet00SyncMessage)o).player;
+			
+			ConnectionObject connection = connections.get(sessionID);
+			Connection otherPlayer = playerConnections.get(c);
+			
+			if(player == 1)
+				connection.setP1ReadyToPlay(true);
+			else
+				connection.setP2ReadyToPlay(true);
+			
+			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
+			{
+				synchronized(this){
+					otherPlayer.sendTCP(o);
+					c.sendTCP(o);
+					connection.setP1ReadyToPlay(false);
+					connection.setP2ReadyToPlay(false);
+				}
+			}
 		}
 		
 	}

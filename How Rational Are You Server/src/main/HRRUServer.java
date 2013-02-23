@@ -37,6 +37,7 @@ public class HRRUServer {
 	
 	private void registerPackets(){
 		Kryo kryo = server.getKryo();
+		kryo.register(Packet00SyncMessage.class);
 		kryo.register(Packet0CreateRequest.class);
 		kryo.register(Packet1CreateAnswer.class);
 		kryo.register(Packet2JoinRequest.class);
