@@ -1,25 +1,78 @@
-2
+7
 
 1
-4
-4
-3
-1
-What is your favourite derp?
-What is your favourite herp?
-What is your favourite slurp?
-What is your favourite flurp?
-herp
-derp
-flarp
-blurp
-
-2
-1
-3
-1
-1
-The answer is 5?
-1
-2
 5
+0
+1
+q1.html
+5p
+10p
+15p
+20p
+25p
+
+2
+2
+1
+1
+q2.html
+True
+False
+
+3
+6
+3
+2
+q3.html
+K
+K 8
+K 5
+A 8
+A 5
+K A
+
+4
+6
+1
+3
+q4.html
+1%
+2%
+5%
+50%
+95%
+98%
+
+5
+6
+3
+2
+q5.html
+U
+9 J
+9 U
+J U
+J 2
+U 2
+
+6
+6
+3
+2
+q5.html
+U
+9 J
+9 U
+J U
+J 2
+U 2
+
+7
+4
+1
+1
+q7.html
+The horizontal lines are of different length.
+The horizontal lines are of equal length.
+The image is not symmetrical.
+None of the above.

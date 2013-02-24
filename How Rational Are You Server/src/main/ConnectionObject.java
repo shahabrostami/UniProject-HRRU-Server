@@ -18,6 +18,8 @@ public class ConnectionObject {
 	private boolean established;
 	private int[] question_list_check1;
 	private int[] question_list_check2;
+	private int[] puzzle_list_check1;
+	private int[] puzzle_list_check2;
 	
 	public ConnectionObject(Connection p1, String p1name, int sessionID, String password)
 	{
@@ -30,11 +32,19 @@ public class ConnectionObject {
 		this.established = false;
 		this.question_list_check1 = new int[HRRUServer.question_list.getNumberOfQuestions()];
 		this.question_list_check2 = new int[HRRUServer.question_list.getNumberOfQuestions()];
+		this.puzzle_list_check1 = new int[HRRUServer.puzzle_list.getNumberOfPuzzles()];
+		this.puzzle_list_check2 = new int[HRRUServer.puzzle_list.getNumberOfPuzzles()];
 		
 		for(int i = 0; i < question_list_check1.length; i++)
 		{
 			question_list_check1[i] = 0;
 			question_list_check2[i] = 0;
+		}
+		
+		for(int i = 0; i < puzzle_list_check1.length; i++)
+		{
+			puzzle_list_check1[i] = 0;
+			puzzle_list_check2[i] = 0;
 		}
 	}
 	
@@ -116,7 +126,6 @@ public class ConnectionObject {
 		this.p2tile = p2tile;
 	}
 
-	
 	public void setP1ReadyToPlay(boolean b) {
 		this.p1ReadyToPlay = b;
 	}
@@ -132,6 +141,7 @@ public class ConnectionObject {
 	public boolean getP2ReadyToPlay() {
 		return this.p2ReadyToPlay;
 	}
+	
 	public int[] getQuestion_list_check1() {
 		return question_list_check1;
 	}
@@ -146,6 +156,22 @@ public class ConnectionObject {
 
 	public void setQuestion_list_check2(int[] question_list_check2) {
 		this.question_list_check2 = question_list_check2;
+	}
+
+	public int[] getPuzzle_list_check1() {
+		return puzzle_list_check1;
+	}
+
+	public void setPuzzle_list_check1(int[] puzzle_list_check1) {
+		this.puzzle_list_check1 = puzzle_list_check1;
+	}
+
+	public int[] getPuzzle_list_check2() {
+		return puzzle_list_check2;
+	}
+
+	public void setPuzzle_list_check2(int[] puzzle_list_check2) {
+		this.puzzle_list_check2 = puzzle_list_check2;
 	}
 
 }

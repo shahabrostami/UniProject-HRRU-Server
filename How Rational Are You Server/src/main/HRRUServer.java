@@ -15,10 +15,12 @@ public class HRRUServer {
 	
 	private Server server;
 	public static QuestionList question_list;
+	public static PuzzleList puzzle_list;
 	
 	public HRRUServer() throws IOException {
 		try {
 			question_list = new QuestionList("Question.txt");
+			puzzle_list = new PuzzleList("Puzzle.txt");
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,7 +35,6 @@ public class HRRUServer {
 		server.start();
 		server.bind(9991, 9992);
 	}
-	
 	
 	private void registerPackets(){
 		Kryo kryo = server.getKryo();
@@ -55,6 +56,7 @@ public class HRRUServer {
 		kryo.register(Packet12PlayReady.class);
 		kryo.register(Packet13Play.class);
 		kryo.register(Packet14QuestionComplete.class);
+		kryo.register(Packet15PuzzleComplete.class);
 		kryo.register(int[].class);
 	}
 	

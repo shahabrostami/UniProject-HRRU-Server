@@ -13,6 +13,7 @@ public class QuestionList {
 	
 	public QuestionList(String file_name) throws SlickException, NumberFormatException, IOException
 	{
+		
 		FILE_NAME = file_name;
 		
 		FileInputStream file_stream = new FileInputStream("res/text/" + FILE_NAME);
@@ -24,8 +25,8 @@ public class QuestionList {
 		number_of_questions = Integer.parseInt(strLine);
 		question_list = new Question[number_of_questions];
 		
-		int question_id, description_lines, number_of_answers, answer, difficulty;
-		String description[];
+		int question_id, number_of_answers, answer, difficulty;
+		String file;
 		String choices[];
 		Question new_question;
 		counter = 0;
@@ -36,9 +37,6 @@ public class QuestionList {
 			question_id = Integer.parseInt(strLine);
 			
 			strLine = br.readLine();
-			description_lines = Integer.parseInt(strLine);
-			
-			strLine = br.readLine();
 			number_of_answers = Integer.parseInt(strLine);
 			
 			strLine = br.readLine();
@@ -47,25 +45,23 @@ public class QuestionList {
 			strLine = br.readLine();
 			difficulty = Integer.parseInt(strLine);
 			
-			description = new String[description_lines];
-			for(int i = 0; i < description_lines; i++)
-			{
-				strLine = br.readLine();
-				description[i] = strLine;
-			}
+			strLine = br.readLine();
+			file = strLine;
 			
 			choices = new String[number_of_answers];
 			for(int i = 0; i < number_of_answers; i++)
 			{
 				strLine = br.readLine();
+				System.out.println(strLine);
 				choices[i] = strLine;
 			}
-			new_question = new Question(question_id, description_lines, number_of_answers, answer, difficulty, description, choices);
+			new_question = new Question(question_id, number_of_answers, answer, difficulty, file, choices);
 			question_list[counter] = new_question;
 			counter++;
 		}
 		br.close();
 	}
+	
 	
 	public int getNumberOfQuestions()
 	{

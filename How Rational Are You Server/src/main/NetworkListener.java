@@ -19,7 +19,12 @@ public class NetworkListener extends Listener{
 	private final QuestionList question_list = HRRUServer.question_list;
 	private final Question[] questions = question_list.getQuestion_list();
 	
+	private final PuzzleList puzzle_list = HRRUServer.puzzle_list;
+	private final Puzzle[] puzzles = puzzle_list.getPuzzle_list();
+	
 	private final int no_of_questions = question_list.getNumberOfQuestions();
+	private final int no_of_puzzles = puzzle_list.getNumberOfPuzzles();
+	
 	private Random rand = new Random();
 	
 	public void connected(Connection c) {
@@ -129,7 +134,7 @@ public class NetworkListener extends Listener{
 				tile_random_number = Math.random();
 				if(tile_random_number <= 1)
 					tileOrder[i] = 1;
-				else if(tile_random_number <= 0.4)
+				else if(tile_random_number <= 1)
 					tileOrder[i] = 2;
 				else if(tile_random_number <= 0.6)
 					tileOrder[i] = 3;
@@ -207,7 +212,8 @@ public class NetworkListener extends Listener{
 			int player1tile = connection.getP1tile();
 			int player2tile = connection.getP2tile();
 			
-			Packet13Play playMessage = new Packet13Play();
+			Packet13Play playMessage1 = new Packet13Play();
+			Packet13Play playMessage2 = new Packet13Play();
 			
 			System.out.println(player);
 			
@@ -220,6 +226,7 @@ public class NetworkListener extends Listener{
 			
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
+				// P1 and P2 have same tile, calculate difference!
 				if(player1tile == player2tile)
 				{
 					if(player1tile == 1)
@@ -233,29 +240,156 @@ public class NetworkListener extends Listener{
 							question_id = rand.nextInt(no_of_questions);
 							question_check_counter++;
 							if(question_check_counter > (no_of_questions*2))
+							{
 								for(int i = 0; i<no_of_questions; i++)
 								{
 									connection.getQuestion_list_check1()[question_id] = 0;
 									connection.getQuestion_list_check2()[question_id] = 0;
 								}
+							}
 						}
 						connection.getQuestion_list_check1()[question_id] = 1;
 						connection.getQuestion_list_check2()[question_id] = 1;
-						playMessage.activity = 1;
-						playMessage.activity_id = question_id;
+						playMessage1.activity = 1;
+						playMessage1.activity_id = question_id;
+						playMessage2.activity = 1;
+						playMessage2.activity_id = question_id;
 						System.out.println(question_id);
-						
-						synchronized(this){
-							otherPlayer.sendTCP(playMessage);
-							c.sendTCP(playMessage);
-							connection.setP1ReadyToPlay(false);
-							connection.setP2ReadyToPlay(false);
+					}
+					else if(player1tile == 2)
+					{
+						int puzzle_id = rand.nextInt(no_of_puzzles);
+						int puzzle_list_check1[] = connection.getPuzzle_list_check1();
+						int puzzle_list_check2[] = connection.getPuzzle_list_check2();
+						int puzzle_check_counter = 0;
+						while(puzzle_list_check1[puzzle_id] == 1 && puzzle_list_check2[puzzle_id] == 1)
+						{
+							puzzle_id = rand.nextInt(no_of_puzzles);
+							puzzle_check_counter++;
+							System.out.println("puzzletoomany!");
+							if(puzzle_check_counter > (no_of_puzzles*2))
+							{
+								for(int i = 0; i<no_of_puzzles; i++)
+								{
+									connection.getPuzzle_list_check1()[puzzle_id] = 0;
+									connection.getPuzzle_list_check2()[puzzle_id] = 0;
+								}
+							}
 						}
+						connection.getPuzzle_list_check1()[puzzle_id] = 1;
+						connection.getPuzzle_list_check2()[puzzle_id] = 1;
+						playMessage1.activity = 2;
+						playMessage1.activity_id = puzzle_id;
+						playMessage2.activity = 2;
+						playMessage2.activity_id = puzzle_id;
 					}
 				}
+				// P1's tile
+				else if(player1tile == 1)
+				{
+					int question_id = rand.nextInt(no_of_questions);
+					int question_list_check1[] = connection.getQuestion_list_check1();
+					int question_check_counter = 0;
+					while(question_list_check1[question_id] == 1)
+					{
+						question_id = rand.nextInt(no_of_questions);
+						question_check_counter++;
+						if(question_check_counter > (no_of_questions*2))
+							for(int i = 0; i<no_of_questions; i++)
+							{
+								connection.getQuestion_list_check1()[question_id] = 0;
+							}
+					}
+					connection.getQuestion_list_check1()[question_id] = 1;
+					playMessage1.activity = 1;
+					playMessage1.activity_id = question_id;
+					System.out.println("P1" + question_id);
+				}
+				else if(player1tile == 2)
+				{
+					int puzzle_id = rand.nextInt(no_of_puzzles);
+					int puzzle_list_check1[] = connection.getPuzzle_list_check1();
+					int puzzle_check_counter = 0;
+					while(puzzle_list_check1[puzzle_id] == 1)
+					{
+						puzzle_id = rand.nextInt(no_of_puzzles);
+						puzzle_check_counter++;
+						if(puzzle_check_counter > (no_of_puzzles*2))
+							for(int i = 0; i<no_of_puzzles; i++)
+							{
+								connection.getPuzzle_list_check1()[puzzle_id] = 0;
+							}
+					}
+					connection.getPuzzle_list_check1()[puzzle_id] = 1;
+					playMessage1.activity = 2;
+					playMessage1.activity_id = puzzle_id;
+					System.out.println("P1" + puzzle_id);
+				}
+				// P2's tile
+				else if(player2tile == 1)
+				{
+					int question_id = rand.nextInt(no_of_questions);
+					int question_list_check2[] = connection.getQuestion_list_check2();
+					int question_check_counter = 0;
+					while(question_list_check2[question_id] == 1)
+					{
+						question_id = rand.nextInt(no_of_questions);
+						question_check_counter++;
+						if(question_check_counter > (no_of_questions*2))
+							for(int i = 0; i<no_of_questions; i++)
+							{
+								connection.getQuestion_list_check2()[question_id] = 0;
+							}
+					}
+					connection.getQuestion_list_check2()[question_id] = 1;
+					playMessage2.activity = 2;
+					playMessage2.activity_id = question_id;
+					System.out.println("P2" + question_id);
+				}
+				else if(player2tile == 2)
+				{
+					int puzzle_id = rand.nextInt(no_of_puzzles);
+					int puzzle_list_check2[] = connection.getPuzzle_list_check2();
+					int puzzle_check_counter = 0;
+					while(puzzle_list_check2[puzzle_id] == 1)
+					{
+						puzzle_id = rand.nextInt(no_of_puzzles);
+						puzzle_check_counter++;
+						if(puzzle_check_counter > (no_of_puzzles*2))
+							for(int i = 0; i<no_of_puzzles; i++)
+							{
+								connection.getPuzzle_list_check2()[puzzle_id] = 0;
+							}
+					}
+					connection.getPuzzle_list_check2()[puzzle_id] = 1;
+					playMessage2.activity = 2;
+					playMessage2.activity_id = puzzle_id;
+					System.out.println("P2" + puzzle_id);
+				}
+				if(player == 1)
+				{
+					synchronized(this){
+						c.sendTCP(playMessage1);
+						otherPlayer.sendTCP(playMessage2);
+					}
+				}
+				else if(player == 2)
+				{
+					synchronized(this){
+						c.sendTCP(playMessage2);
+						otherPlayer.sendTCP(playMessage1);
+					}
+				}
+				connection.setP1ReadyToPlay(false);
+				connection.setP2ReadyToPlay(false);
 			}
 		}
 		if(o instanceof Packet14QuestionComplete)
+		{
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
+		}
+		if(o instanceof Packet15PuzzleComplete)
 		{
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);

@@ -17,4 +17,5 @@ public class Packet {
 	public static class Packet12PlayReady { public int sessionID; public int player; }
 	public static class Packet13Play { public int activity; public int activity_id; }
 	public static class Packet14QuestionComplete { public int sessionID; public int player; public int points; public int difficulty; public int elapsedtime; public int overall; public boolean correct; }
+	public static class Packet15PuzzleComplete { public int sessionID; public int player; public int points; public int difficulty; public int elapsedtime; public int overall; public boolean correct; }
 }

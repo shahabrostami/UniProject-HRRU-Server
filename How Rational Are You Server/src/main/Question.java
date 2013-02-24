@@ -4,18 +4,16 @@ import org.newdawn.slick.SlickException;
 
 public class Question {
 
-	private String[] description;
+	private String file;
 	private int amountOfAnswers;
-	private int descriptionLines;
 	private int answer;
 	private int appeared;
 	private int difficulty;
 	private String[] choices;
 	
-	public Question (int id, int descriptionLines, int amountOfAnswers, int answer, int difficulty, String[] description, String[] choices) throws SlickException
+	public Question (int id, int amountOfAnswers, int answer, int difficulty, String description, String[] choices) throws SlickException
 	{
-		this.description = description;
-		this.descriptionLines = descriptionLines;
+		this.file = description;
 		this.amountOfAnswers = amountOfAnswers;
 		this.answer = answer;
 		this.choices = choices;
@@ -43,14 +41,10 @@ public class Question {
 		return amountOfAnswers;
 	}
 
-	public String[] getDescription() {
-		return description;
+	public String getFile() {
+		return file;
 	}
 	
-	public int getDescriptionLines() {
-		return descriptionLines;
-	}
-
 	public int getDifficulty() {
 		return difficulty;
 	}
