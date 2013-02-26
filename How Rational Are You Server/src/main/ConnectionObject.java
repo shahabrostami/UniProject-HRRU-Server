@@ -9,6 +9,8 @@ public class ConnectionObject {
 	private String p2name;
 	private int p1position;
 	private int p2position;
+	private int p1tempvalue;
+	private int p2tempvalue;
 	private int p1tile;
 	private int p2tile;
 	private boolean p1ReadyToPlay;
@@ -172,6 +174,22 @@ public class ConnectionObject {
 
 	public void setPuzzle_list_check2(int[] puzzle_list_check2) {
 		this.puzzle_list_check2 = puzzle_list_check2;
+	}
+
+	public int getP1tempvalue() {
+		return p1tempvalue;
+	}
+
+	public void setP1tempvalue(int p1tempvalue) {
+		this.p1tempvalue = p1tempvalue;
+	}
+
+	public int getP2tempvalue() {
+		return p2tempvalue;
+	}
+
+	public void setP2tempvalue(int p2tempvalue) {
+		this.p2tempvalue = p2tempvalue;
 	}
 
 }

@@ -5,22 +5,25 @@ import java.io.IOException;
 import org.newdawn.slick.SlickException;
 
 import main.Packet.*;
+import main.item.ItemList;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.serializers.BeanSerializer;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-
 
 public class HRRUServer {
 	
 	private Server server;
 	public static QuestionList question_list;
 	public static PuzzleList puzzle_list;
+	public static ItemList item_list;
 	
 	public HRRUServer() throws IOException {
 		try {
 			question_list = new QuestionList("Question.txt");
 			puzzle_list = new PuzzleList("Puzzle.txt");
+			item_list = new ItemList();
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,11 +32,11 @@ public class HRRUServer {
 			e.printStackTrace();
 		}
 		
-		server = new Server();
+		server = new Server(131072, 16384);
 		registerPackets();
 		server.addListener(new NetworkListener());
 		server.start();
-		server.bind(9991, 9992);
+		server.bind(9991);
 	}
 	
 	private void registerPackets(){
@@ -42,8 +45,6 @@ public class HRRUServer {
 		kryo.register(Packet0CreateRequest.class);
 		kryo.register(Packet1CreateAnswer.class);
 		kryo.register(Packet2JoinRequest.class);
-		kryo.register(Packet3JoinAnswer.class);
-		kryo.register(Packet4ConnectionEstablished.class);
 		kryo.register(Packet3JoinAnswer.class);
 		kryo.register(Packet4ConnectionEstablished.class);
 		kryo.register(Packet5CancelRequest.class);
@@ -57,6 +58,8 @@ public class HRRUServer {
 		kryo.register(Packet13Play.class);
 		kryo.register(Packet14QuestionComplete.class);
 		kryo.register(Packet15PuzzleComplete.class);
+		kryo.register(Packet16SendBid.class);
+		kryo.register(Packet17EndBid.class);
 		kryo.register(int[].class);
 	}
 	
@@ -71,5 +74,4 @@ public class HRRUServer {
 		}
 		
 	}
-
 }

@@ -3,8 +3,9 @@ package main;
 import java.util.HashMap;
 import java.util.Random;
 
-import main.Packet.Packet11TurnMessage;
 import main.Packet.*;
+import main.item.Item;
+import main.item.ItemList;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -13,6 +14,8 @@ import com.esotericsoftware.minlog.Log;
 public class NetworkListener extends Listener{
 	
 	int sessionID = 0;
+	
+	HashMap<Connection, Integer> connectionSessions = new HashMap<Connection, Integer> ();
 	HashMap<Integer, ConnectionObject> connections = new HashMap<Integer, ConnectionObject> ();
 	HashMap<Connection, Connection> playerConnections = new HashMap<Connection, Connection> ();
 	
@@ -22,8 +25,12 @@ public class NetworkListener extends Listener{
 	private final PuzzleList puzzle_list = HRRUServer.puzzle_list;
 	private final Puzzle[] puzzles = puzzle_list.getPuzzle_list();
 	
+	private final ItemList item_list = HRRUServer.item_list;
+	private final Item[] items = item_list.getItems();
+	
 	private final int no_of_questions = question_list.getNumberOfQuestions();
 	private final int no_of_puzzles = puzzle_list.getNumberOfPuzzles();
+	private final int no_of_items = item_list.getSize();
 	
 	private Random rand = new Random();
 	
@@ -38,6 +45,7 @@ public class NetworkListener extends Listener{
 		{
 			Packet6CancelRequestResponse cancelResponse = new Packet6CancelRequestResponse();
 			otherPlayer.sendTCP(cancelResponse);
+			connections.remove(connectionSessions.get(c));
 		}
 	}
 
@@ -50,8 +58,12 @@ public class NetworkListener extends Listener{
 			createAnswer.password = ((Packet0CreateRequest)o).password;
 			ConnectionObject newconnection = new ConnectionObject(c, player1name, createAnswer.sessionID, createAnswer.password);
 			connections.put(sessionID, newconnection);
+			connectionSessions.put(c, sessionID);
 			Log.info("Created a server connection with sessionID " + sessionID + " with password " + createAnswer.password);
-			c.sendTCP(createAnswer);
+			synchronized ( this ) {
+				c.sendTCP("Hello");
+				c.sendTCP(createAnswer);
+			}
 			sessionID++;
 		}
 		if(o instanceof Packet2JoinRequest){
@@ -70,6 +82,7 @@ public class NetworkListener extends Listener{
 					joinServer.setP2(c);
 					joinServer.isEstablished();
 					connections.put(joinAnswer.sessionID, joinServer);
+					connectionSessions.put(c, joinAnswer.sessionID);
 					playerConnections.put(connections.get(joinAnswer.sessionID).getP1() , c);
 					playerConnections.put(c, connections.get(joinAnswer.sessionID).getP1());
 					joinAnswer.accepted = true;
@@ -107,6 +120,7 @@ public class NetworkListener extends Listener{
 				if(connection.getP2() != (null))
 					connection.getP2().sendTCP(cancelResponse);
 				connections.remove(sessionID);
+				connectionSessions.remove(c);
 			}
 		}
 		if(o instanceof Packet7Ready){
@@ -132,11 +146,11 @@ public class NetworkListener extends Listener{
 			for(int i = 0; i < size; i++)
 			{
 				tile_random_number = Math.random();
-				if(tile_random_number <= 1)
+				if(tile_random_number <= 0)
 					tileOrder[i] = 1;
-				else if(tile_random_number <= 1)
+				else if(tile_random_number <= 0)
 					tileOrder[i] = 2;
-				else if(tile_random_number <= 0.6)
+				else if(tile_random_number <= 1)
 					tileOrder[i] = 3;
 				else tileOrder[i] = 0;
 			}
@@ -229,6 +243,7 @@ public class NetworkListener extends Listener{
 				// P1 and P2 have same tile, calculate difference!
 				if(player1tile == player2tile)
 				{
+					// Both Question
 					if(player1tile == 1)
 					{
 						int question_id = rand.nextInt(no_of_questions);
@@ -256,6 +271,7 @@ public class NetworkListener extends Listener{
 						playMessage2.activity_id = question_id;
 						System.out.println(question_id);
 					}
+					// Both Puzzle
 					else if(player1tile == 2)
 					{
 						int puzzle_id = rand.nextInt(no_of_puzzles);
@@ -282,6 +298,22 @@ public class NetworkListener extends Listener{
 						playMessage1.activity_id = puzzle_id;
 						playMessage2.activity = 2;
 						playMessage2.activity_id = puzzle_id;
+					}
+					// Both Game
+					else if(player1tile == 3)
+					{
+						
+						int item_id = rand.nextInt(no_of_items);
+						Item currentItem = items[item_id];
+				        int itemValue = rand.nextInt(currentItem.getMaxValue() - currentItem.getMinValue() + 1) + currentItem.getMinValue();
+						playMessage1.activity = 3;
+						playMessage1.activity_id = 1;
+						playMessage1.secondary_id = item_id;
+						playMessage1.secondary_value = itemValue;
+						playMessage2.activity = 3;
+						playMessage2.activity_id = 1;
+						playMessage2.secondary_id = item_id;
+						playMessage2.secondary_value = itemValue;
 					}
 				}
 				// P1's tile
@@ -394,6 +426,146 @@ public class NetworkListener extends Listener{
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
+		if(o instanceof Packet16SendBid)
+		{
+			int sessionID = ((Packet16SendBid)o).sessionID;
+			int player = ((Packet16SendBid)o).player;
+			int bid = ((Packet16SendBid)o).bid;
+			int itemValue = ((Packet16SendBid)o).itemValue;
+			
+			ConnectionObject connection = connections.get(sessionID);
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
+			
+			if(player == 1)
+			{
+				connection.setP1ReadyToPlay(true);
+				connection.setP1tempvalue(bid);
+			}
+			else
+			{
+				connection.setP2ReadyToPlay(true);
+				connection.setP2tempvalue(bid);
+			}
+			
+			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
+			{
+				int p1value = connection.getP1tempvalue();
+				int p2value = connection.getP2tempvalue();
+				
+				Packet17EndBid endBidWin = new Packet17EndBid();
+				Packet17EndBid endBidLose = new Packet17EndBid();
+				
+				((Packet17EndBid)endBidWin).itemValue = itemValue;
+				((Packet17EndBid)endBidLose).itemValue = itemValue;
+				((Packet17EndBid)endBidWin).win = true;
+				((Packet17EndBid)endBidLose).win = false;
+				// if both bid 0
+				if(p1value == 0 && p2value == 0)
+				{
+					System.out.println("both lose");
+					((Packet17EndBid)endBidLose).amountWon = 0;
+					((Packet17EndBid)endBidLose).playerWon = 0;
+					((Packet17EndBid)endBidLose).otherPlayerBid = 0;
+					synchronized (this) {
+							c.sendTCP(endBidLose);
+							otherPlayer.sendTCP(endBidLose);
+					}
+					
+				}
+				// p1 wins
+				else if(p1value > p2value)
+				{
+					System.out.println("p1 win");
+					((Packet17EndBid)endBidWin).amountWon = itemValue - p1value;
+					((Packet17EndBid)endBidLose).amountWon = itemValue - p1value;
+					((Packet17EndBid)endBidWin).playerWon = 1;
+					((Packet17EndBid)endBidLose).playerWon = 1;
+					// if player1 sent last packet, they won
+					if(player == 1)
+					{
+						((Packet17EndBid)endBidWin).otherPlayerBid = connection.getP2tempvalue();
+						((Packet17EndBid)endBidLose).otherPlayerBid = connection.getP1tempvalue();
+						synchronized (this) {
+							c.sendTCP(endBidWin);
+							otherPlayer.sendTCP(endBidLose);
+						}
+					}
+					// if player2 sent last packet, they lost
+					else
+					{
+						((Packet17EndBid)endBidWin).otherPlayerBid = connection.getP2tempvalue();
+						((Packet17EndBid)endBidLose).otherPlayerBid = connection.getP1tempvalue();
+						synchronized (this) {
+							c.sendTCP(endBidLose);
+							otherPlayer.sendTCP(endBidWin);
+						}
+					}
+				}
+				// p2 wins
+				else if(p2value > p1value)
+				{
+					System.out.println("p2 win");
+					((Packet17EndBid)endBidWin).amountWon = itemValue - p2value;
+					((Packet17EndBid)endBidLose).amountWon = itemValue - p2value;
+					((Packet17EndBid)endBidWin).playerWon = 2;
+					((Packet17EndBid)endBidLose).playerWon = 2;
+					// if player1 sent last packet, they lost
+					if(player == 1)
+					{
+						((Packet17EndBid)endBidWin).otherPlayerBid = connection.getP1tempvalue();
+						((Packet17EndBid)endBidLose).otherPlayerBid = connection.getP2tempvalue();
+						synchronized (this) {
+							c.sendTCP(endBidLose);
+							otherPlayer.sendTCP(endBidWin);
+						}
+					}
+					// if player2 sent last packet, they won
+					else
+					{
+						((Packet17EndBid)endBidWin).otherPlayerBid = connection.getP1tempvalue();
+						((Packet17EndBid)endBidLose).otherPlayerBid = connection.getP2tempvalue();
+						synchronized (this) {
+							c.sendTCP(endBidWin);
+							otherPlayer.sendTCP(endBidLose);
+						}
+					}
+				}
+				
+				// if same value, last player who sent, wins
+				else if(p1value == p2value)
+				{
+					((Packet17EndBid)endBidWin).amountWon = itemValue - p1value;
+					((Packet17EndBid)endBidLose).amountWon = itemValue - p1value;
+					// if player1 sent last packet, they won
+					if(player == 1)
+					{
+						((Packet17EndBid)endBidWin).playerWon = 1;
+						((Packet17EndBid)endBidLose).playerWon = 1;
+						((Packet17EndBid)endBidWin).otherPlayerBid = connection.getP2tempvalue();
+						((Packet17EndBid)endBidLose).otherPlayerBid = connection.getP1tempvalue();
+						synchronized (this) {
+							c.sendTCP(endBidLose);
+							otherPlayer.sendTCP(endBidWin);
+						}
+					}
+					// if player2 sent last packet, they won
+					else
+					{
+						((Packet17EndBid)endBidWin).playerWon = 2;
+						((Packet17EndBid)endBidLose).playerWon = 2;
+						((Packet17EndBid)endBidWin).otherPlayerBid = connection.getP1tempvalue();
+						((Packet17EndBid)endBidLose).otherPlayerBid = connection.getP2tempvalue();
+						synchronized (this) {
+							c.sendTCP(endBidLose);
+							otherPlayer.sendTCP(endBidWin);
+						}
+					}
+				}
+				connection.setP1ReadyToPlay(false);
+				connection.setP2ReadyToPlay(false);
+			}
+		}
 		if(o instanceof Packet00SyncMessage)
 		{
 			int sessionID = ((Packet00SyncMessage)o).sessionID;
@@ -417,6 +589,5 @@ public class NetworkListener extends Listener{
 				}
 			}
 		}
-		
 	}
 }
