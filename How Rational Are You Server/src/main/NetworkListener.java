@@ -146,12 +146,12 @@ public class NetworkListener extends Listener{
 			for(int i = 0; i < size; i++)
 			{
 				tile_random_number = Math.random();
-				if(tile_random_number <= 0)
+				if(tile_random_number <= 0.5)
 					tileOrder[i] = 1;
-				else if(tile_random_number <= 0)
-					tileOrder[i] = 2;
 				else if(tile_random_number <= 1)
 					tileOrder[i] = 3;
+				else if(tile_random_number <= 0)
+					tileOrder[i] = 2;
 				else tileOrder[i] = 0;
 			}
 			int sessionID = ((Packet.Packet8Start)o).sessionID;
@@ -240,8 +240,22 @@ public class NetworkListener extends Listener{
 			
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
+				if(player1tile == 3 || player2tile == 3)
+				{
+					int item_id = rand.nextInt(no_of_items);
+					Item currentItem = items[item_id];
+				    int itemValue = rand.nextInt(currentItem.getMaxValue() - currentItem.getMinValue() + 1) + currentItem.getMinValue();
+					playMessage1.activity = 3;
+					playMessage1.activity_id = 1;
+					playMessage1.secondary_id = item_id;
+					playMessage1.secondary_value = itemValue;
+					playMessage2.activity = 3;
+					playMessage2.activity_id = 1;
+					playMessage2.secondary_id = item_id;
+					playMessage2.secondary_value = itemValue;
+				}
 				// P1 and P2 have same tile, calculate difference!
-				if(player1tile == player2tile)
+				else if(player1tile == player2tile)
 				{
 					// Both Question
 					if(player1tile == 1)
@@ -298,22 +312,6 @@ public class NetworkListener extends Listener{
 						playMessage1.activity_id = puzzle_id;
 						playMessage2.activity = 2;
 						playMessage2.activity_id = puzzle_id;
-					}
-					// Both Game
-					else if(player1tile == 3)
-					{
-						
-						int item_id = rand.nextInt(no_of_items);
-						Item currentItem = items[item_id];
-				        int itemValue = rand.nextInt(currentItem.getMaxValue() - currentItem.getMinValue() + 1) + currentItem.getMinValue();
-						playMessage1.activity = 3;
-						playMessage1.activity_id = 1;
-						playMessage1.secondary_id = item_id;
-						playMessage1.secondary_value = itemValue;
-						playMessage2.activity = 3;
-						playMessage2.activity_id = 1;
-						playMessage2.secondary_id = item_id;
-						playMessage2.secondary_value = itemValue;
 					}
 				}
 				// P1's tile
