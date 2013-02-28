@@ -14,10 +14,12 @@ public class Packet {
 	public static class Packet9CharacterSelect { public int sessionID;  public int player; public int characterID; }
 	public static class Packet10ChatMessage { public int playerID; public String message; }
 	public static class Packet11TurnMessage { public int sessionID; public int playerID; public int moves; public int tile; }
-	public static class Packet12PlayReady { public int sessionID; public int player; }
-	public static class Packet13Play { public int activity; public int activity_id; public int secondary_id; public int secondary_value; }
+	public static class Packet12PlayReady { public int sessionID; public int player;}
+	public static class Packet13Play { public int activity; public int activity_id; public int secondary_id; public int secondary_value; public int third_value; }
 	public static class Packet14QuestionComplete { public int sessionID; public int player; public int points; public int difficulty; public int elapsedtime; public int overall; public boolean correct; }
 	public static class Packet15PuzzleComplete { public int sessionID; public int player; public int points; public int difficulty; public int elapsedtime; public int overall; public boolean correct; }
 	public static class Packet16SendBid { public int sessionID; public int player; public int bid; public int itemValue; }
 	public static class Packet17EndBid { public int itemValue; public int otherPlayerBid; public int playerWon; public int amountWon; public boolean win;}
+	public static class Packet18TrustFirst { public int sessionID; public int player; public int playerGiveValue; }
+	public static class Packet19TrustSecond { public int sessionID; public int player; public int playerReturnValue; }
 }

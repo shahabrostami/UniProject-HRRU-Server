@@ -3,6 +3,7 @@ package main;
 import java.io.*;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class PuzzleList {
 	
@@ -16,7 +17,7 @@ public class PuzzleList {
 		
 		FILE_NAME = file_name;
 		
-		FileInputStream file_stream = new FileInputStream("res/text/" + FILE_NAME);
+		InputStream file_stream = ResourceLoader.getResourceAsStream("text/" + FILE_NAME);
 		DataInputStream in = new DataInputStream(file_stream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 

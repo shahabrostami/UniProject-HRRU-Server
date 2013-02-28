@@ -146,7 +146,7 @@ public class NetworkListener extends Listener{
 			for(int i = 0; i < size; i++)
 			{
 				tile_random_number = Math.random();
-				if(tile_random_number <= 0.5)
+				if(tile_random_number <= 0)
 					tileOrder[i] = 1;
 				else if(tile_random_number <= 1)
 					tileOrder[i] = 3;
@@ -240,19 +240,47 @@ public class NetworkListener extends Listener{
 			
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
+				int activity_id = 2; 
+						// rand.nextInt(HRRUServer.no_of_games + 1);
+				playMessage1.activity = 3;
+				playMessage2.activity = 3;
+				System.out.println("" + activity_id);
 				if(player1tile == 3 || player2tile == 3)
 				{
-					int item_id = rand.nextInt(no_of_items);
-					Item currentItem = items[item_id];
-				    int itemValue = rand.nextInt(currentItem.getMaxValue() - currentItem.getMinValue() + 1) + currentItem.getMinValue();
-					playMessage1.activity = 3;
-					playMessage1.activity_id = 1;
-					playMessage1.secondary_id = item_id;
-					playMessage1.secondary_value = itemValue;
-					playMessage2.activity = 3;
-					playMessage2.activity_id = 1;
-					playMessage2.secondary_id = item_id;
-					playMessage2.secondary_value = itemValue;
+					int playerCounter = connection.getPlayerTurnCounter();
+					if(activity_id == 1)
+					{
+						int item_id = rand.nextInt(no_of_items);
+						Item currentItem = items[item_id];
+						int itemValue = rand.nextInt(currentItem.getMaxValue() - currentItem.getMinValue() + 1) + currentItem.getMinValue();
+						playMessage1.activity_id = 1;
+						playMessage1.secondary_id = item_id;
+						playMessage1.secondary_value = itemValue;
+						playMessage2.activity_id = 1;
+						playMessage2.secondary_id = item_id;
+						playMessage2.secondary_value = itemValue;
+					}
+					else if(activity_id == 2)
+					{
+						int maxValue = rand.nextInt(5) + 2;
+						int multiplier = (rand.nextInt(6)) + 2;
+						if(maxValue > 3)
+							multiplier = (rand.nextInt(3)) + 2;
+						maxValue *= 50;
+						
+						playMessage1.secondary_id = playerCounter;
+						playMessage1.activity_id = 2;
+						playMessage1.secondary_value = maxValue;
+						playMessage1.third_value = multiplier;
+
+						playMessage2.secondary_id = playerCounter;
+						playMessage2.activity_id = 2;
+						playMessage2.secondary_value = maxValue;
+						playMessage2.third_value = multiplier;
+					}
+					if(playerCounter == 1)
+						connection.setPlayerTurnCounter(2);
+					else connection.setPlayerTurnCounter(1);
 				}
 				// P1 and P2 have same tile, calculate difference!
 				else if(player1tile == player2tile)
@@ -563,6 +591,16 @@ public class NetworkListener extends Listener{
 				connection.setP1ReadyToPlay(false);
 				connection.setP2ReadyToPlay(false);
 			}
+		}
+		if(o instanceof Packet18TrustFirst)
+		{
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
+		}
+		if(o instanceof Packet19TrustSecond)
+		{
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
 		}
 		if(o instanceof Packet00SyncMessage)
 		{
