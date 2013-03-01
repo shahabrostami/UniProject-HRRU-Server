@@ -22,4 +22,6 @@ public class Packet {
 	public static class Packet17EndBid { public int itemValue; public int otherPlayerBid; public int playerWon; public int amountWon; public boolean win;}
 	public static class Packet18TrustFirst { public int sessionID; public int player; public int playerGiveValue; }
 	public static class Packet19TrustSecond { public int sessionID; public int player; public int playerReturnValue; }
+	public static class Packet20SendPrison { public int sessionID; public int player; public int choice; public int elapsedTime; }
+	public static class Packet21EndPrison { }
 }

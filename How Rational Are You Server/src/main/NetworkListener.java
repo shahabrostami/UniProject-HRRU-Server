@@ -32,6 +32,14 @@ public class NetworkListener extends Listener{
 	private final int no_of_puzzles = puzzle_list.getNumberOfPuzzles();
 	private final int no_of_items = item_list.getSize();
 	
+	// Prisoner game variables
+	private final static int cooperate = 0;
+	private final static int betray = 1;
+	private final int bothCooperatePoints = 150;
+	private final int cooperatePoints = 50;
+	private final int betrayPoints = 250;
+	private final int bothBetrayPoints = 0;
+	
 	private Random rand = new Random();
 	
 	public void connected(Connection c) {
@@ -50,6 +58,30 @@ public class NetworkListener extends Listener{
 	}
 
 	public void received(Connection c, Object o) {
+		Log.set(Log.LEVEL_TRACE);
+		if(o instanceof Packet00SyncMessage)
+		{
+			int sessionID = ((Packet00SyncMessage)o).sessionID;
+			int player = ((Packet00SyncMessage)o).player;
+			
+			ConnectionObject connection = connections.get(sessionID);
+			Connection otherPlayer = playerConnections.get(c);
+			
+			if(player == 1)
+				connection.setP1ReadyToPlay(true);
+			else
+				connection.setP2ReadyToPlay(true);
+			
+			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
+			{
+				synchronized(this){
+					otherPlayer.sendTCP(o);
+					c.sendTCP(o);
+					connection.setP1ReadyToPlay(false);
+					connection.setP2ReadyToPlay(false);
+				}
+			}
+		}
 		if(o instanceof Packet0CreateRequest){
 			Packet1CreateAnswer createAnswer = new Packet1CreateAnswer();
 			String player1name = ((Packet0CreateRequest)o).player1Name;
@@ -240,8 +272,8 @@ public class NetworkListener extends Listener{
 			
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
-				int activity_id = 2; 
-						// rand.nextInt(HRRUServer.no_of_games + 1);
+				// int activity_id = 3; 
+				int activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
 				playMessage1.activity = 3;
 				playMessage2.activity = 3;
 				System.out.println("" + activity_id);
@@ -277,6 +309,11 @@ public class NetworkListener extends Listener{
 						playMessage2.activity_id = 2;
 						playMessage2.secondary_value = maxValue;
 						playMessage2.third_value = multiplier;
+					}
+					else if(activity_id == 3)
+					{
+						playMessage1.activity_id = 3;
+						playMessage2.activity_id = 3;
 					}
 					if(playerCounter == 1)
 						connection.setPlayerTurnCounter(2);
@@ -602,27 +639,38 @@ public class NetworkListener extends Listener{
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
-		if(o instanceof Packet00SyncMessage)
+		if(o instanceof Packet20SendPrison)
 		{
-			int sessionID = ((Packet00SyncMessage)o).sessionID;
-			int player = ((Packet00SyncMessage)o).player;
+			int sessionID = ((Packet20SendPrison)o).sessionID;
+			int player = ((Packet20SendPrison)o).player;
+			int choice = ((Packet20SendPrison)o).choice;
 			
 			ConnectionObject connection = connections.get(sessionID);
 			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
 			
 			if(player == 1)
+			{
 				connection.setP1ReadyToPlay(true);
+				connection.setP1tempvalue(choice);
+			}
 			else
+			{
 				connection.setP2ReadyToPlay(true);
+				connection.setP2tempvalue(choice);
+			}
 			
 			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
 			{
-				synchronized(this){
-					otherPlayer.sendTCP(o);
-					c.sendTCP(o);
+				Packet21EndPrison endPrison = new Packet21EndPrison();
+				
+				synchronized (this) {
+					c.sendTCP(endPrison);
+					otherPlayer.sendTCP(endPrison);
 					connection.setP1ReadyToPlay(false);
 					connection.setP2ReadyToPlay(false);
 				}
+				
 			}
 		}
 	}

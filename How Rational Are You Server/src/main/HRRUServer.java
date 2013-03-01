@@ -9,6 +9,7 @@ import main.item.ItemList;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.BeanSerializer;
+import com.esotericsoftware.kryo.serializers.FieldSerializer;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
@@ -18,7 +19,7 @@ public class HRRUServer {
 	public static QuestionList question_list;
 	public static PuzzleList puzzle_list;
 	public static ItemList item_list;
-	public static final int no_of_games = 2;
+	public static final int no_of_games = 3;
 	
 	public HRRUServer() throws IOException {
 		try {
@@ -34,10 +35,10 @@ public class HRRUServer {
 		}
 		
 		server = new Server(131072, 16384);
-		registerPackets();
 		server.addListener(new NetworkListener());
 		server.start();
 		server.bind(9991);
+		registerPackets();
 	}
 	
 	private void registerPackets(){
@@ -63,6 +64,8 @@ public class HRRUServer {
 		kryo.register(Packet17EndBid.class);
 		kryo.register(Packet18TrustFirst.class);
 		kryo.register(Packet19TrustSecond.class);
+		kryo.register(Packet20SendPrison.class);
+		kryo.register(Packet21EndPrison.class);
 		kryo.register(int[].class);
 	}
 	
