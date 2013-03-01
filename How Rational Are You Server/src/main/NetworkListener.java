@@ -178,7 +178,7 @@ public class NetworkListener extends Listener{
 			for(int i = 0; i < size; i++)
 			{
 				tile_random_number = Math.random();
-				if(tile_random_number <= 0)
+				if(tile_random_number <= 0.6)
 					tileOrder[i] = 1;
 				else if(tile_random_number <= 1)
 					tileOrder[i] = 3;
