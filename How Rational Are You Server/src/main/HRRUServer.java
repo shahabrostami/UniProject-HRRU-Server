@@ -19,7 +19,7 @@ public class HRRUServer {
 	public static QuestionList question_list;
 	public static PuzzleList puzzle_list;
 	public static ItemList item_list;
-	public static final int no_of_games = 3;
+	public static final int no_of_games = 4;
 	
 	public HRRUServer() throws IOException {
 		try {
@@ -66,6 +66,8 @@ public class HRRUServer {
 		kryo.register(Packet19TrustSecond.class);
 		kryo.register(Packet20SendPrison.class);
 		kryo.register(Packet21EndPrison.class);
+		kryo.register(Packet22PropUlt.class);
+		kryo.register(packet23DecUlt.class);
 		kryo.register(int[].class);
 	}
 	

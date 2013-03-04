@@ -15,7 +15,8 @@ public class ConnectionObject {
 	private int p2tile;
 	private boolean p1ReadyToPlay;
 	private boolean p2ReadyToPlay;
-	private int playerTurnCounter;
+	private int playerTurnCounterTrust;
+	private int playerTurnCounterUlt;
 	private String password;
 	private int sessionID;
 	private boolean established;
@@ -33,7 +34,8 @@ public class ConnectionObject {
 		this.password = password;
 		this.sessionID = sessionID;
 		this.established = false;
-		this.setPlayerTurnCounter(1);
+		this.setPlayerTurnCounterTrust(1);
+		this.setPlayerTurnCounterUlt(1);
 		this.question_list_check1 = new int[HRRUServer.question_list.getNumberOfQuestions()];
 		this.question_list_check2 = new int[HRRUServer.question_list.getNumberOfQuestions()];
 		this.puzzle_list_check1 = new int[HRRUServer.puzzle_list.getNumberOfPuzzles()];
@@ -194,12 +196,20 @@ public class ConnectionObject {
 		this.p2tempvalue = p2tempvalue;
 	}
 
-	public int getPlayerTurnCounter() {
-		return playerTurnCounter;
+	public int getPlayerTurnCounterUlt() {
+		return playerTurnCounterUlt;
 	}
 
-	public void setPlayerTurnCounter(int playerTurnCounter) {
-		this.playerTurnCounter = playerTurnCounter;
+	public void setPlayerTurnCounterUlt(int playerTurnCounterUlt) {
+		this.playerTurnCounterUlt = playerTurnCounterUlt;
+	}
+
+	public int getPlayerTurnCounterTrust() {
+		return playerTurnCounterTrust;
+	}
+
+	public void setPlayerTurnCounterTrust(int playerTurnCounterTrust) {
+		this.playerTurnCounterTrust = playerTurnCounterTrust;
 	}
 
 }

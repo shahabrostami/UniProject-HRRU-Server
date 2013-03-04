@@ -39,6 +39,10 @@ public class NetworkListener extends Listener{
 	private final int cooperatePoints = 50;
 	private final int betrayPoints = 250;
 	private final int bothBetrayPoints = 0;
+	private final int easyTilesMax = 10;
+	private final int mediumTilesMax = 9;
+	private final int hardTilesMax = 7;
+	private final int gameTilesMax = 6;
 	
 	private Random rand = new Random();
 	
@@ -58,7 +62,6 @@ public class NetworkListener extends Listener{
 	}
 
 	public void received(Connection c, Object o) {
-		Log.set(Log.LEVEL_TRACE);
 		if(o instanceof Packet00SyncMessage)
 		{
 			int sessionID = ((Packet00SyncMessage)o).sessionID;
@@ -169,22 +172,48 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet8Start){
-			int size = 36;
+			int size = 32;
 			int[] tileOrder = new int[size];
 			double tile_random_number = 0;
 			tileOrder[0] = 0;
-			
+			int easyTiles = easyTilesMax;
+			int mediumTiles = mediumTilesMax;
+			int hardTiles = hardTilesMax;
+			int gameTiles = gameTilesMax;
+			int counter = 0;
 			// calculate order of tiletypes
-			for(int i = 0; i < size; i++)
+			while(counter < size)
 			{
 				tile_random_number = Math.random();
-				if(tile_random_number <= 0.6)
-					tileOrder[i] = 1;
-				else if(tile_random_number <= 1)
-					tileOrder[i] = 3;
-				else if(tile_random_number <= 0)
-					tileOrder[i] = 2;
-				else tileOrder[i] = 0;
+				if(tile_random_number <= 0.25 && easyTiles > 0)
+				{
+					System.out.println(0);
+					tileOrder[counter] = 0;
+					easyTiles--;
+					counter++;
+				}
+				else if(tile_random_number <= 0.5 && mediumTiles > 0)
+				{
+					System.out.println(1);
+					tileOrder[counter] = 1;
+					mediumTiles--;
+					counter++;
+				}
+				else if(tile_random_number <= 0.75 && hardTiles > 0)
+				{
+					System.out.println(2);
+					tileOrder[counter] = 2;
+					hardTiles--;
+					counter++;
+				}
+				else if(tile_random_number <= 1 && gameTiles > 0)
+				{
+					System.out.println(3);
+					tileOrder[counter] = 3;
+					gameTiles--;
+					counter++;
+				}
+				System.out.println("lock");
 			}
 			int sessionID = ((Packet.Packet8Start)o).sessionID;
 			ConnectionObject connection = connections.get(sessionID);
@@ -192,6 +221,8 @@ public class NetworkListener extends Listener{
 			Packet8Start startPacket = new Packet8Start();
 			startPacket.sessionID = sessionID;
 			startPacket.board = tileOrder;
+			for(int i = 0; i < 32; i++)
+				System.out.println(tileOrder[i]);
 			
 			synchronized ( this ) {
 			connection.getP1().sendTCP(startPacket);
@@ -272,14 +303,11 @@ public class NetworkListener extends Listener{
 			
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
-				// int activity_id = 3; 
-				int activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
-				playMessage1.activity = 3;
-				playMessage2.activity = 3;
-				System.out.println("" + activity_id);
 				if(player1tile == 3 || player2tile == 3)
 				{
-					int playerCounter = connection.getPlayerTurnCounter();
+					int activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
+					playMessage1.activity = 3;
+					playMessage2.activity = 3;
 					if(activity_id == 1)
 					{
 						int item_id = rand.nextInt(no_of_items);
@@ -294,11 +322,10 @@ public class NetworkListener extends Listener{
 					}
 					else if(activity_id == 2)
 					{
-						int maxValue = rand.nextInt(5) + 2;
-						int multiplier = (rand.nextInt(6)) + 2;
-						if(maxValue > 3)
-							multiplier = (rand.nextInt(3)) + 2;
-						maxValue *= 50;
+						int playerCounter = connection.getPlayerTurnCounterTrust();
+						int maxValue = rand.nextInt(2) + 3; // 3 - 5
+						int multiplier = 3;
+						maxValue *= 20;
 						
 						playMessage1.secondary_id = playerCounter;
 						playMessage1.activity_id = 2;
@@ -309,85 +336,76 @@ public class NetworkListener extends Listener{
 						playMessage2.activity_id = 2;
 						playMessage2.secondary_value = maxValue;
 						playMessage2.third_value = multiplier;
+						if(playerCounter == 1)
+							connection.setPlayerTurnCounterTrust(2);
+						else connection.setPlayerTurnCounterTrust(1);
 					}
 					else if(activity_id == 3)
 					{
 						playMessage1.activity_id = 3;
 						playMessage2.activity_id = 3;
 					}
-					if(playerCounter == 1)
-						connection.setPlayerTurnCounter(2);
-					else connection.setPlayerTurnCounter(1);
+					else if(activity_id == 4)
+					{
+						playMessage1.activity_id = 4;
+						playMessage2.activity_id = 4;
+						int playerCounter = connection.getPlayerTurnCounterTrust();
+						int overallPoints = rand.nextInt(4) + 2;
+						overallPoints*=50;
+						
+						playMessage1.secondary_id = playerCounter;
+						playMessage1.secondary_value = overallPoints;
+
+						playMessage2.secondary_id = playerCounter;
+						playMessage2.secondary_value = overallPoints;
+						if(playerCounter == 1)
+							connection.setPlayerTurnCounterTrust(2);
+						else connection.setPlayerTurnCounterTrust(1);
+					}
 				}
 				// P1 and P2 have same tile, calculate difference!
 				else if(player1tile == player2tile)
 				{
-					// Both Question
-					if(player1tile == 1)
+					int question_id = rand.nextInt(no_of_questions);
+					int question_list_check1[] = connection.getQuestion_list_check1();
+					int question_list_check2[] = connection.getQuestion_list_check2();
+					int question_check_counter = 0;
+					int difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+					while(question_list_check1[question_id] == 1 || question_list_check2[question_id] == 1 || difficulty != player1tile)
 					{
-						int question_id = rand.nextInt(no_of_questions);
-						int question_list_check1[] = connection.getQuestion_list_check1();
-						int question_list_check2[] = connection.getQuestion_list_check2();
-						int question_check_counter = 0;
-						while(question_list_check1[question_id] == 1 && question_list_check2[question_id] == 1)
+						question_id = rand.nextInt(no_of_questions);
+						question_check_counter++;
+						difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+						if(question_check_counter > (no_of_questions*2))
 						{
-							question_id = rand.nextInt(no_of_questions);
-							question_check_counter++;
-							if(question_check_counter > (no_of_questions*2))
+							for(int i = 0; i<no_of_questions; i++)
 							{
-								for(int i = 0; i<no_of_questions; i++)
-								{
-									connection.getQuestion_list_check1()[question_id] = 0;
-									connection.getQuestion_list_check2()[question_id] = 0;
-								}
+								connection.getQuestion_list_check1()[question_id] = 0;
+								connection.getQuestion_list_check2()[question_id] = 0;
 							}
 						}
-						connection.getQuestion_list_check1()[question_id] = 1;
-						connection.getQuestion_list_check2()[question_id] = 1;
-						playMessage1.activity = 1;
-						playMessage1.activity_id = question_id;
-						playMessage2.activity = 1;
-						playMessage2.activity_id = question_id;
-						System.out.println(question_id);
 					}
-					// Both Puzzle
-					else if(player1tile == 2)
-					{
-						int puzzle_id = rand.nextInt(no_of_puzzles);
-						int puzzle_list_check1[] = connection.getPuzzle_list_check1();
-						int puzzle_list_check2[] = connection.getPuzzle_list_check2();
-						int puzzle_check_counter = 0;
-						while(puzzle_list_check1[puzzle_id] == 1 && puzzle_list_check2[puzzle_id] == 1)
-						{
-							puzzle_id = rand.nextInt(no_of_puzzles);
-							puzzle_check_counter++;
-							System.out.println("puzzletoomany!");
-							if(puzzle_check_counter > (no_of_puzzles*2))
-							{
-								for(int i = 0; i<no_of_puzzles; i++)
-								{
-									connection.getPuzzle_list_check1()[puzzle_id] = 0;
-									connection.getPuzzle_list_check2()[puzzle_id] = 0;
-								}
-							}
-						}
-						connection.getPuzzle_list_check1()[puzzle_id] = 1;
-						connection.getPuzzle_list_check2()[puzzle_id] = 1;
-						playMessage1.activity = 2;
-						playMessage1.activity_id = puzzle_id;
-						playMessage2.activity = 2;
-						playMessage2.activity_id = puzzle_id;
-					}
+					System.out.println("okay: " + difficulty);
+					connection.getQuestion_list_check1()[question_id] = 1;
+					connection.getQuestion_list_check2()[question_id] = 1;
+					playMessage1.activity = 1;
+					playMessage1.activity_id = question_id;
+					playMessage2.activity = 1;
+					playMessage2.activity_id = question_id;
+					System.out.println(question_id);
 				}
 				// P1's tile
-				else if(player1tile == 1)
+				else
 				{
 					int question_id = rand.nextInt(no_of_questions);
 					int question_list_check1[] = connection.getQuestion_list_check1();
 					int question_check_counter = 0;
-					while(question_list_check1[question_id] == 1)
+					int difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+					while(question_list_check1[question_id] == 1 || difficulty != player1tile)
 					{
 						question_id = rand.nextInt(no_of_questions);
+						difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+						System.out.println(difficulty + "difficulty");
 						question_check_counter++;
 						if(question_check_counter > (no_of_questions*2))
 							for(int i = 0; i<no_of_questions; i++)
@@ -399,36 +417,16 @@ public class NetworkListener extends Listener{
 					playMessage1.activity = 1;
 					playMessage1.activity_id = question_id;
 					System.out.println("P1" + question_id);
-				}
-				else if(player1tile == 2)
-				{
-					int puzzle_id = rand.nextInt(no_of_puzzles);
-					int puzzle_list_check1[] = connection.getPuzzle_list_check1();
-					int puzzle_check_counter = 0;
-					while(puzzle_list_check1[puzzle_id] == 1)
-					{
-						puzzle_id = rand.nextInt(no_of_puzzles);
-						puzzle_check_counter++;
-						if(puzzle_check_counter > (no_of_puzzles*2))
-							for(int i = 0; i<no_of_puzzles; i++)
-							{
-								connection.getPuzzle_list_check1()[puzzle_id] = 0;
-							}
-					}
-					connection.getPuzzle_list_check1()[puzzle_id] = 1;
-					playMessage1.activity = 2;
-					playMessage1.activity_id = puzzle_id;
-					System.out.println("P1" + puzzle_id);
-				}
-				// P2's tile
-				else if(player2tile == 1)
-				{
-					int question_id = rand.nextInt(no_of_questions);
+							
+					question_id = rand.nextInt(no_of_questions);
 					int question_list_check2[] = connection.getQuestion_list_check2();
-					int question_check_counter = 0;
-					while(question_list_check2[question_id] == 1)
+					question_check_counter = 0;
+					difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+					while(question_list_check2[question_id] == 1 || difficulty != player2tile)
 					{
 						question_id = rand.nextInt(no_of_questions);
+						difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+						System.out.println(difficulty + "difficulty");
 						question_check_counter++;
 						if(question_check_counter > (no_of_questions*2))
 							for(int i = 0; i<no_of_questions; i++)
@@ -437,30 +435,11 @@ public class NetworkListener extends Listener{
 							}
 					}
 					connection.getQuestion_list_check2()[question_id] = 1;
-					playMessage2.activity = 2;
+					playMessage2.activity = 1;
 					playMessage2.activity_id = question_id;
 					System.out.println("P2" + question_id);
 				}
-				else if(player2tile == 2)
-				{
-					int puzzle_id = rand.nextInt(no_of_puzzles);
-					int puzzle_list_check2[] = connection.getPuzzle_list_check2();
-					int puzzle_check_counter = 0;
-					while(puzzle_list_check2[puzzle_id] == 1)
-					{
-						puzzle_id = rand.nextInt(no_of_puzzles);
-						puzzle_check_counter++;
-						if(puzzle_check_counter > (no_of_puzzles*2))
-							for(int i = 0; i<no_of_puzzles; i++)
-							{
-								connection.getPuzzle_list_check2()[puzzle_id] = 0;
-							}
-					}
-					connection.getPuzzle_list_check2()[puzzle_id] = 1;
-					playMessage2.activity = 2;
-					playMessage2.activity_id = puzzle_id;
-					System.out.println("P2" + puzzle_id);
-				}
+				
 				if(player == 1)
 				{
 					synchronized(this){
@@ -672,6 +651,16 @@ public class NetworkListener extends Listener{
 				}
 				
 			}
+		}
+		if(o instanceof Packet22PropUlt)
+		{
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
+		}
+		if(o instanceof packet23DecUlt)
+		{
+			Connection otherPlayer = playerConnections.get(c);
+			otherPlayer.sendTCP(o);
 		}
 	}
 }
