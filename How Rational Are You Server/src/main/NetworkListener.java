@@ -39,10 +39,10 @@ public class NetworkListener extends Listener{
 	private final int cooperatePoints = 50;
 	private final int betrayPoints = 250;
 	private final int bothBetrayPoints = 0;
-	private final int easyTilesMax = 10;
-	private final int mediumTilesMax = 9;
-	private final int hardTilesMax = 7;
-	private final int gameTilesMax = 6;
+	private final int easyTilesMax = 0;
+	private final int mediumTilesMax = 0;
+	private final int hardTilesMax = 0;
+	private final int gameTilesMax = 32;
 	
 	private Random rand = new Random();
 	
@@ -305,7 +305,7 @@ public class NetworkListener extends Listener{
 			{
 				if(player1tile == 3 || player2tile == 3)
 				{
-					int activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
+					int activity_id = 2; // rand.nextInt(HRRUServer.no_of_games) + 1;
 					playMessage1.activity = 3;
 					playMessage2.activity = 3;
 					if(activity_id == 1)
