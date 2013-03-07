@@ -22,8 +22,11 @@ public class ConnectionObject {
 	private boolean established;
 	private int[] question_list_check1;
 	private int[] question_list_check2;
-	private int[] puzzle_list_check1;
-	private int[] puzzle_list_check2;
+	private boolean[] gamesDone;
+	private boolean prisonerGameDone;
+	private boolean bidGameDone;
+	private boolean trustGameDone;
+	private boolean ultGameDone;
 	
 	public ConnectionObject(Connection p1, String p1name, int sessionID, String password)
 	{
@@ -38,8 +41,6 @@ public class ConnectionObject {
 		this.setPlayerTurnCounterUlt(1);
 		this.question_list_check1 = new int[HRRUServer.question_list.getNumberOfQuestions()];
 		this.question_list_check2 = new int[HRRUServer.question_list.getNumberOfQuestions()];
-		this.puzzle_list_check1 = new int[HRRUServer.puzzle_list.getNumberOfPuzzles()];
-		this.puzzle_list_check2 = new int[HRRUServer.puzzle_list.getNumberOfPuzzles()];
 		
 		for(int i = 0; i < question_list_check1.length; i++)
 		{
@@ -47,11 +48,16 @@ public class ConnectionObject {
 			question_list_check2[i] = 0;
 		}
 		
-		for(int i = 0; i < puzzle_list_check1.length; i++)
-		{
-			puzzle_list_check1[i] = 0;
-			puzzle_list_check2[i] = 0;
-		}
+		
+		this.setPrisonerGameDone(false);
+		this.setBidGameDone(false);
+		this.setTrustGameDone(false);
+		this.setUltGameDone(false);
+		this.gamesDone = new boolean[5];
+		gamesDone[1] = this.bidGameDone;
+		gamesDone[2] = this.trustGameDone;
+		gamesDone[3] = this.trustGameDone;
+		gamesDone[4] = this.ultGameDone;
 	}
 	
 	public Connection getP1() {
@@ -164,22 +170,6 @@ public class ConnectionObject {
 		this.question_list_check2 = question_list_check2;
 	}
 
-	public int[] getPuzzle_list_check1() {
-		return puzzle_list_check1;
-	}
-
-	public void setPuzzle_list_check1(int[] puzzle_list_check1) {
-		this.puzzle_list_check1 = puzzle_list_check1;
-	}
-
-	public int[] getPuzzle_list_check2() {
-		return puzzle_list_check2;
-	}
-
-	public void setPuzzle_list_check2(int[] puzzle_list_check2) {
-		this.puzzle_list_check2 = puzzle_list_check2;
-	}
-
 	public int getP1tempvalue() {
 		return p1tempvalue;
 	}
@@ -210,6 +200,46 @@ public class ConnectionObject {
 
 	public void setPlayerTurnCounterTrust(int playerTurnCounterTrust) {
 		this.playerTurnCounterTrust = playerTurnCounterTrust;
+	}
+
+	public boolean[] getGamesDone() {
+		return gamesDone;
+	}
+
+	public void setGamesDone(boolean[] gamesDone) {
+		this.gamesDone = gamesDone;
+	}
+
+	public boolean isPrisonerGameDone() {
+		return prisonerGameDone;
+	}
+
+	public void setPrisonerGameDone(boolean prisonerGameDone) {
+		this.prisonerGameDone = prisonerGameDone;
+	}
+
+	public boolean isBidGameDone() {
+		return bidGameDone;
+	}
+
+	public void setBidGameDone(boolean bidGameDone) {
+		this.bidGameDone = bidGameDone;
+	}
+
+	public boolean isTrustGameDone() {
+		return trustGameDone;
+	}
+
+	public void setTrustGameDone(boolean trustGameDone) {
+		this.trustGameDone = trustGameDone;
+	}
+
+	public boolean isUltGameDone() {
+		return ultGameDone;
+	}
+
+	public void setUltGameDone(boolean ultGameDone) {
+		this.ultGameDone = ultGameDone;
 	}
 
 }

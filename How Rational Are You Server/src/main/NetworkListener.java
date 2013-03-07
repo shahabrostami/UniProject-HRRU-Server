@@ -22,15 +22,12 @@ public class NetworkListener extends Listener{
 	private final QuestionList question_list = HRRUServer.question_list;
 	private final Question[] questions = question_list.getQuestion_list();
 	
-	private final PuzzleList puzzle_list = HRRUServer.puzzle_list;
-	private final Puzzle[] puzzles = puzzle_list.getPuzzle_list();
-	
 	private final ItemList item_list = HRRUServer.item_list;
 	private final Item[] items = item_list.getItems();
 	
 	private final int no_of_questions = question_list.getNumberOfQuestions();
-	private final int no_of_puzzles = puzzle_list.getNumberOfPuzzles();
 	private final int no_of_items = item_list.getSize();
+	private final int no_of_games = 4;
 	
 	// Prisoner game variables
 	private final static int cooperate = 0;
@@ -41,8 +38,13 @@ public class NetworkListener extends Listener{
 	private final int bothBetrayPoints = 0;
 	private final int easyTilesMax = 0;
 	private final int mediumTilesMax = 0;
-	private final int hardTilesMax = 0;
-	private final int gameTilesMax = 32;
+	private final int hardTilesMax = 32;
+	private final int gameTilesMax = 0;
+	
+	private final int bidgame = 1;
+	private final int trustgame = 2;
+	private final int prisonergame = 3;
+	private final int ultgame = 4;
 	
 	private Random rand = new Random();
 	
@@ -305,7 +307,23 @@ public class NetworkListener extends Listener{
 			{
 				if(player1tile == 3 || player2tile == 3)
 				{
-					int activity_id = 2; // rand.nextInt(HRRUServer.no_of_games) + 1;
+					boolean gamesDone[] = connection.getGamesDone();
+					int activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
+					int counter_check = 0;
+					while(gamesDone[activity_id] == true)
+					{
+						counter_check++;
+						activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
+						if(counter_check > (no_of_games*3))
+						{
+							gamesDone[1] = false;
+							gamesDone[2] = false;
+							gamesDone[3] = false;
+							gamesDone[4] = false;
+							counter_check = 0;
+						}
+					}
+					// activity_id = 3; // UNDO THIS
 					playMessage1.activity = 3;
 					playMessage2.activity = 3;
 					if(activity_id == 1)
@@ -319,6 +337,7 @@ public class NetworkListener extends Listener{
 						playMessage2.activity_id = 1;
 						playMessage2.secondary_id = item_id;
 						playMessage2.secondary_value = itemValue;
+						gamesDone[bidgame] = true;
 					}
 					else if(activity_id == 2)
 					{
@@ -339,11 +358,13 @@ public class NetworkListener extends Listener{
 						if(playerCounter == 1)
 							connection.setPlayerTurnCounterTrust(2);
 						else connection.setPlayerTurnCounterTrust(1);
+						gamesDone[trustgame] = true;
 					}
 					else if(activity_id == 3)
 					{
 						playMessage1.activity_id = 3;
 						playMessage2.activity_id = 3;
+						gamesDone[prisonergame] = true;
 					}
 					else if(activity_id == 4)
 					{
@@ -361,6 +382,7 @@ public class NetworkListener extends Listener{
 						if(playerCounter == 1)
 							connection.setPlayerTurnCounterTrust(2);
 						else connection.setPlayerTurnCounterTrust(1);
+						gamesDone[ultgame] = true;
 					}
 				}
 				// P1 and P2 have same tile, calculate difference!

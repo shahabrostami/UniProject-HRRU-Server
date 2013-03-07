@@ -17,14 +17,12 @@ public class HRRUServer {
 	
 	private Server server;
 	public static QuestionList question_list;
-	public static PuzzleList puzzle_list;
 	public static ItemList item_list;
 	public static final int no_of_games = 4;
 	
 	public HRRUServer() throws IOException {
 		try {
 			question_list = new QuestionList("Question.txt");
-			puzzle_list = new PuzzleList("Puzzle.txt");
 			item_list = new ItemList();
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
