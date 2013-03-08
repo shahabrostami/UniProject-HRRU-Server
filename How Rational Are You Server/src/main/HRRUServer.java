@@ -1,8 +1,16 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.ResourceLoader;
 
 import main.Packet.*;
 import main.item.ItemList;
@@ -10,20 +18,46 @@ import main.item.ItemList;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.BeanSerializer;
 import com.esotericsoftware.kryo.serializers.FieldSerializer;
+import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
 public class HRRUServer {
-	
+
 	private Server server;
 	public static QuestionList question_list;
 	public static ItemList item_list;
+	public static ArrayList<Score> scores = new ArrayList<Score>();
 	public static final int no_of_games = 4;
 	
 	public HRRUServer() throws IOException {
 		try {
+			// set up question and items list
 			question_list = new QuestionList("Question.txt");
 			item_list = new ItemList();
+			
+			// set up input reader for scores
+			InputStream file_stream = ResourceLoader.getResourceAsStream("text/scores.txt");
+			DataInputStream in = new DataInputStream(file_stream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			// score list creator
+			Score score;
+			String[] values;
+			String name;
+			int points;
+			while((strLine = br.readLine()) != null)
+			{
+				// read and separate by tabs, score and name read in and stored in list
+				values = strLine.split("\\t", -1);
+				name = values[1];
+				points = Integer.parseInt(values[0]);
+				score = new Score(name, points);
+				scores.add(score);
+				System.out.println("" + name + "" + points);
+			}
+			Collections.sort(scores);
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,6 +100,9 @@ public class HRRUServer {
 		kryo.register(Packet21EndPrison.class);
 		kryo.register(Packet22PropUlt.class);
 		kryo.register(packet23DecUlt.class);
+		kryo.register(Packet24SendScore.class);
+		kryo.register(Packet25AllScores.class);
+		kryo.register(String[].class);
 		kryo.register(int[].class);
 	}
 	

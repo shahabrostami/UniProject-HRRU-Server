@@ -1,7 +1,18 @@
 package main;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
+
+import org.newdawn.slick.util.ResourceLoader;
 
 import main.Packet.*;
 import main.item.Item;
@@ -18,6 +29,8 @@ public class NetworkListener extends Listener{
 	HashMap<Connection, Integer> connectionSessions = new HashMap<Connection, Integer> ();
 	HashMap<Integer, ConnectionObject> connections = new HashMap<Integer, ConnectionObject> ();
 	HashMap<Connection, Connection> playerConnections = new HashMap<Connection, Connection> ();
+	
+	private ArrayList<Score> scores = HRRUServer.scores;
 	
 	private final QuestionList question_list = HRRUServer.question_list;
 	private final Question[] questions = question_list.getQuestion_list();
@@ -36,10 +49,10 @@ public class NetworkListener extends Listener{
 	private final int cooperatePoints = 50;
 	private final int betrayPoints = 250;
 	private final int bothBetrayPoints = 0;
-	private final int easyTilesMax = 0;
-	private final int mediumTilesMax = 0;
-	private final int hardTilesMax = 32;
-	private final int gameTilesMax = 0;
+	private final int easyTilesMax = 8;
+	private final int mediumTilesMax = 8;
+	private final int hardTilesMax = 8;
+	private final int gameTilesMax = 8;
 	
 	private final int bidgame = 1;
 	private final int trustgame = 2;
@@ -683,6 +696,62 @@ public class NetworkListener extends Listener{
 		{
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
+		}
+		if(o instanceof Packet24SendScore)
+		{
+			// setup variables
+			String name = ((Packet24SendScore)o).name;
+			int score = ((Packet24SendScore)o).score;
+			int player = ((Packet24SendScore)o).player;
+			int sessionID = ((Packet24SendScore)o).sessionID;
+			// set up connection variables
+			ConnectionObject connection = connections.get(sessionID);
+			Connection otherPlayer = playerConnections.get(c);
+			// add player score
+			Score playerScore = new Score(name, score);
+			scores.add(playerScore);
+			Collections.sort(scores);
+			String textScore = score + "\t" + name;
+			
+                BufferedWriter bw;
+				try {
+					System.out.println(System.getProperty("user.dir"));
+					bw = new BufferedWriter(new FileWriter("res/text/scores.txt", true));
+					bw.newLine();
+					bw.write(textScore);
+	                bw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+           
+
+			
+			
+			if(player == 1)
+			{
+				connection.setP1ReadyToPlay(true);
+			}
+			else
+			{
+				connection.setP2ReadyToPlay(true);
+			}
+			
+			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
+			{
+				String sendNames[] = new String[10];
+				int sendScores[] = new int[10];
+				for(int i = 0; i < 10; i++)
+				{
+					sendNames[i] = scores.get(i).getName();
+					sendScores[i] = scores.get(i).getScore();
+				}
+				Packet25AllScores sendScorePacket = new Packet25AllScores();
+				sendScorePacket.names = sendNames;
+				sendScorePacket.scores = sendScores;
+				c.sendTCP(sendScorePacket);
+				otherPlayer.sendTCP(sendScorePacket);
+			}
 		}
 	}
 }

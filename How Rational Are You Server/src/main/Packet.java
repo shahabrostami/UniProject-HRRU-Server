@@ -26,4 +26,6 @@ public class Packet {
 	public static class Packet21EndPrison { }
 	public static class Packet22PropUlt { public int sessionID; public int player; public int playerPropValue; public int playerDecValue; }
 	public static class packet23DecUlt { public int sessionID; public int player; public boolean success; }
+	public static class Packet24SendScore { public int sessionID; public int player; public String name; public int score; }
+	public static class Packet25AllScores { public String[] names; public int[] scores; }
 }
