@@ -63,6 +63,17 @@ public class NetworkListener extends Listener{
 	
 	public void connected(Connection c) {
 		Log.info("[SERVER] Someone has connected.");
+		String sendNames[] = new String[10];
+		int sendScores[] = new int[10];
+		for(int i = 0; i < 10; i++)
+		{
+			sendNames[i] = scores.get(i).getName();
+			sendScores[i] = scores.get(i).getScore();
+		}
+		Packet25AllScores sendScorePacket = new Packet25AllScores();
+		sendScorePacket.names = sendNames;
+		sendScorePacket.scores = sendScores;
+		c.sendTCP(sendScorePacket);
 	}
 
 	public void disconnected(Connection c) {
@@ -713,17 +724,16 @@ public class NetworkListener extends Listener{
 			Collections.sort(scores);
 			String textScore = score + "\t" + name;
 			
-                BufferedWriter bw;
-				try {
-					System.out.println(System.getProperty("user.dir"));
-					bw = new BufferedWriter(new FileWriter("res/text/scores.txt", true));
-					bw.newLine();
-					bw.write(textScore);
-	                bw.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            BufferedWriter bw;
+			try {
+				bw = new BufferedWriter(new FileWriter("res/text/scores.txt", true));
+				bw.newLine();
+				bw.write(textScore);
+	            bw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
            
 
 			
@@ -752,6 +762,60 @@ public class NetworkListener extends Listener{
 				c.sendTCP(sendScorePacket);
 				otherPlayer.sendTCP(sendScorePacket);
 			}
+		}
+		if(o instanceof Packet26Feedback)
+		{
+			int[] feedback = ((Packet26Feedback)o).feedback;
+			String otherComments = ((Packet26Feedback)o).otherComments;
+			otherComments = otherComments.replace("\n", " ");
+			String feedbackLine = feedback[0] + "\t" + feedback[1] + "\t" + feedback[2] 
+					+ "\t" + feedback[3] + "\t" + feedback[4] + "\t" + feedback[5] + "\t" + otherComments;
+ 			BufferedWriter bw;
+				try {
+					bw = new BufferedWriter(new FileWriter("res/text/feedback.txt", true));
+					bw.newLine();
+					bw.write(feedbackLine);
+		            bw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		if(o instanceof Packet27QuestionAnswers)
+		{
+			int[] answers = ((Packet27QuestionAnswers)o).answers;
+			int questionScore = ((Packet27QuestionAnswers)o).questionScore;
+			int bidScore = ((Packet27QuestionAnswers)o).bidScore;
+			int trustScore = ((Packet27QuestionAnswers)o).trustScore;
+			int prisonScore = ((Packet27QuestionAnswers)o).prisonScore;
+			int ultScore = ((Packet27QuestionAnswers)o).ultScore;
+			int totalScore = ((Packet27QuestionAnswers)o).playerScore;
+			
+			String answersLine = "" + answers[0];
+			
+			for(int i = 1; i < answers.length; i++)
+				answersLine = answersLine + "\t" + answers[i];
+
+ 			BufferedWriter bw;
+				try {
+					bw = new BufferedWriter(new FileWriter("res/text/choices.txt", true));
+					bw.newLine();
+					bw.write(answersLine);
+		            bw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			String pointsLine = questionScore + "\t" + bidScore + "\t" + trustScore + "\t" + prisonScore + "\t" + ultScore + "\t" + totalScore;
+				try {
+					bw = new BufferedWriter(new FileWriter("res/text/totalpoints.txt", true));
+					bw.newLine();
+					bw.write(pointsLine);
+		            bw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 }

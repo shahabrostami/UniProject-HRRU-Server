@@ -28,4 +28,6 @@ public class Packet {
 	public static class packet23DecUlt { public int sessionID; public int player; public boolean success; }
 	public static class Packet24SendScore { public int sessionID; public int player; public String name; public int score; }
 	public static class Packet25AllScores { public String[] names; public int[] scores; }
+	public static class Packet26Feedback { public int[] feedback; public String otherComments; } 
+	public static class Packet27QuestionAnswers { public int[] answers; public int questionScore; public int bidScore; public int prisonScore; public int trustScore; public int ultScore; public int playerScore; }
 }

@@ -102,6 +102,8 @@ public class HRRUServer {
 		kryo.register(packet23DecUlt.class);
 		kryo.register(Packet24SendScore.class);
 		kryo.register(Packet25AllScores.class);
+		kryo.register(Packet26Feedback.class);
+		kryo.register(Packet27QuestionAnswers.class);
 		kryo.register(String[].class);
 		kryo.register(int[].class);
 	}
