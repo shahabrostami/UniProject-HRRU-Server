@@ -53,7 +53,6 @@ public class QuestionList {
 			for(int i = 0; i < number_of_answers; i++)
 			{
 				strLine = br.readLine();
-				System.out.println(strLine);
 				choices[i] = strLine;
 			}
 			new_question = new Question(question_id, number_of_answers, answer, difficulty, file, choices);

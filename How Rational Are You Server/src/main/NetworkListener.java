@@ -1,18 +1,12 @@
 package main;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
-
-import org.newdawn.slick.util.ResourceLoader;
 
 import main.Packet.*;
 import main.item.Item;
@@ -33,7 +27,6 @@ public class NetworkListener extends Listener{
 	private ArrayList<Score> scores = HRRUServer.scores;
 	
 	private final QuestionList question_list = HRRUServer.question_list;
-	private final Question[] questions = question_list.getQuestion_list();
 	
 	private final ItemList item_list = HRRUServer.item_list;
 	private final Item[] items = item_list.getItems();
@@ -42,13 +35,6 @@ public class NetworkListener extends Listener{
 	private final int no_of_items = item_list.getSize();
 	private final int no_of_games = 4;
 	
-	// Prisoner game variables
-	private final static int cooperate = 0;
-	private final static int betray = 1;
-	private final int bothCooperatePoints = 150;
-	private final int cooperatePoints = 50;
-	private final int betrayPoints = 250;
-	private final int bothBetrayPoints = 0;
 	private final int easyTilesMax = 8;
 	private final int mediumTilesMax = 8;
 	private final int hardTilesMax = 8;
@@ -213,33 +199,28 @@ public class NetworkListener extends Listener{
 				tile_random_number = Math.random();
 				if(tile_random_number <= 0.25 && easyTiles > 0)
 				{
-					System.out.println(0);
 					tileOrder[counter] = 0;
 					easyTiles--;
 					counter++;
 				}
 				else if(tile_random_number <= 0.5 && mediumTiles > 0)
 				{
-					System.out.println(1);
 					tileOrder[counter] = 1;
 					mediumTiles--;
 					counter++;
 				}
 				else if(tile_random_number <= 0.75 && hardTiles > 0)
 				{
-					System.out.println(2);
 					tileOrder[counter] = 2;
 					hardTiles--;
 					counter++;
 				}
 				else if(tile_random_number <= 1 && gameTiles > 0)
 				{
-					System.out.println(3);
 					tileOrder[counter] = 3;
 					gameTiles--;
 					counter++;
 				}
-				System.out.println("lock");
 			}
 			int sessionID = ((Packet.Packet8Start)o).sessionID;
 			ConnectionObject connection = connections.get(sessionID);
@@ -247,8 +228,6 @@ public class NetworkListener extends Listener{
 			Packet8Start startPacket = new Packet8Start();
 			startPacket.sessionID = sessionID;
 			startPacket.board = tileOrder;
-			for(int i = 0; i < 32; i++)
-				System.out.println(tileOrder[i]);
 			
 			synchronized ( this ) {
 			connection.getP1().sendTCP(startPacket);
@@ -318,14 +297,11 @@ public class NetworkListener extends Listener{
 			Packet13Play playMessage1 = new Packet13Play();
 			Packet13Play playMessage2 = new Packet13Play();
 			
-			System.out.println(player);
-			
 			if(player == 1)
 				connection.setP1ReadyToPlay(true);
 			else
 				connection.setP2ReadyToPlay(true);
 			
-			System.out.println(connection.getP1ReadyToPlay() + "---" + connection.getP2ReadyToPlay());
 			
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
@@ -431,14 +407,12 @@ public class NetworkListener extends Listener{
 							}
 						}
 					}
-					System.out.println("okay: " + difficulty);
 					connection.getQuestion_list_check1()[question_id] = 1;
 					connection.getQuestion_list_check2()[question_id] = 1;
 					playMessage1.activity = 1;
 					playMessage1.activity_id = question_id;
 					playMessage2.activity = 1;
 					playMessage2.activity_id = question_id;
-					System.out.println(question_id);
 				}
 				// P1's tile
 				else
@@ -451,7 +425,6 @@ public class NetworkListener extends Listener{
 					{
 						question_id = rand.nextInt(no_of_questions);
 						difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
-						System.out.println(difficulty + "difficulty");
 						question_check_counter++;
 						if(question_check_counter > (no_of_questions*2))
 							for(int i = 0; i<no_of_questions; i++)
@@ -462,8 +435,7 @@ public class NetworkListener extends Listener{
 					connection.getQuestion_list_check1()[question_id] = 1;
 					playMessage1.activity = 1;
 					playMessage1.activity_id = question_id;
-					System.out.println("P1" + question_id);
-							
+					
 					question_id = rand.nextInt(no_of_questions);
 					int question_list_check2[] = connection.getQuestion_list_check2();
 					question_check_counter = 0;
@@ -472,7 +444,6 @@ public class NetworkListener extends Listener{
 					{
 						question_id = rand.nextInt(no_of_questions);
 						difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
-						System.out.println(difficulty + "difficulty");
 						question_check_counter++;
 						if(question_check_counter > (no_of_questions*2))
 							for(int i = 0; i<no_of_questions; i++)
@@ -483,7 +454,6 @@ public class NetworkListener extends Listener{
 					connection.getQuestion_list_check2()[question_id] = 1;
 					playMessage2.activity = 1;
 					playMessage2.activity_id = question_id;
-					System.out.println("P2" + question_id);
 				}
 				
 				if(player == 1)
@@ -551,7 +521,6 @@ public class NetworkListener extends Listener{
 				// if both bid 0
 				if(p1value == 0 && p2value == 0)
 				{
-					System.out.println("both lose");
 					((Packet17EndBid)endBidLose).amountWon = 0;
 					((Packet17EndBid)endBidLose).playerWon = 0;
 					((Packet17EndBid)endBidLose).otherPlayerBid = 0;
@@ -564,7 +533,6 @@ public class NetworkListener extends Listener{
 				// p1 wins
 				else if(p1value > p2value)
 				{
-					System.out.println("p1 win");
 					((Packet17EndBid)endBidWin).amountWon = itemValue - p1value;
 					((Packet17EndBid)endBidLose).amountWon = itemValue - p1value;
 					((Packet17EndBid)endBidWin).playerWon = 1;
@@ -593,7 +561,6 @@ public class NetworkListener extends Listener{
 				// p2 wins
 				else if(p2value > p1value)
 				{
-					System.out.println("p2 win");
 					((Packet17EndBid)endBidWin).amountWon = itemValue - p2value;
 					((Packet17EndBid)endBidLose).amountWon = itemValue - p2value;
 					((Packet17EndBid)endBidWin).playerWon = 2;

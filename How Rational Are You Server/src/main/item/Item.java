@@ -2,11 +2,9 @@ package main.item;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
 public class Item {
 
-	private int id;
 	private int minValue;
 	private int maxValue;
 	private String name;
@@ -14,7 +12,6 @@ public class Item {
 	private Image itemImage;
 	
 	public Item(int id, int minValue, int maxValue, String name, String description, Image itemImage) throws SlickException {
-		this.id = id;
 		this.setMinValue(minValue);
 		this.setMaxValue(maxValue);
 		this.setName(name);

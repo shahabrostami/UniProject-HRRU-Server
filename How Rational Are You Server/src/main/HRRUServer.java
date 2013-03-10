@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -16,9 +14,6 @@ import main.Packet.*;
 import main.item.ItemList;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.serializers.BeanSerializer;
-import com.esotericsoftware.kryo.serializers.FieldSerializer;
-import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
@@ -54,7 +49,6 @@ public class HRRUServer {
 				points = Integer.parseInt(values[0]);
 				score = new Score(name, points);
 				scores.add(score);
-				System.out.println("" + name + "" + points);
 			}
 			Collections.sort(scores);
 			
