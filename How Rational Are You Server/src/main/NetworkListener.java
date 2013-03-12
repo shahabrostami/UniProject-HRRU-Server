@@ -194,7 +194,7 @@ public class NetworkListener extends Listener{
 			int mediumTiles = mediumTilesMax;
 			int hardTiles = hardTilesMax;
 			int gameTiles = gameTilesMax;
-			int counter = 10;
+			int counter = 12;
 			// calculate order of tiletypes
 			tileOrder[0] = 3;
 			tileOrder[1] = 3;
@@ -206,6 +206,8 @@ public class NetworkListener extends Listener{
 			tileOrder[7] = 3;
 			tileOrder[8] = 3;
 			tileOrder[9] = 3;
+			tileOrder[10] = 3;
+			tileOrder[11] = 3;
 			
 			while(counter < size)
 			{
