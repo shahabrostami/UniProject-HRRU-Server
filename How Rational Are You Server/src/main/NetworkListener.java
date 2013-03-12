@@ -34,12 +34,12 @@ public class NetworkListener extends Listener{
 	private final int no_of_questions = question_list.getNumberOfQuestions();
 	private final int no_of_items = item_list.getSize();
 	private final int no_of_games = 4;
-	
-	private final int easyTilesMax = 8;
+	// tile assignment
+	private final int easyTilesMax = 9;
 	private final int mediumTilesMax = 8;
-	private final int hardTilesMax = 8;
-	private final int gameTilesMax = 8;
-	
+	private final int hardTilesMax = 5;
+	private final int gameTilesMax = 0;
+	// game id
 	private final int bidgame = 1;
 	private final int trustgame = 2;
 	private final int prisonergame = 3;
@@ -51,6 +51,7 @@ public class NetworkListener extends Listener{
 		Log.info("[SERVER] Someone has connected.");
 		String sendNames[] = new String[10];
 		int sendScores[] = new int[10];
+		// create scoreboard and send
 		for(int i = 0; i < 10; i++)
 		{
 			sendNames[i] = scores.get(i).getName();
@@ -64,6 +65,7 @@ public class NetworkListener extends Listener{
 
 	public void disconnected(Connection c) {
 		Log.info("[SERVER] Someone has disconnected.");
+		// disconnect other player
 		Connection otherPlayer = playerConnections.get(c);
 		if(!(otherPlayer == null))
 		{
@@ -76,6 +78,7 @@ public class NetworkListener extends Listener{
 	public void received(Connection c, Object o) {
 		if(o instanceof Packet00SyncMessage)
 		{
+			// Sync message, ensure both players are ready before continuing
 			int sessionID = ((Packet00SyncMessage)o).sessionID;
 			int player = ((Packet00SyncMessage)o).player;
 			
@@ -98,6 +101,7 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet0CreateRequest){
+			// Creates server connection between 2 plaeyers.
 			Packet1CreateAnswer createAnswer = new Packet1CreateAnswer();
 			String player1name = ((Packet0CreateRequest)o).player1Name;
 			createAnswer.accepted = true;
@@ -107,15 +111,12 @@ public class NetworkListener extends Listener{
 			connections.put(sessionID, newconnection);
 			connectionSessions.put(c, sessionID);
 			Log.info("Created a server connection with sessionID " + sessionID + " with password " + createAnswer.password);
-			synchronized ( this ) {
-				c.sendTCP("Hello");
-				c.sendTCP(createAnswer);
-			}
+			c.sendTCP(createAnswer);
 			sessionID++;
 		}
 		if(o instanceof Packet2JoinRequest){
 			Packet3JoinAnswer joinAnswer = new Packet3JoinAnswer();
-			// TO DO, make sure connection is correct, right sessionID and right password etc.
+			// joins the player connection to the correct connection objective
 			joinAnswer.sessionID = ((Packet2JoinRequest)o).sessionID;
 			
 			if(connections.containsKey(joinAnswer.sessionID)) // does the sessionID exist?
@@ -157,6 +158,7 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet5CancelRequest){
+			// Cancel request, ensures that when the player disconnects, the other player is notified
 			Packet6CancelRequestResponse cancelResponse = new Packet6CancelRequestResponse();
 			int sessionID = ((Packet.Packet5CancelRequest)o).sessionID;
 			
@@ -171,19 +173,19 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet7Ready){
+			// packet for setting player sync before continuing game
 			int sessionID = ((Packet.Packet7Ready)o).sessionID;
 			int player = ((Packet.Packet7Ready)o).player;
 			ConnectionObject connection = connections.get(sessionID);
 			if(player == 1)
-			{
 				connection.getP2().sendTCP(o);
-			}
 			else if(player == 2)
-			{
 				connection.getP1().sendTCP(o);
-			}
 		}
 		if(o instanceof Packet8Start){
+			// This initiaties the game connection object between 2 players.
+			// Creates the required connection hashmaps and board and
+			// sends it to the players involved
 			int size = 32;
 			int[] tileOrder = new int[size];
 			double tile_random_number = 0;
@@ -192,8 +194,19 @@ public class NetworkListener extends Listener{
 			int mediumTiles = mediumTilesMax;
 			int hardTiles = hardTilesMax;
 			int gameTiles = gameTilesMax;
-			int counter = 0;
+			int counter = 10;
 			// calculate order of tiletypes
+			tileOrder[0] = 3;
+			tileOrder[1] = 3;
+			tileOrder[2] = 3;
+			tileOrder[3] = 3;
+			tileOrder[4] = 3;
+			tileOrder[5] = 3;
+			tileOrder[6] = 3;
+			tileOrder[7] = 3;
+			tileOrder[8] = 3;
+			tileOrder[9] = 3;
+			
 			while(counter < size)
 			{
 				tile_random_number = Math.random();
@@ -235,6 +248,7 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet9CharacterSelect){
+			// handshaking for character selection between 2 players.
 			int sessionID = ((Packet.Packet9CharacterSelect)o).sessionID;
 			int characterID = ((Packet.Packet9CharacterSelect)o).characterID;
 			int player = ((Packet.Packet9CharacterSelect)o).player;
@@ -252,6 +266,7 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet10ChatMessage)
 		{
+			// forwards chat message to correct player.
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
