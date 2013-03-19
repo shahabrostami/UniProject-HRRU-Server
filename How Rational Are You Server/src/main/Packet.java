@@ -1,5 +1,5 @@
 package main;
-
+// setup packet classes and their variables
 public class Packet {
 	public static class Packet00SyncMessage { public int sessionID; public int player; }
 	public static class Packet0CreateRequest{ public String player1Name; public String password; }

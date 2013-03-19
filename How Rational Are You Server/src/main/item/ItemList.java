@@ -3,14 +3,14 @@ package main.item;
 import org.newdawn.slick.SlickException;
 
 public class ItemList  {
-
+	// create the list of items for bidding
 	private int size;
 	private Item item[];
 	
 	public ItemList() throws SlickException {
 		size = 12;
 		item = new Item[size];
-		
+		// initiate each item with item name and description, with bidding values minimum and maximum
 		item[0] = new Item(0, 50, 150, "Armor", "Armor", null);
 		item[1] = new Item(1, 100, 200, "Axe", "Axe", null);
 		item[2] = new Item(2, 50, 100, "Book", "Book", null);

@@ -19,6 +19,7 @@ import com.esotericsoftware.minlog.Log;
 
 public class HRRUServer {
 
+	// Server variables
 	private Server server;
 	public static QuestionList question_list;
 	public static ItemList item_list;
@@ -53,13 +54,11 @@ public class HRRUServer {
 			Collections.sort(scores);
 			
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		// initiate server and start
 		server = new Server(131072, 16384);
 		server.addListener(new NetworkListener());
 		server.start();
@@ -68,6 +67,7 @@ public class HRRUServer {
 	}
 	
 	private void registerPackets(){
+		// register network classes for packets
 		Kryo kryo = server.getKryo();
 		kryo.register(Packet00SyncMessage.class);
 		kryo.register(Packet0CreateRequest.class);
@@ -104,6 +104,7 @@ public class HRRUServer {
 	
 	public static void main(String[] args) throws SlickException
 	{
+		// Create server object
 		try {
 			new HRRUServer();
 			Log.set(Log.LEVEL_DEBUG);

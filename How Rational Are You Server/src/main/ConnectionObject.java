@@ -2,6 +2,7 @@ package main;
 
 import com.esotericsoftware.kryonet.Connection;
 
+// connection Object between 2 players that holds the game instance variables on the server.
 public class ConnectionObject {
 	private Connection p1;
 	private Connection p2;
@@ -30,6 +31,7 @@ public class ConnectionObject {
 	
 	public ConnectionObject(Connection p1, String p1name, int sessionID, String password)
 	{
+		// initiate default object variables
 		this.p1 = p1;
 		this.p2 = null;
 		this.p1name = p1name;
@@ -42,13 +44,14 @@ public class ConnectionObject {
 		this.question_list_check1 = new int[HRRUServer.question_list.getNumberOfQuestions()];
 		this.question_list_check2 = new int[HRRUServer.question_list.getNumberOfQuestions()];
 		
+		// initiate players question lists
 		for(int i = 0; i < question_list_check1.length; i++)
 		{
 			question_list_check1[i] = 0;
 			question_list_check2[i] = 0;
 		}
 		
-		
+		// set default state variables 
 		this.setPrisonerGameDone(false);
 		this.setBidGameDone(false);
 		this.setTrustGameDone(false);
@@ -59,7 +62,7 @@ public class ConnectionObject {
 		gamesDone[3] = this.trustGameDone;
 		gamesDone[4] = this.ultGameDone;
 	}
-	
+	// get and set functions for connection object variables
 	public Connection getP1() {
 		return p1;
 	}

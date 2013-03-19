@@ -4,7 +4,9 @@ public class Score implements Comparable<Score>{
 	
 	private int score;
 	private String name;
-
+	// record scores for the scoreboard
+	// implements the comparison function to allow comparing
+	// results whilst still keeping order
 	public Score(String name, int score)
 	{
 		super();
@@ -13,7 +15,6 @@ public class Score implements Comparable<Score>{
 	}
 	@Override
 	public int compareTo(Score o) {
-	// 	TODO Auto-generated method stub
 		int score = ((Score)o).getScore();
 		return score - this.score;
 	}

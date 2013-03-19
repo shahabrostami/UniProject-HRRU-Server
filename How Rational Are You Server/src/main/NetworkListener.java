@@ -18,28 +18,29 @@ import com.esotericsoftware.minlog.Log;
 
 public class NetworkListener extends Listener{
 	
+	// start the sessionID counter at 0.
 	int sessionID = 0;
 	
+	// server and connections hashmaps
 	HashMap<Connection, Integer> connectionSessions = new HashMap<Connection, Integer> ();
 	HashMap<Integer, ConnectionObject> connections = new HashMap<Integer, ConnectionObject> ();
 	HashMap<Connection, Connection> playerConnections = new HashMap<Connection, Connection> ();
 	
+	// initiate the scores, questions and items used in the game
 	private ArrayList<Score> scores = HRRUServer.scores;
-	
 	private final QuestionList question_list = HRRUServer.question_list;
-	
 	private final ItemList item_list = HRRUServer.item_list;
 	private final Item[] items = item_list.getItems();
-	
+	// question variables
 	private final int no_of_questions = question_list.getNumberOfQuestions();
 	private final int no_of_items = item_list.getSize();
 	private final int no_of_games = 4;
-	// tile assignment
-	private final int easyTilesMax = 9;
+	// tile assignment, set this to equal the total tile szie.
+	private final int easyTilesMax = 8;
 	private final int mediumTilesMax = 8;
-	private final int hardTilesMax = 5;
-	private final int gameTilesMax = 0;
-	// game id
+	private final int hardTilesMax = 6;
+	private final int gameTilesMax = 10;
+	// game ids
 	private final int bidgame = 1;
 	private final int trustgame = 2;
 	private final int prisonergame = 3;
@@ -51,7 +52,7 @@ public class NetworkListener extends Listener{
 		Log.info("[SERVER] Someone has connected.");
 		String sendNames[] = new String[10];
 		int sendScores[] = new int[10];
-		// create scoreboard and send
+		// if a player joins, create scoreboard and send over
 		for(int i = 0; i < 10; i++)
 		{
 			sendNames[i] = scores.get(i).getName();
@@ -65,7 +66,7 @@ public class NetworkListener extends Listener{
 
 	public void disconnected(Connection c) {
 		Log.info("[SERVER] Someone has disconnected.");
-		// disconnect other player
+		// if a player leaves, disconnect other player
 		Connection otherPlayer = playerConnections.get(c);
 		if(!(otherPlayer == null))
 		{
@@ -78,13 +79,13 @@ public class NetworkListener extends Listener{
 	public void received(Connection c, Object o) {
 		if(o instanceof Packet00SyncMessage)
 		{
-			// Sync message, ensure both players are ready before continuing
+			// sync message, ensure both players are ready before continuing
 			int sessionID = ((Packet00SyncMessage)o).sessionID;
 			int player = ((Packet00SyncMessage)o).player;
 			
 			ConnectionObject connection = connections.get(sessionID);
 			Connection otherPlayer = playerConnections.get(c);
-			
+			// set player ready to play true
 			if(player == 1)
 				connection.setP1ReadyToPlay(true);
 			else
@@ -92,6 +93,7 @@ public class NetworkListener extends Listener{
 			
 			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
 			{
+				// synchronise for both players
 				synchronized(this){
 					otherPlayer.sendTCP(o);
 					c.sendTCP(o);
@@ -123,23 +125,26 @@ public class NetworkListener extends Listener{
 			{
 				String password = ((Packet2JoinRequest)o).password;
 				ConnectionObject joinServer = connections.get(joinAnswer.sessionID);
+				// if the password is correct, initiate the connection object for other player
 				if(joinServer.getPassword().equals(password))
 				{
 					String player2name = ((Packet2JoinRequest)o).player2Name;
 					joinServer.setP2name(player2name);
 					joinServer.setP2(c);
 					joinServer.isEstablished();
+					// set up new connections in hashmaps
 					connections.put(joinAnswer.sessionID, joinServer);
 					connectionSessions.put(c, joinAnswer.sessionID);
 					playerConnections.put(connections.get(joinAnswer.sessionID).getP1() , c);
 					playerConnections.put(c, connections.get(joinAnswer.sessionID).getP1());
+					// set up join packet for other player
 					joinAnswer.accepted = true;
 					joinAnswer.player1Name = joinServer.getP1name();
 					joinAnswer.sessionID =  joinServer.getSessionID();
 					joinAnswer.password = password;
 					Log.info(joinAnswer.player1Name + " is now connected with " + player2name);
 					c.sendTCP(joinAnswer);
-					
+					// éstablish connection for first player
 					Packet4ConnectionEstablished connectionEstablished = new Packet4ConnectionEstablished();
 					connectionEstablished.player2Name = player2name;
 					Connection p1 = joinServer.getP1();
@@ -158,7 +163,7 @@ public class NetworkListener extends Listener{
 			}
 		}
 		if(o instanceof Packet5CancelRequest){
-			// Cancel request, ensures that when the player disconnects, the other player is notified
+			// cancel request, ensures that when the player disconnects, the other player is notified
 			Packet6CancelRequestResponse cancelResponse = new Packet6CancelRequestResponse();
 			int sessionID = ((Packet.Packet5CancelRequest)o).sessionID;
 			
@@ -194,21 +199,8 @@ public class NetworkListener extends Listener{
 			int mediumTiles = mediumTilesMax;
 			int hardTiles = hardTilesMax;
 			int gameTiles = gameTilesMax;
-			int counter = 12;
+			int counter = 0;
 			// calculate order of tiletypes
-			tileOrder[0] = 3;
-			tileOrder[1] = 3;
-			tileOrder[2] = 3;
-			tileOrder[3] = 3;
-			tileOrder[4] = 3;
-			tileOrder[5] = 3;
-			tileOrder[6] = 3;
-			tileOrder[7] = 3;
-			tileOrder[8] = 3;
-			tileOrder[9] = 3;
-			tileOrder[10] = 3;
-			tileOrder[11] = 3;
-			
 			while(counter < size)
 			{
 				tile_random_number = Math.random();
@@ -237,6 +229,7 @@ public class NetworkListener extends Listener{
 					counter++;
 				}
 			}
+			// send tile assignment to both players
 			int sessionID = ((Packet.Packet8Start)o).sessionID;
 			ConnectionObject connection = connections.get(sessionID);
 			
@@ -274,13 +267,15 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet11TurnMessage)
 		{
+			// return and record the players turn, including their new position
 			int player = ((Packet11TurnMessage)o).playerID;
 			int moves = ((Packet11TurnMessage)o).moves;
 			int sessionID = ((Packet11TurnMessage)o).sessionID;
 			int tile = ((Packet11TurnMessage)o).tile;
 			ConnectionObject connection = connections.get(sessionID);
 			Connection otherPlayer = playerConnections.get(c);
-			
+			// depending on the player who has had their turn, update their position
+			// and update the other player on this new position
 			if(player == 1)
 			{
 				connection.updateP1position(moves);
@@ -302,6 +297,7 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet12PlayReady)
 		{
+			// if both players are ready to play, calculate the next activity
 			int sessionID = ((Packet12PlayReady)o).sessionID;
 			int player = ((Packet12PlayReady)o).player;
 			
@@ -319,18 +315,21 @@ public class NetworkListener extends Listener{
 			else
 				connection.setP2ReadyToPlay(true);
 			
-			
+			// wait until both players are ready to play
 			if(connection.getP1ReadyToPlay() && connection.getP2ReadyToPlay())
 			{
+				// if both players are on a game tile, calculate a game to play
 				if(player1tile == 3 || player2tile == 3)
 				{
 					boolean gamesDone[] = connection.getGamesDone();
 					int activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
 					int counter_check = 0;
+					//  make sure a game that hasn't been played yet is played
 					while(gamesDone[activity_id] == true)
 					{
 						counter_check++;
 						activity_id = rand.nextInt(HRRUServer.no_of_games) + 1;
+						// if all games have been played, reset all to not played and try again
 						if(counter_check > (no_of_games*3))
 						{
 							gamesDone[1] = false;
@@ -340,9 +339,10 @@ public class NetworkListener extends Listener{
 							counter_check = 0;
 						}
 					}
-					// activity_id = 3; // UNDO THIS
+
 					playMessage1.activity = 3;
 					playMessage2.activity = 3;
+					// if the game is a bidding game, set up variables and send over the item price and multiplier
 					if(activity_id == 1)
 					{
 						int item_id = rand.nextInt(no_of_items);
@@ -356,10 +356,11 @@ public class NetworkListener extends Listener{
 						playMessage2.secondary_value = itemValue;
 						gamesDone[bidgame] = true;
 					}
+					// if the game is a trust game, set up variables and send over the initial value and multiplier
 					else if(activity_id == 2)
 					{
 						int playerCounter = connection.getPlayerTurnCounterTrust();
-						int maxValue = rand.nextInt(2) + 3; // 3 - 5
+						int maxValue = rand.nextInt(2) + 3; 
 						int multiplier = 3;
 						maxValue *= 20;
 						
@@ -377,12 +378,14 @@ public class NetworkListener extends Listener{
 						else connection.setPlayerTurnCounterTrust(1);
 						gamesDone[trustgame] = true;
 					}
+					// if the game is a prisoner game, no necessary variables required
 					else if(activity_id == 3)
 					{
 						playMessage1.activity_id = 3;
 						playMessage2.activity_id = 3;
 						gamesDone[prisonergame] = true;
 					}
+					// if the game is a dictator game, pick who goes first and send over the playerid
 					else if(activity_id == 4)
 					{
 						playMessage1.activity_id = 4;
@@ -402,7 +405,7 @@ public class NetworkListener extends Listener{
 						gamesDone[ultgame] = true;
 					}
 				}
-				// P1 and P2 have same tile, calculate difference!
+				// if both players are on the same question tile
 				else if(player1tile == player2tile)
 				{
 					int question_id = rand.nextInt(no_of_questions);
@@ -410,6 +413,7 @@ public class NetworkListener extends Listener{
 					int question_list_check2[] = connection.getQuestion_list_check2();
 					int question_check_counter = 0;
 					int difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+					// pick a question that is equal to the difficulty and both players havent played yet
 					while(question_list_check1[question_id] == 1 || question_list_check2[question_id] == 1 || difficulty != player1tile)
 					{
 						question_id = rand.nextInt(no_of_questions);
@@ -431,13 +435,14 @@ public class NetworkListener extends Listener{
 					playMessage2.activity = 1;
 					playMessage2.activity_id = question_id;
 				}
-				// P1's tile
+				// if players are on a different tile
 				else
 				{
 					int question_id = rand.nextInt(no_of_questions);
 					int question_list_check1[] = connection.getQuestion_list_check1();
 					int question_check_counter = 0;
 					int difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+					// pick a question that the player hasnt played yet and is equal to their tile difficulty.
 					while(question_list_check1[question_id] == 1 || difficulty != player1tile)
 					{
 						question_id = rand.nextInt(no_of_questions);
@@ -445,18 +450,17 @@ public class NetworkListener extends Listener{
 						question_check_counter++;
 						if(question_check_counter > (no_of_questions*2))
 							for(int i = 0; i<no_of_questions; i++)
-							{
 								connection.getQuestion_list_check1()[question_id] = 0;
-							}
 					}
 					connection.getQuestion_list_check1()[question_id] = 1;
 					playMessage1.activity = 1;
 					playMessage1.activity_id = question_id;
-					
+					// do the same for player 2
 					question_id = rand.nextInt(no_of_questions);
 					int question_list_check2[] = connection.getQuestion_list_check2();
 					question_check_counter = 0;
 					difficulty =  question_list.getQuestion_list()[question_id].getDifficulty() - 1;
+					// pick a question that player 2 hasnt played yet and is equal to their difficulty
 					while(question_list_check2[question_id] == 1 || difficulty != player2tile)
 					{
 						question_id = rand.nextInt(no_of_questions);
@@ -464,15 +468,13 @@ public class NetworkListener extends Listener{
 						question_check_counter++;
 						if(question_check_counter > (no_of_questions*2))
 							for(int i = 0; i<no_of_questions; i++)
-							{
 								connection.getQuestion_list_check2()[question_id] = 0;
-							}
 					}
 					connection.getQuestion_list_check2()[question_id] = 1;
 					playMessage2.activity = 1;
 					playMessage2.activity_id = question_id;
 				}
-				
+				// send the players their packets
 				if(player == 1)
 				{
 					synchronized(this){
@@ -493,16 +495,19 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet14QuestionComplete)
 		{
+			// send each players their question results
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
 		if(o instanceof Packet15PuzzleComplete)
 		{
+			// send each players their puzzle results
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
 		if(o instanceof Packet16SendBid)
 		{
+			// send each player their bid results
 			int sessionID = ((Packet16SendBid)o).sessionID;
 			int player = ((Packet16SendBid)o).player;
 			int bid = ((Packet16SendBid)o).bid;
@@ -511,7 +516,7 @@ public class NetworkListener extends Listener{
 			ConnectionObject connection = connections.get(sessionID);
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
-			
+			// make sure both players are ready
 			if(player == 1)
 			{
 				connection.setP1ReadyToPlay(true);
@@ -522,12 +527,12 @@ public class NetworkListener extends Listener{
 				connection.setP2ReadyToPlay(true);
 				connection.setP2tempvalue(bid);
 			}
-			
+			// when both players are ready
 			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
 			{
 				int p1value = connection.getP1tempvalue();
 				int p2value = connection.getP2tempvalue();
-				
+				// get the player bids
 				Packet17EndBid endBidWin = new Packet17EndBid();
 				Packet17EndBid endBidLose = new Packet17EndBid();
 				
@@ -541,13 +546,14 @@ public class NetworkListener extends Listener{
 					((Packet17EndBid)endBidLose).amountWon = 0;
 					((Packet17EndBid)endBidLose).playerWon = 0;
 					((Packet17EndBid)endBidLose).otherPlayerBid = 0;
+					// both lose
 					synchronized (this) {
 							c.sendTCP(endBidLose);
 							otherPlayer.sendTCP(endBidLose);
 					}
 					
 				}
-				// p1 wins
+				// if p1 has a higher bid than p2, p1 wins
 				else if(p1value > p2value)
 				{
 					((Packet17EndBid)endBidWin).amountWon = itemValue - p1value;
@@ -575,7 +581,7 @@ public class NetworkListener extends Listener{
 						}
 					}
 				}
-				// p2 wins
+				// if p2 bids higher than p1, p2 wins
 				else if(p2value > p1value)
 				{
 					((Packet17EndBid)endBidWin).amountWon = itemValue - p2value;
@@ -640,16 +646,19 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet18TrustFirst)
 		{
+			// send both players their trust results
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
 		if(o instanceof Packet19TrustSecond)
 		{
+		    // send both players their trust results
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
 		if(o instanceof Packet20SendPrison)
 		{
+			// send both players their prison results
 			int sessionID = ((Packet20SendPrison)o).sessionID;
 			int player = ((Packet20SendPrison)o).player;
 			int choice = ((Packet20SendPrison)o).choice;
@@ -657,7 +666,7 @@ public class NetworkListener extends Listener{
 			ConnectionObject connection = connections.get(sessionID);
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
-			
+			// make sure both players are finished
 			if(player == 1)
 			{
 				connection.setP1ReadyToPlay(true);
@@ -668,7 +677,7 @@ public class NetworkListener extends Listener{
 				connection.setP2ReadyToPlay(true);
 				connection.setP2tempvalue(choice);
 			}
-			
+			// when both players are finished, send results over
 			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
 			{
 				Packet21EndPrison endPrison = new Packet21EndPrison();
@@ -684,11 +693,13 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet22PropUlt)
 		{
+			// send both players the ultimatum results
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
 		if(o instanceof packet23DecUlt)
 		{
+			// send both players the ultimatum results
 			Connection otherPlayer = playerConnections.get(c);
 			otherPlayer.sendTCP(o);
 		}
@@ -715,22 +726,15 @@ public class NetworkListener extends Listener{
 				bw.write(textScore);
 	            bw.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-           
 
-			
-			
+			// make sure both players are ready
 			if(player == 1)
-			{
 				connection.setP1ReadyToPlay(true);
-			}
 			else
-			{
 				connection.setP2ReadyToPlay(true);
-			}
-			
+			// when both players are ready, send over the NEW scoreboard
 			if(connection.getP1ReadyToPlay() && (connection.getP2ReadyToPlay()))
 			{
 				String sendNames[] = new String[10];
@@ -749,24 +753,26 @@ public class NetworkListener extends Listener{
 		}
 		if(o instanceof Packet26Feedback)
 		{
+			// set up variables to receive player feedback
 			int[] feedback = ((Packet26Feedback)o).feedback;
 			String otherComments = ((Packet26Feedback)o).otherComments;
 			otherComments = otherComments.replace("\n", " ");
 			String feedbackLine = feedback[0] + "\t" + feedback[1] + "\t" + feedback[2] 
 					+ "\t" + feedback[3] + "\t" + feedback[4] + "\t" + feedback[5] + "\t" + otherComments;
  			BufferedWriter bw;
+ 			// record the feedback into the feedback text file
 				try {
 					bw = new BufferedWriter(new FileWriter("res/text/feedback.txt", true));
 					bw.newLine();
 					bw.write(feedbackLine);
 		            bw.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}
 		if(o instanceof Packet27QuestionAnswers)
 		{
+			// set up variables to receive ALL of the player scores
 			int[] answers = ((Packet27QuestionAnswers)o).answers;
 			int questionScore = ((Packet27QuestionAnswers)o).questionScore;
 			int bidScore = ((Packet27QuestionAnswers)o).bidScore;
@@ -780,6 +786,7 @@ public class NetworkListener extends Listener{
 			for(int i = 1; i < answers.length; i++)
 				answersLine = answersLine + "\t" + answers[i];
 
+			// record the players answers of questions into the text file for choices 
  			BufferedWriter bw;
 				try {
 					bw = new BufferedWriter(new FileWriter("res/text/choices.txt", true));
@@ -787,9 +794,9 @@ public class NetworkListener extends Listener{
 					bw.write(answersLine);
 		            bw.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			// do the same for the points for both players
 			String pointsLine = questionScore + "\t" + bidScore + "\t" + trustScore + "\t" + prisonScore + "\t" + ultScore + "\t" + totalScore;
 				try {
 					bw = new BufferedWriter(new FileWriter("res/text/totalpoints.txt", true));
@@ -797,7 +804,6 @@ public class NetworkListener extends Listener{
 					bw.write(pointsLine);
 		            bw.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}

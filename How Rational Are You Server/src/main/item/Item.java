@@ -4,7 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class Item {
-
+	// initiate item objects for server record
 	private int minValue;
 	private int maxValue;
 	private String name;

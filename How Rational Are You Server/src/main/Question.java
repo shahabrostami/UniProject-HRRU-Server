@@ -3,7 +3,7 @@ package main;
 import org.newdawn.slick.SlickException;
 
 public class Question {
-
+	// this is the question object that holds each individual question attributes
 	private String file;
 	private int amountOfAnswers;
 	private int answer;
