@@ -1,0 +1,242 @@
+21
+
+1
+5
+0
+1
+q1.html
+a1.html
+5p
+10p
+15p
+20p
+25p
+
+2
+2
+1
+1
+q2.html
+a2.html
+True
+False
+
+3
+6
+4
+2
+q3.html
+a3.html
+K
+K 8
+K 5
+A 8
+A 5
+K A
+
+4
+6
+1
+3
+q4.html
+a4.html
+1%
+2%
+5%
+50%
+95%
+98%
+
+5
+6
+2
+2
+q5.html
+a5.html
+U
+9 J
+9 U
+J U
+J 2
+U 2
+
+6
+6
+2
+2
+q6.html
+a6.html
+A E
+A E 2
+A E 7
+V 2
+V 7
+None of the above.
+
+7
+4
+1
+1
+q7.html
+a7.html
+The horizontal lines are of different length.
+The horizontal lines are of equal length.
+The image is not symmetrical.
+None of the above.
+
+8
+2
+0
+2
+q8.html
+a8.html
+Linda is a bank teller.
+Linda is a bank teller, active in  the feminist movement.
+
+9
+5
+2
+3
+q9.html
+a9.html
+1 and 3
+1 and 4
+2 and 3
+2 and 4
+None of the above.
+
+10
+5
+3
+2
+q10.html
+a10.html
+$0
+$20
+$20 plus 10 years interest.
+$75
+A savings of $55.
+
+11
+2
+1
+1
+q11.html
+a11.html
+True
+False
+
+12
+6
+1
+2
+q12.html
+a12.html
+1 minute
+5 minutes
+20 minutes
+100 minutes
+500 minutes
+None of the above.
+
+13
+5
+2
+1
+q13.html
+a13.html
+2 days
+24 days
+47 days
+48 days
+None of the above.
+
+14
+5
+4
+1
+q14.html
+a14.html
+BBBGGG
+GGGGGG
+BBBBBB
+BGBBGB
+None of the above.
+
+15
+4
+0
+2
+q15.html
+a15.html
+RGRRR
+GRGRRR
+GRRRRR
+None of the above.
+
+16
+5
+1
+3
+q16.html
+a16.html
+12%
+41%
+80%
+85%
+None of the above.
+
+17
+4
+0
+2
+q17.html
+a17.html
+0 to 5%
+5 to 10%
+60 to 65%
+90 to 95%
+
+18
+3
+2
+1
+q18.html
+a18.html
+Urn A
+Urn B
+Urn C
+
+19
+3
+0
+3
+q19.html
+a19.html
+Offer A
+Offer B
+Both offers are equal.
+
+20
+5
+3
+3
+q20.html
+a20.html
+They are both Knaves.
+They are both Knights.
+Husband is a Knight, Wife is a Knave.
+Husband is a Knave, Wife is a Knight
+None of the above.
+
+21
+5
+2
+3
+q21.html
+a21.html
+They are both Knaves.
+They are both Knights.
+Husband is a Knight, Wife is a Knave.
+Husband is a Knave, Wife is a Knight
+None of the above.

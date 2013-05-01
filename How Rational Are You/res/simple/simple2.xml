@@ -1,0 +1,2799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE themes PUBLIC "-//www.matthiasmann.de//TWL-Theme//EN" "http://hg.l33tlabs.org/twl/raw-file/tip/src/de/matthiasmann/twl/theme/theme.dtd">
+<!--
+    Copyright (c) 2007-2011, Matthias Mann
+    
+    All rights reserved.
+    
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+    
+        * Redistributions of source code must retain the above copyright notice,
+          this list of conditions and the following disclaimer.
+        * Redistributions in binary form must reproduce the above copyright
+          notice, this list of conditions and the following disclaimer in the
+          documentation and/or other materials provided with the distribution.
+        * Neither the name of Matthias Mann nor the names of its contributors may
+          be used to endorse or promote products derived from this software
+          without specific prior written permission.
+    
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<!--
+    Document   : simple.xml
+    Created on : November 22, 2007, 9:23 PM
+    Author     : Matthias Mann
+    Description:
+        This is a very simple looking theme using a fake 3d look and shades of gray.
+        It can be used as a base for new applications / projects.
+--><themes>
+	
+    <include filename="cursors.xml"/>
+    <images file="importantbuttonbg.png">
+        <area name="importantbg-1" xywh="0,160,300,40"/>
+        <select name="important.button">
+            <area if="pressed" xywh="0,80,300,40"/>
+            <area if="selected" xywh="0,80,300,40"/>
+            <area if="hover" xywh="0,40,300,40"/>
+            <animation timeSource="hover">
+                <frame duration="100" ref="importantbg-1"/>
+                <frames duration="100" count="9" xywh="0,200,300,40" offsety="40"/>
+            </animation>
+        
+        
+        </select>
+    </images>
+    <images file="importantbutton2bg.png">
+        <area name="importantbg2-1" xywh="0,310,300,90"/>
+        <select name="importantroll.button">
+            <area if="pressed" xywh="0,580,300,90"/>
+            <area if="selected" xywh="0,40,300,90"/>
+            <area if="hover" xywh="0,130,300,90"/>
+            <animation timeSource="hover">
+                <frame duration="100" ref="importantbg2-1"/>
+                <frames duration="100" count="9" xywh="0,310,300,90" offsety="90"/>
+            </animation>
+        
+        
+        </select>
+    </images>
+    <images file="statusbanner.png">
+        <area name="status-background" xywh="*"/>
+    </images>
+
+
+    <images file="chat.png" format="RGBA" filter="linear">
+        <area name="tooltip.background" border="3" xywh="1,24,7,7" splitx="L3,R3" splity="T3,B3"/>
+        <area name="choice.norm.background" border="3" xywh="1,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+    
+        <area name="choice.hover.background" border="3" xywh="9,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+        <area name="choice.sel.background" border="3" xywh="17,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+        <area name="choice.red.background" border="3" xywh="25,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+        <grid name="frame.background" weightsX="0,1,0" weightsY="0,1,0" border="20,4,4,4" tint="#DFFF">
+            <area xywh="1,1,2,17"/>
+            <area xywh="4,1,1,17"/>
+            <area xywh="13,1,2,17"/>
+            <area xywh="1,19,2,1"/>
+            <area xywh="4,19,1,1"/>
+            <area xywh="13,19,2,1"/>
+            <area xywh="1,21,2,2"/>
+            <area xywh="4,21,1,2"/>
+            <area xywh="13,21,2,2"/>
+        </grid>
+        <select name="vscrollbar.upbutton.background" center="true">
+            <area tint="#FF0000" if="pressed" xywh="16,7,7,4"/>
+            <area tint="#5A5A5A" if="hover" xywh="16,7,7,4"/>
+            <area tint="#000000" xywh="16,7,7,4"/>
+        </select>
+        <select name="vscrollbar.downbutton.background" center="true">
+            <area tint="#FF0000" if="pressed" xywh="16,12,7,4"/>
+            <area tint="#5A5A5A" if="hover" xywh="16,12,7,4"/>
+            <area tint="#000000" xywh="16,12,7,4"/>
+        </select>
+        <select name="choice.button">
+            <area if="pressed" xywh="17,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+            <area if="selected" xywh="17,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+            <area if="hover" xywh="9,32,7,7" tint="#FFFFFF" splitx="L3,R3" splity="T3,B3"/>
+            <area xywh="1,32,7,7" splitx="L3,R3" splity="T3,B3"/>
+        </select>
+        <select name="menu.button">
+            <area if="pressed" xywh="17,40,7,7" splitx="L3,R3" splity="T3,B3"/>
+            <area if="selected" xywh="41,40,7,7" splitx="L3,R3" splity="T3,B3"/>
+            <area if="hover" xywh="9,40,7,7" tint="#FFFFFF" splitx="L3,R3" splity="T3,B3"/>
+            <area xywh="1,40,7,7" splitx="L3,R3" splity="T3,B3"/>
+        </select>
+        <area name="important.button1" xywh="1,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button2" xywh="9,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button3" xywh="17,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button4" xywh="25,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button5" xywh="33,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button6" xywh="41,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button7" xywh="49,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+        <area name="important.button8" xywh="57,40,7,7" splitx="L3,R3" splity="T3,B3" border="3"/>
+    
+    
+    
+        <select name="vscrollbar.thumb.background">
+            <area splity="4,5" tint="#FF0000" if="pressed" xywh="16,17,7,10"/>
+            <area splity="4,5" tint="#5A5A5A" if="hover" xywh="16,17,7,10"/>
+            <area splity="4,5" tint="#000000" xywh="16,17,7,10"/>
+        </select>
+        <area name="smiley" center="true" xywh="24,1,14,14"/>
+        <area name="innerframe.background" xywh="17,1,5,5" splitx="2,3" splity="2,3" border="2"/>
+
+        <area name="-editfield.cursor" xywh="1,1,1,1"/>
+        <animation name="editfield.cursor" timeSource="keyboardFocus">
+            <frame ref="-editfield.cursor" duration="500"/>
+            <frame ref="none" duration="500"/>
+        </animation>
+        <area name="editfield.selection" tint="#E000FEFF" xywh="1,1,1,1"/>
+        <area name="evilframe.background" border="19,5,5,5" xywh="40,1,20,29" splitx="L5,R5" splity="T19,B5"/>
+        <area name="evilframe.background7260959053317" border="19,5,5,5" xywh="86,1,20,61" splitx="L2,R3" splity="T2,B3"/>
+
+        <composed name="valueadjuster.background" border="2">
+            <area tint="#cccc" xywh="1,1,1,1"/>
+            <alias ref="innerframe.background"/>
+        </composed>
+    </images>
+	
+    <images file="simple.png" format="COLOR">
+        <area name="-borderA" border="3" xywh="0,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderB" border="3" xywh="10,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderC" border="3" xywh="20,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderD" border="3" xywh="30,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderE" border="3" xywh="40,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderF" border="3" xywh="50,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderG" border="3" xywh="60,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-borderH" border="3" xywh="70,0,9,9" splitx="L3,R3" splity="T3,B3"/>
+        <area name="-iconA" xywh="0,10,9,6"/>
+        <area name="-iconB" xywh="0,16,10,9"/>
+        <area name="-iconC" xywh="10,10,14,14"/>
+        <area name="-iconD" xywh="0,25,9,6"/>
+        <area name="-iconE" xywh="0,31,6,9"/>
+        <area name="-iconF" xywh="6,31,6,9"/>
+        <area name="-iconG" xywh="28,12,7,7"/>
+        <!-- iconH icon based on famfamfam Icon "arrow_turn_right.png" -->
+        <area name="-iconH" xywh="68,10,15,15"/>
+        <!-- iconI icon based on famfamfam Icon "folder.png" -->
+        <area name="-iconI" xywh="53,10,14,11"/>
+        <!-- iconJ icon based on famfamfam Icon "key.png" -->
+        <area name="-iconJ" xywh="24,41,16,16"/>
+        <!-- iconK icon based on famfamfam Icon "arrow_refresh.png" -->
+        <area name="-iconK" xywh="41,41,16,16"/>
+        <!-- iconL icon based on famfamfam Icon "book_open.png" -->
+        <area name="-iconL" xywh="36,10,16,14"/>
+        <area name="-iconM" xywh="20,41,3,13"/>
+        <area name="-iconN" xywh="30,20,4,4"/>
+        <area name="-iconO" xywh="29,25,12,12"/>
+        <area name="-iconP" xywh="42,25,12,12"/>
+        <area name="-iconQ" xywh="0,51,13,3"/>
+        <area name="-iconR" xywh="58,41,13,16"/>
+        <area name="-gradA" xywh="0,62,128,1"/>
+        <area name="-gradB" xywh="0,59,128,1"/>
+        <area name="-gradC" xywh="25,21,1,1"/>
+        <area name="-selH" repeatX="true" tiled="true" xywh="26,10,8,1"/>
+        <area name="-selV" repeatY="true" tiled="true" xywh="26,10,1,8"/>
+
+        <area name="white" xywh="24,4,1,1"/>
+        <alias name="black" ref="white" tint="#000"/>
+
+        <alias name="frame.resizeIcon" ref="-iconC"/>
+
+        <area name="textarea.ul-bullet" center="true" sizeOverwriteH="20" inset="3,0,-3,0" xywh="80,0,9,9"/>
+        
+        <composed name="frame.resizeable-title" border="25,5,5,5">
+            <alias ref="-borderA"/>
+            <grid weightsX="0,1,0" weightsY="0,1" inset="4">
+                <alias ref="none"/>
+                <select sizeOverwriteV="18">
+                    <alias ref="-gradA" if="keyboardFocus | hasOpenPopups"/>
+                    <alias ref="-gradB"/>
+                </select>
+                <alias ref="none"/>
+                <alias ref="none"/>
+                <alias ref="none"/>
+                <alias ref="none"/>
+            </grid>
+        </composed>
+
+        <composed name="--selection">
+            <grid weightsX="1" weightsY="0,1,0">
+                <alias ref="-selH"/>
+                <alias ref="none"/>
+                <alias ref="-selH"/>
+            </grid>
+            <grid weightsX="0,1,0" weightsY="1">
+                <alias ref="-selV"/>
+                <alias ref="none"/>
+                <alias ref="-selV"/>
+            </grid>
+        </composed>
+        <alias name="-selection" ref="--selection" inset="2" if="keyboardFocus"/>
+
+        <select name="button.background" border="6,3">
+            <alias ref="-borderB" if="disabled" tint="#8fff"/>
+            <alias ref="-borderE" if="armed"/>
+            <alias ref="-borderB"/>
+        </select>
+        <alias name="button.overlay" ref="-selection"/>
+
+        <select name="togglebutton.background" border="6,3">
+            <alias ref="-borderC" if="disabled + selected" tint="#8fff"/>
+            <alias ref="-borderB" if="disabled" tint="#8fff"/>
+            <alias ref="-borderE" if="armed"/>
+            <alias ref="-borderC" if="selected"/>
+            <alias ref="-borderB"/>
+        </select>
+        <alias name="togglebutton.overlay" ref="-selection"/>
+
+        <grid name="radiobutton.background" weightsX="0,1" weightsY="1" border="1" center="true">
+            <select center="true">
+                <composed if="selected + disabled" tint="#8fff">
+                    <alias ref="-iconP"/>
+                    <alias ref="-iconN" center="true"/>
+                </composed>
+                <alias ref="-iconO" if="disabled" tint="#8fff"/>
+                <composed if="selected + armed">
+                    <alias ref="-iconP"/>
+                    <alias ref="-iconN" center="true"/>
+                </composed>
+                <alias ref="-iconP" if="armed"/>
+                <composed if="selected">
+                    <alias ref="-iconO"/>
+                    <alias ref="-iconN" center="true"/>
+                </composed>
+                <alias ref="-iconO"/>
+            </select>
+            <alias ref="none"/>
+        </grid>
+        <alias name="radiobutton.overlay" ref="--selection" if="keyboardFocus"/>
+
+        <select name="valueadjuster.display.background">
+            <alias ref="-borderB" if="disabled" tint="#8fff"/>
+            <alias ref="-borderE" if="armed | pressed"/>
+            <alias ref="-borderB"/>
+        </select>
+        <alias name="valueadjuster.display.overlay" ref="-selection"/>
+
+        <alias name="-frame.closeIcon" ref="-iconB" inset="2,3,3,3"/>
+        <select name="frame.closebutton.background">
+            <composed if="armed">
+                <alias ref="-borderE"/>
+                <alias ref="-frame.closeIcon" inset="1,1,-1,-1"/>
+            </composed>
+            <composed>
+                <alias ref="-borderB"/>
+                <alias ref="-frame.closeIcon"/>
+            </composed>
+        </select>
+
+
+        <alias name="-icon.upbutton" ref="-iconD" inset="5,3,5,4"/>
+        <alias name="-icon.downbutton" ref="-iconA" inset="5,3,5,4"/>
+        <alias name="-icon.leftbutton" ref="-iconE" inset="3,4,4,6"/>
+        <alias name="-icon.rightbutton" ref="-iconF" inset="3,4,4,6"/>
+
+        <alias name="scrollbar.thumb.background" ref="valueadjuster.display.background"/>
+        <area name="scrollbar.background" tiled="true" xywh="12,24,16,16"/>
+
+       
+
+        <composed name="splitpane.splitter.background" sizeOverwriteH="9" sizeOverwriteV="9" border="0">
+            <alias ref="button.background"/>
+            <alias ref="-iconM" center="true" inset="0,-1,0,1"/>
+        </composed>
+        <composed name="splitpane.vsplitter.background" sizeOverwriteH="9" sizeOverwriteV="9" border="0">
+            <alias ref="button.background"/>
+            <alias ref="-iconQ" center="true" inset="-1,0,1,0"/>
+        </composed>
+
+        <select name="editfield.background">
+            <alias ref="-borderE" if="readonly"/>
+            <alias ref="-borderC"/>
+        </select>
+
+        <alias name="listbox.display.background" ref="-gradC" if="selected"/>
+        <alias name="listbox.display.overlay" ref="-selection"/>
+
+        <alias name="-icon.combobox" ref="-iconA" center="true"/>
+        <select name="combobox.button.background" inset="2,0,2,2">
+            <composed if="armed">
+                <alias ref="-borderD"/>
+                <alias ref="-icon.combobox" inset="1,1,-1,-1"/>
+            </composed>
+            <composed>
+                <alias ref="-borderA"/>
+                <alias ref="-icon.combobox"/>
+            </composed>
+        </select>
+        <alias name="combobox.display.background" ref="-gradC" inset="2,2,2,0" if="comboboxKeyboardFocus"/>
+
+        <alias name="-icon.checkbox" ref="-iconG" center="true"/>
+        <select name="checkbox.background">
+            <composed if="selected + armed">
+                    <alias ref="-borderE"/>
+                    <alias ref="-icon.checkbox"/>
+                </composed>
+                <composed if="selected">
+                    <alias ref="-borderC"/>
+                    <alias ref="-icon.checkbox"/>
+                </composed>
+                <alias ref="-borderE" if="armed"/>
+                <alias ref="-borderC"/>
+            </select>
+        <alias name="checkbox.overlay" ref="-selection"/>
+
+        <alias name="popupmenu.button.background" ref="-gradC" if="hover | armed"/>
+        <area name="popupmenu.separator" inset="2" xywh="14,41,1,2"/>
+        
+        <alias name="buttonBox.background" ref="-borderA" inset="0,-2,-2,-2"/>
+
+        <select name="treetable.treebutton.background" inset="2,1,0,4">
+            <area unless="selected" xywh="0,41,9,9"/>
+            <area xywh="10,41,9,9"/>
+        </select>
+        <composed name="columnHeader.background" inset="-3,0">
+            <alias ref="-borderB"/>
+            <grid weightsX="1,0" weightsY="1">
+                <alias ref="none"/>
+                <select center="true" inset="0,0,0,3">
+                    <alias ref="-iconD" if="sortAscending"/>
+                    <alias ref="-iconA" if="sortDescending"/>
+                </select>
+            </grid>
+        </composed>
+
+        <alias name="table.row.background" ref="-gradC" if="rowSelected"/>
+        <alias name="table.row.overlay" ref="--selection" inset="1" if="keyboardFocus + !hasFocusedChild + leadRow"/>
+        <alias name="table.row.dropmarker" ref="-gradC"/>
+
+        <alias name="propertysheet.sublist.background" ref="-borderB"/>
+
+        <select name="treepathdisplay.node.background">
+            <alias ref="-borderE" if="armed"/>
+            <alias ref="-borderD" if="hover"/>
+        </select>
+
+        <composed name="fileselector.buttonOneLevelUp.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-iconH" unless="armed"/>
+                <alias ref="-iconH" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+        <composed name="fileselector.buttonHome.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-iconR" unless="armed"/>
+                <alias ref="-iconR" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+        <select name="-fileselector.showbutton">
+            <alias ref="-borderE" if="armed"/>
+            <alias ref="-borderF" if="selected"/>
+            <alias ref="-borderD" if="hover"/>
+        </select>
+        <composed name="fileselector.buttonShowFolders.background">
+            <alias ref="-fileselector.showbutton"/>
+            <alias ref="-iconI" center="true"/>
+        </composed>
+        <composed name="fileselector.buttonShowHidden.background">
+            <alias ref="-fileselector.showbutton"/>
+            <alias ref="-iconJ" center="true"/>
+        </composed>
+        <composed name="fileselector.buttonRefresh.background">
+            <alias ref="-fileselector.showbutton"/>
+            <alias ref="-iconK" center="true"/>
+        </composed>
+        <composed name="fileselector.buttonMRU.background">
+            <alias ref="button.background"/>
+            <select center="true">
+                <alias ref="-iconL" unless="armed"/>
+                <alias ref="-iconL" inset="1,1,-1,-1"/>
+            </select>
+        </composed>
+
+        <alias name="colorselector.cursor" ref="-selH"/>
+    </images>
+
+    <images file="yourturn.png">
+        <area name="yourturn-background" xywh="*"/>
+    </images>
+    <images file="yourwait.png">
+        <area name="yourwait-background" xywh="*"/>
+    </images>
+
+
+    <images file="rollpanelbg.png">
+        <area name="rollpanel.background" xywh="*"/>
+    </images>
+    <images file="playerscorebackground.png">
+        <area name="score-background" xywh="*"/>
+    </images>
+    <images file="headerbg.png">
+        <area name="new27923765893294" xywh="0,0,1,1"/>
+    </images>
+    <images file="correctbg.png">
+        <area name="correct-background" xywh="*" border="20"/>
+    </images>
+    <images file="incorrectbg.png">
+        <area name="incorrect-background" xywh="*" border="20"/>
+    </images>
+    <images file="questionstatbg.png">
+        <area name="questionstat.background" xywh="*" border="50,30,30,30"/>
+    </images>
+    <images file="puzzlestatbg.png">
+        <area name="puzzlestat.background" xywh="*" border="35,10,10,10"/>
+    </images>
+    <images file="gamestatbg.png">
+        <area name="gamestat.background" xywh="*" border="35,10,10,10"/>
+    </images>
+    <images file="itembg.png">
+        <area name="item.background" xywh="*" border="50,300,30,0"/>
+    </images>
+    <images file="correctbidbg.png">
+        <area name="correctbid-background" xywh="*" border="60,20,20,20"/>
+    </images>
+
+    <images file="incorrectbidbg.png">
+        <area name="incorrectbid-background" xywh="*" border="60,20,20,20"/>
+    </images>
+    <images file="firsttrustpanel.png">
+        <area name="firsttrust.background" xywh="*" border="10,210,10,10"/>
+    </images>
+    <images file="secondtrustpanel.png">
+        <area name="secondtrust.background" xywh="*" border="10,210,10,10"/>
+    </images>
+    <images file="incorrectturst-background.png">
+        <area name="incorrecttrust-background" xywh="*" border="20"/>
+    </images>
+    <images file="correcttrustbackground.png">
+        <area name="correcttrust-background" xywh="*" border="20"/>
+    </images>
+    <images file="profitprison.png">
+        <area name="profitprison-background" xywh="*" border="240,20,20,20"/>
+    </images>
+    <images file="lossprison.png">
+        <area name="lossprison-background" xywh="*" border="240,20,20,20"/>
+    </images>
+
+
+    <images file="betray.png">
+        <select name="betray-background">
+            <area xywh="638,0,319,239" if="pressed"/>
+            <area xywh="319,0,319,239" if="hover"/>
+            <area xywh="0,0,319,239"/>
+        </select>
+    </images>
+    <images file="cooperate.png">
+        <select name="cooperate-background">
+            <area xywh="638,0,319,239" if="pressed"/>
+            <area xywh="319,0,319,239" if="hover"/>
+            <area xywh="0,0,319,239"/>
+        </select>
+    </images>
+    <images file="accept.png">
+        <select name="accept-background">
+            <area xywh="638,0,319,239" if="pressed"/>
+            <area xywh="319,0,319,239" if="hover"/>
+            <area xywh="0,0,319,239"/>
+        </select>
+    </images>
+    <images file="reject.png">
+        <select name="reject-background">
+            <area xywh="638,0,319,239" if="pressed"/>
+            <area xywh="319,0,319,239" if="hover"/>
+            <area xywh="0,0,319,239"/>
+        </select>
+    </images>
+
+
+    <images file="ultpanel.png">
+        <area name="ultpanel.background" xywh="*" border="75,0,20,0"/>
+    </images>
+    <images file="trustpanelstats.png">
+        <area name="trustpanelstats.background" xywh="*" border="50,30,30,30"/>
+    </images>
+    <images file="coopbetraypanelstats.png">
+        <area name="coopbetraypanelstats.background" xywh="*" border="50,30,30,30"/>
+    </images>
+    <images file="bidpanelstats.png">
+        <area name="bidpanelstats.background" xywh="*" border="20,30,30,30"/>
+    </images>
+    <images file="ultimatumpanelstats.png">
+        <area name="ultpanelstats.background" xywh="*" border="50,30,30,30"/>
+    </images>
+    <images file="questionfeedback.png">
+        <area name="questionfeedback.background" xywh="*" border="10,7"/>
+    </images>
+    <images file="fullscreenicon.png">
+        <select name="fullscreen.button">
+            <area xywh="25,0,25,25" if="hover"/>
+            <area xywh="50,0,25,25" if="selected"/>
+            <area xywh="0,0,25,25"/>
+        </select>
+    
+    
+    </images>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <images file="q7.png">
+        <area name="q7.png" xywh="*"/>
+    </images>
+    <images file="verdict.png">
+        <area name="verdict.background" xywh="*" border="255,20,20,245"/>
+    </images>
+
+    
+	<fontDef name="black" filename="Font/font.fnt" color="black"/>
+    
+	<fontDef name="red" filename="Font/font.fnt" color="#863636"/>
+    
+	<fontDef name="blue" filename="Font/font.fnt" color="#4A5E93"/>
+    
+	<fontDef name="green" filename="Font/font.fnt" color="#2E6E33"/>
+
+    <fontDef name="button" filename="Font/font.fnt" color="white">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+
+    <fontDef name="label" filename="Font/Raleway.fnt" color="white">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+
+    <fontDef name="title" filename="title.fnt" color="white">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+    <fontDef name="atarititle" filename="atarititle.fnt" color="white"/>
+    <fontDef name="redatari14" filename="redatari14.fnt" color="white"/>
+    <fontDef name="greenatari14" filename="greenatari14.fnt" color="white"/>
+
+
+
+
+    <fontDef name="atarisubtitle" filename="atarisubtitle.fnt" color="white">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+    <fontDef name="atariblue10" filename="atariblue10.fnt" color="white"/>
+    <fontDef name="atarigreen10" filename="atarigreen10.fnt" color="white"/>
+
+
+    <fontDef name="scoreatari12" filename="scoreatari12.fnt" color="white"/>
+    <fontDef name="scoreatari12r" filename="scoreatari12r.fnt" color="white"/>
+    <fontDef name="scoretotal12" filename="scoretotal12.fnt" color="white"/>
+
+
+
+    <fontDef name="whiteatari14" filename="plainatari14.fnt" color="white">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+    <fontDef name="whiteatari142" filename="whiteatari142.fnt" color="white"/>
+
+
+    <fontDef name="atarigreen16" filename="atarigreen16.fnt" color="white">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+
+    <fontDef name="questionatari26" filename="questionatari26.fnt">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+
+    <fontDef name="questionatari16" filename="questionatari16.fnt">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+    <fontDef name="questionatari16red" filename="questionatari16red.fnt" color="white"/>
+
+
+    <fontDef name="itematari16" filename="itematari16.fnt">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+
+    <fontDef name="questionatari16bl" filename="questionatari16lbl.fnt">
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="pressed" offsetX="1" offsetY="1"/>
+        <fontParam if="hover"/>
+    
+    </fontDef>
+    <fontDef name="questionatari12" filename="questionatari12.fnt" color="white"/>
+    <fontDef name="questionatari8" filename="questionatari8.fnt" color="white"/>
+    <fontDef name="questionatari9y" filename="questionatari9y.fnt" color="white"/>
+    <fontDef name="questionatari9yellow" filename="questionatari9yellow.fnt" color="white"/>
+
+    
+	<fontDef name="combobox" filename="Font/font.fnt" color="black">
+        <fontParam if="comboboxKeyboardFocus" color="white"/>
+    </fontDef>
+
+    <fontDef name="popupmenu-button" filename="Font/font.fnt" color="black">
+        <fontParam if="hover | armed" color="white"/>
+    </fontDef>
+
+    <fontDef name="listbox-display" filename="Font/font.fnt" color="black">
+        <fontParam if="selected" color="white"/>
+    </fontDef>
+    
+    <inputMapDef name="-defaultInputMap">
+        <action name="selectAll">ctrl A</action>
+        <action name="cut">ctrl X</action>
+        <action name="copy">ctrl C</action>
+        <action name="paste">ctrl V</action>
+    </inputMapDef>
+	
+    <theme name="-defaults">
+        <param name="background"><image>none</image></param>
+        <param name="overlay"><image>none</image></param>
+        <param name="font"><font>questionatari8</font></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <!-- a wildcard in the base theme allows to make a flat theme -->
+        <theme name="" ref="*"/>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>300</int></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="fpscounter" ref="-defaults" allowWildcard="true">
+        <param name="tooltip"><string>Current FPS</string></param>
+    </theme>
+
+    <theme name="label" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>label</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="labelred" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>redatari14</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="labelgreen" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>greenatari14</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="labelyourturn" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>label</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>800</int></param>
+        <param name="minHeight"><int>600</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>yourturn-background</image></param>
+    </theme>
+
+    <theme name="labelyourwait" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>label</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>800</int></param>
+        <param name="minHeight"><int>600</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>yourwait-background</image></param>
+    </theme>
+
+    <theme name="title" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>title</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="statuswhite" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>status-background</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="statusred" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>redatari14</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>status-background</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="statusgreen" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>greenatari14</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>status-background</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="atarititle" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>atarititle</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        <param name="background"><image>none</image></param>
+    </theme>
+
+    <theme name="atarisubtitle" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>atarisubtitle</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="atarigreen16" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>atarigreen16</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="labelscoretotal" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>scoretotal12</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="labelscoretotalleft" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>scoretotal12</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari8" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari8</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari9y" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari9y</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari9c" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari9yellow</font></param>
+        <param name="minWidth"><int>700</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="questionatari9l" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari9y</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari9r" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari9y</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+    </theme>
+
+    <theme name="questionatari10" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>atariblue10</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+    </theme>
+
+    <theme name="questionatari8i" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari8</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+    </theme>
+
+    <theme name="questionatari12" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari12</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari16" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari16</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari16red" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari16red</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="itematari16" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>itematari16</font></param>
+        <param name="minWidth"><int>400</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari16r" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari16</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+    </theme>
+
+    <theme name="questionatari16lbl" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari16bl</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+    </theme>
+
+    <theme name="questionatari8r" ref="-defaults" allowWildcard="true">
+        <param name="font"><font>questionatari8</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>100</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+    </theme>
+    
+    <theme name="button" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>innerframe.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>label</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+    
+    <theme name="choicebutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>choice.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>label</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>20</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>60</int></param>
+    </theme>
+    
+    <theme name="menubutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>menu.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>label</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>20</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>60</int></param>
+    </theme>
+    
+    <theme name="verdictbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>menu.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>label</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>120</int></param>
+        <param name="minHeight"><int>20</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>50</int></param>
+    </theme>
+    
+    <theme name="importantbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>importantroll.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>label</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>20</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>60</int></param>
+    </theme>
+    
+    <theme name="acceptbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>accept-background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>319</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>239</int></param>
+    </theme>
+    
+    <theme name="rollbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>choice.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>scoretotal12</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>150</int></param>
+    </theme>
+    
+    <theme name="fullscreenbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>fullscreen.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>scoretotal12</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>25</int></param>
+        <param name="maxWidth"><int>25</int></param>
+        <param name="minHeight"><int>25</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>25</int></param>
+    </theme>
+    
+    <theme name="importantrollbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>importantroll.button</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>scoretotal12</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+        <param name="maxHeight"><int>150</int></param>
+    </theme>
+    
+    <theme name="betraybutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>betray-background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>319</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>239</int></param>
+    </theme>
+    
+    <theme name="cooperatebutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>cooperate-background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>319</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>239</int></param>
+    </theme>
+    
+    <theme name="rejectbutton" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>reject-background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>319</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>239</int></param>
+    </theme>
+	
+    <theme name="togglebutton" ref="button" allowWildcard="true">
+        <param name=""><image>togglebutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="background"><image>choice.button</image></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="maxHeight"><int>91</int></param>
+    </theme>
+    
+    <theme name="tooltipwindow" ref="-defaults">
+        <param name="background"><image>tooltip.background</image></param>
+        <param name="border"><border>5</border></param>
+        <param name="fadeInTime"><int>0</int></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>black</font></param>
+        </theme>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="editfield" allowWildcard="true" ref="-defaults">
+        <param name=""><image>editfield.*</image></param>
+        <param name="background"><image>innerframe.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="passwordChar"><int>0x25CF</int></param>
+        <param name="columns"><int>8</int></param>
+        <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+        <theme name="renderer" ref="-defaults">
+        </theme>
+        <param name="autocompletion-height"><int>150</int></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="editfield2" allowWildcard="true" ref="-defaults">
+        <param name=""><image>editfield.*</image></param>
+        <param name="background"><image>tooltip.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="passwordChar"><int>0x25CF</int></param>
+        <param name="columns"><int>8</int></param>
+        <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+        <theme name="renderer" ref="-defaults">
+        </theme>
+        <param name="autocompletion-height"><int>150</int></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="login-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>evilframe.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="correct-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>correct-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <param name="textAlignment"><enum type="alignment">FILL</enum></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="ult-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>ultpanel.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="textAlignment"><enum type="alignment">FILL</enum></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minWidth"><int>0</int></param>
+    </theme>
+
+    <theme name="correctbid-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>correctbid-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>340</int></param>
+        <param name="maxWidth"><int>340</int></param>
+        <param name="minHeight"><int>160</int></param>
+        <param name="maxHeight"><int>160</int></param>
+        <param name="textAlignment"><enum type="alignment">FILL</enum></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="incorrect-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>incorrect-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12r</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="correcttrust-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>correcttrust-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <param name="textAlignment"><enum type="alignment">FILL</enum></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>questionatari16</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="incorrecttrust-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>incorrecttrust-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12r</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>questionatari16</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="correctprison-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>profitprison-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <param name="textAlignment"><enum type="alignment">FILL</enum></param>
+        <param name="font"><font>whiteatari14</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="incorrectprison-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>lossprison-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12r</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="incorrectbid-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>incorrectbid-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>350</int></param>
+        <param name="maxWidth"><int>350</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>scoreatari12r</font></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelmiddle" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="normal-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>score-background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="backgroundlayout" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>none</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="roll-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>rollpanel.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="choices-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>none</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+    </theme>
+
+    <theme name="question-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>none</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="font"><font>questionatari26</font></param>
+    </theme>
+
+    <theme name="questionfeedback-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>none</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>700</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="font"><font>questionatari8</font></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="questionfeedbackc-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>choice.sel.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>700</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <param name="font"><font>scoretotal12</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>atarigreen10</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelreceived" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>whiteatari142</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="questionfeedbacki-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>choice.sel.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>700</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="maxHeight"><int>350</int></param>
+        <param name="font"><font>scoretotal12</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>atarigreen10</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelreceived" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>whiteatari142</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="firsttrust-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>firsttrust.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>100</int></param>
+        <param name="font"><font>questionatari16</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>atarigreen10</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelreceived" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>whiteatari142</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="questionfeedbackmain-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>questionfeedback.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>530</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>80</int></param>
+        <param name="font"><font>questionatari8</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>atarigreen10</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelreceived" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>whiteatari142</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+
+    <theme name="verdict-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>verdict.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>701</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>462</int></param>
+        <param name="font"><font>questionatari16</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>atarigreen10</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelreceived" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="labelright" ref="-defaults">
+            <param name="font"><font>whiteatari14</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>whiteatari142</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+        <theme name="verdictbutton" ref="-defaults" allowWildcard="true">
+            <param name="background"><image>menu.button</image></param>
+            <param name="border"><border>background.border</border></param>
+            <param name="font"><font>label</font></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>100</int></param>
+            <param name="minHeight"><int>20</int></param>
+            <param name="inputMap"><inputMap>-defaultInputMap</inputMap></param>
+            <param name="maxHeight"><int>50</int></param>
+        </theme>
+    </theme>
+
+
+    <theme name="secondtrust-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>secondtrust.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>600</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>100</int></param>
+        <param name="font"><font>questionatari16</font></param>
+        <theme name="label" ref="-defaults">
+            <param name="font"><font>atarigreen10</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelreceived" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelscoretotalright" ref="-defaults">
+            <param name="font"><font>scoretotal12</font></param>
+            <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+        </theme>
+        <theme name="labelscoretotal" ref="-defaults">
+            <param name="font"><font>scoreatari12</font></param>
+            <param name="textAlignment"><enum type="alignment">LEFT</enum></param>
+        </theme>
+        <theme name="labelwhite" ref="-defaults" allowWildcard="true">
+            <param name="font"><font>whiteatari142</font></param>
+            <param name="minWidth"><int>0</int></param>
+            <param name="maxWidth"><int>0</int></param>
+            <param name="minHeight"><int>0</int></param>
+            <param name="maxHeight"><int>0</int></param>
+            <param name="background"><image>none</image></param>
+            <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+        </theme>
+    </theme>
+    <theme name="labelright" ref="-defaults">
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="textAlignment"><enum type="alignment">RIGHT</enum></param>
+    </theme>
+
+
+    <theme name="item-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>item.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>300</int></param>
+        <param name="font"><font>questionatari26</font></param>
+    </theme>
+
+    <theme name="questionstat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>questionstat.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>750</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="trustgamestat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>trustpanelstats.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="coopbetraygamestat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>coopbetraypanelstats.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="bidgamestat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>bidpanelstats.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="ultgamestat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>ultpanelstats.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="puzzlestat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>puzzlestat.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>220</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>435</int></param>
+        <param name="font"><font>questionatari12</font></param>
+    </theme>
+
+    <theme name="gamestat-panel" ref="-defaults" allowWildcard="true">
+                    <param name="background"><image>gamestat.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="maxWidth"><int>220</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxHeight"><int>435</int></param>
+        <param name="font"><font>questionatari12</font></param>
+    </theme>
+
+    <!-- the fallback theme is used when the requested theme can't be found -->
+    <theme name="*" ref="-defaults"/>
+
+    <theme name="radiobutton" ref="button" allowWildcard="true">
+        <param name=""><image>radiobutton.*</image></param>
+        <param name="border"><border>background.border</border></param>
+    </theme>
+
+    <theme name="checkbox" ref="-defaults" allowWildcard="true">
+        <param name=""><image>checkbox.*</image></param>
+        <param name="minWidth"><int>13</int></param>
+        <param name="minHeight"><int>13</int></param>
+    </theme>
+
+	<theme name="editfield-errorinfowindow" ref="-defaults">
+        <param name="background"><image>-borderG</image></param>
+        <param name="border"><border>background.border</border></param>
+        <theme name="label" ref="label"/>
+    </theme>
+
+    <theme name="hscrollbar" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>scrollbar.background</image></param>
+        <theme name="leftbutton" ref="-defaults">
+            <param name=""><image>hscrollbar.leftbutton.*</image></param>
+            <param name="minWidth"><int>16</int></param>
+        </theme>
+        <theme name="rightbutton" ref="-defaults">
+            <param name=""><image>hscrollbar.rightbutton.*</image></param>
+            <param name="minWidth"><int>16</int></param>
+        </theme>
+        <theme name="thumb" ref="-defaults">
+            <param name=""><image>scrollbar.thumb.*</image></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>48</int></param>
+        <param name="minHeight"><int>16</int></param>
+    </theme>
+
+    <theme name="vscrollbar" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>scrollbar.background</image></param>
+        <theme name="upbutton" ref="-defaults">
+            <param name=""><image>vscrollbar.upbutton.*</image></param>
+            <param name="minHeight"><int>16</int></param>
+        </theme>
+        <theme name="downbutton" ref="-defaults">
+            <param name=""><image>vscrollbar.downbutton.*</image></param>
+            <param name="minHeight"><int>16</int></param>
+        </theme>
+        <theme name="thumb" ref="-defaults">
+            <param name=""><image>scrollbar.thumb.*</image></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>16</int></param>
+        <param name="minHeight"><int>48</int></param>
+    </theme>
+    
+	<theme name="listbox" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>-borderC</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="cellHeight"><int>font.lineHeight + 4</int></param>
+        <param name="cellWidth"><constant>SINGLE_COLUMN</constant></param>
+        <param name="rowMajor"><bool>true</bool></param>
+        <param name="fixedCellWidth"><bool>false</bool></param>
+        <param name="fixedCellHeight"><bool>false</bool></param>
+        <param name="maxHeight"><int>8000</int></param>
+        <param name="maxWidth"><int>8000</int></param>
+        <param name="minDisplayedRows"><int>1</int></param>
+        <theme name="vscrollbar" ref="vscrollbar"/>
+        <theme name="display" ref="label">
+            <param name=""><image>listbox.display.*</image></param>
+            <param name="font"><font>listbox-display</font></param>
+            <param name="border"><border>2</border></param>
+        </theme>
+    </theme>
+
+    <theme name="combobox" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>-borderC</image></param>
+        <theme name="display" ref="label">
+            <param name=""><image>combobox.display.*</image></param>
+            <param name="border"><border>3</border></param>
+            <param name="minWidth"><int>50</int></param>
+            <param name="textAlignment"><enum type="alignment">left</enum></param>
+            <param name="font"><font>combobox</font></param>
+        </theme>
+        <theme name="button" ref="-defaults">
+            <param name=""><image>combobox.button.*</image></param>
+            <param name="minWidth"><int>18</int></param>
+        </theme>
+    </theme>
+
+    <theme name="comboboxPopup" ref="-defaults">
+        <param name="background"><image>-borderH</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="listbox" ref="listbox">
+            <param name="background"><image>none</image></param>
+            <param name="border"><border>0</border></param>
+            <param name="minDisplayedRows"><int>5</int></param>
+        </theme>
+        <param name="maxHeight"><int>150</int></param>
+    </theme>
+
+    <theme name="scrollpane" ref="-defaults" allowWildcard="true">
+        <theme name="hscrollbar" ref="hscrollbar"/>
+        <theme name="vscrollbar" ref="vscrollbar"/>
+        <param name="minWidth"><int>100</int></param>
+        <param name="minHeight"><int>100</int></param>
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="maxHeight"><int>32767</int></param>
+        <param name="hasDragButton"><bool>false</bool></param>
+        <param name="autoScrollArea"><int>5</int></param>
+        <param name="autoScrollSpeed"><int>10</int></param>
+        <param name="scrollbarsAlwaysVisible"><bool>false</bool></param>
+        <param name="background"><image>none</image></param>
+    </theme>
+
+    <theme name="splitpane" ref="-defaults" allowWildcard="true">
+        <theme name="splitterHorizontal" ref="button">
+            <param name=""><image>splitpane.splitter.*</image></param>
+            <param name="border"><border>background.border</border></param>
+            <param name="mouseCursor"><cursor>cursor.resizecolumn</cursor></param>
+        </theme>
+        <theme name="splitterVertical" ref="button">
+            <param name=""><image>splitpane.vsplitter.*</image></param>
+            <param name="border"><border>background.border</border></param>
+            <param name="mouseCursor"><cursor>cursor.resizerow</cursor></param>
+        </theme>
+    </theme>
+
+    <theme name="dialoglayout" ref="-defaults" allowWildcard="true">
+        <param name="defaultGap"><dimension>5,5</dimension></param>
+        <param name="smallGap"><dimension>8,8</dimension></param>
+        <param name="mediumGap"><dimension>10,10</dimension></param>
+        <param name="largeGap"><dimension>15,15</dimension></param>
+        <param name="namedGaps"><map/></param>
+    </theme>
+
+    <theme name="-treecellrenderer" ref="-defaults">
+        <param name="treeIndent"><int>15</int></param>
+        <param name="treeButtonSize"><dimension>14,11</dimension></param>
+    </theme>
+    
+	<theme name="table" ref="-defaults" allowWildcard="true">
+        <param name="rowHeight"><int>font.lineHeight + 6</int></param>
+        <theme name="stringcellrenderer" ref="-defaults">
+            <param name="font"><font>listbox-display</font></param>
+            <param name="border"><border>0,3,0,0</border></param>
+        </theme>
+        <theme name="TreeLeafCellRenderer" ref="-treecellrenderer"/>
+        <theme name="TreeNodeCellRenderer" ref="-treecellrenderer"/>
+        <theme name="PropertyEditorCellRender" ref="-treecellrenderer"/>
+        <theme name="PropertyListCellRenderer" ref="-treecellrenderer">
+            <param name=""><image>propertysheet.sublist.*</image></param>
+            <theme name="label" ref="label"/>
+        </theme>
+        <theme name="spanrenderer" ref="-defaults"/>
+        <theme name="treeButton" ref="-defaults">
+            <param name=""><image>treetable.treebutton.*</image></param>
+        </theme>
+        <theme name="columnHeader" ref="button">
+            <param name=""><image>columnHeader.*</image></param>
+        </theme>
+        <param name="columnHeaderWidth"><int>256</int></param>
+        <param name="columnHeaderHeight"><int>20</int></param>
+        <param name="columnDividerDragableDistance"><int>3</int></param>
+        <param name="columnResizeCursor"><cursor>cursor.resizecolumn</cursor></param>
+        <param name="columnDivider"><image>none</image></param>
+        <param name="columnWidths"><map/></param>
+        <param name="ensureColumnHeaderMinWidth"><bool>true</bool></param>
+        <param name="row"><image>table.row.*</image></param>
+        <param name="inputMap"><inputMapDef ref="-defaultInputMap">
+            <action name="toggleSelectionOnLeadRow">ctrl SPACE</action>
+            <action name="selectNextRow">DOWN</action>
+            <action name="selectPreviousRow">UP</action>
+            <action name="selectNextPage">NEXT</action>
+            <action name="selectPreviousPage">PRIOR</action>
+            <action name="selectFirstRow">HOME</action>
+            <action name="selectLastRow">END</action>
+            <action name="extendSelectionToNextRow">shift DOWN</action>
+            <action name="extendSelectionToPreviousRow">shift UP</action>
+            <action name="extendSelectionToNextPage">shift NEXT</action>
+            <action name="extendSelectionToPreviousPage">shift PRIOR</action>
+            <action name="extendSelectionToFirstRow">shift HOME</action>
+            <action name="extendSelectionToLastRow">shift END</action>
+            <action name="moveLeadToNextRow">ctrl DOWN</action>
+            <action name="moveLeadToPreviousRow">ctrl UP</action>
+            <action name="moveLeadToNextPage">ctrl NEXT</action>
+            <action name="moveLeadToPreviousPage">ctrl PRIOR</action>
+            <action name="moveLeadToFirstRow">ctrl HOME</action>
+            <action name="moveLeadToLastRow">ctrl END</action>
+            <action name="expandLeadRow">ADD</action>
+            <action name="collapseLeadRow">SUBTRACT</action>
+        </inputMapDef></param>
+        <theme name="ComboBoxCellRenderer">
+            <param name="comboBoxHeight"><int>20</int></param>
+        </theme>
+        <theme name="EditFieldCellRenderer">
+            <param name="editFieldHeight"><int>20</int></param>
+        </theme>
+    </theme>
+    <theme name="tablesearchwindow" ref="-defaults">
+        <param name="background"><image>-borderH</image></param>
+        <param name="border"><border>10</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="label" ref="label"/>
+            <theme name="editfield" ref="editfield">
+                <param name="columns"><int>20</int></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="treepathdisplay" ref="-defaults" allowWildcard="true">
+        <theme name="pathbox" ref="-defaults">
+            <param name="spacing"><int>0</int></param>
+            <theme name="node" ref="label">
+                <param name=""><image>treepathdisplay.node.*</image></param>
+            </theme>
+            <theme name="separator" ref="label">
+                <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+                <param name="border"><border>2,0</border></param>
+            </theme>
+            <param name="minHeight"><int>node.font.lineHeight + 4</int></param>
+            <param name="alignment"><enum type="alignment">center</enum></param>
+            <param name="mouseCursor"><cursor>cursor.text</cursor></param>
+        </theme>
+        <theme name="patheditfield" ref="editfield"/>
+    </theme>
+
+    <theme name="treecombobox" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>-borderC</image></param>
+        <param name="popupThemeName"><string>treecomboboxPopup</string></param>
+        <theme name="display" ref="treepathdisplay">
+            <param name=""><image>combobox.display.*</image></param>
+            <param name="minWidth"><int>50</int></param>
+            <theme name="pathbox" merge="true">
+                <param name="border"><border>3</border></param>
+                <theme name="node" merge="true">
+                    <param name="font"><font>combobox</font></param>
+                </theme>
+                <theme name="separator" merge="true">
+                    <param name="font"><font>combobox</font></param>
+                </theme>
+            </theme>
+        </theme>
+        <theme name="button" ref="-defaults">
+            <param name=""><image>combobox.button.*</image></param>
+            <param name="minWidth"><int>18</int></param>
+        </theme>
+    </theme>
+    <theme name="treecomboboxPopup" ref="-defaults">
+        <param name="background"><image>-borderH</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="scrollpane" ref="scrollpane">
+            <theme name="treetable" ref="table">
+                <param name="background"><image>none</image></param>
+                <param name="border"><border>0</border></param>
+                <param name="columnHeaderHeight"><int>0</int></param>
+            </theme>
+        </theme>
+        <param name="minHeight"><int>300</int></param>
+    </theme>
+
+    <theme name="editfieldautocompletionwindow" ref="-defaults">
+        <param name="background"><image>-borderG</image></param>
+        <theme name="listbox" ref="listbox"/>
+    </theme>
+
+    <theme name="fileselector" ref="dialoglayout" allowWildcard="true">
+        <theme name="label" ref="label"/>
+        <theme name="currentFolder" ref="treecombobox">
+            <param name="maxWidth"><int>32767</int></param>
+        </theme>
+        <theme name="buttonUp" ref="button">
+            <param name=""><image>fileselector.buttonOneLevelUp.*</image></param>
+            <param name="minWidth"><int>21</int></param>
+        </theme>
+        <theme name="buttonHome" ref="button">
+            <param name=""><image>fileselector.buttonHome.*</image></param>
+            <param name="minWidth"><int>21</int></param>
+        </theme>
+        <theme name="buttonFoldersMRU" ref="button">
+            <param name=""><image>fileselector.buttonMRU.*</image></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="tooltip"><string>Shows recently used folders</string></param>
+        </theme>
+        <theme name="buttonFilesMRU" ref="button">
+            <param name=""><image>fileselector.buttonMRU.*</image></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="tooltip"><string>Shows recently opened files</string></param>
+        </theme>
+        <theme name="buttonOk" ref="button">
+            <param name="text"><string>OK</string></param>
+            <param name="minWidth"><int>80</int></param>
+        </theme>
+        <theme name="buttonCancel" ref="button">
+            <param name="text"><string>Cancel</string></param>
+            <param name="minWidth"><int>80</int></param>
+        </theme>
+        <theme name="buttonShowFolders" ref="button">
+            <param name=""><image>fileselector.buttonShowFolders.*</image></param>
+            <param name="tooltip"><string>Shows folders in the file table</string></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="minHeight"><int>20</int></param>
+        </theme>
+        <theme name="buttonShowHidden" ref="button">
+            <param name=""><image>fileselector.buttonShowHidden.*</image></param>
+            <param name="tooltip"><string>Shows hidden or system files</string></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="minHeight"><int>20</int></param>
+        </theme>
+        <theme name="buttonRefresh" ref="button">
+            <param name=""><image>fileselector.buttonRefresh.*</image></param>
+            <param name="tooltip"><string>Refreshes the file table</string></param>
+            <param name="minWidth"><int>20</int></param>
+            <param name="minHeight"><int>20</int></param>
+        </theme>
+        <theme name="scrollpane" ref="scrollpane">
+            <param name="background"><image>-borderC</image></param>
+            <param name="border"><border>2</border></param>
+            <theme name="fileTable" ref="table">
+                <param name="columnWidths"><map>
+                    <param name="1"><int>70</int></param>
+                    <param name="2"><int>80</int></param>
+                    <param name="3"><int>140</int></param>
+                </map></param>
+            </theme>
+        </theme>
+        <theme name="fileFiltersBox" ref="combobox"/>
+        <param name="inputMap"><inputMapDef ref="-defaultInputMap">
+            <action name="goOneLevelUp">BACK</action>
+            <action name="acceptSelection">RETURN</action>
+        </inputMapDef></param>
+        <param name="namedGaps"><map>
+            <param name="buttonBarLeft"><gap/></param>
+            <param name="buttonBarSpacer"><gap>20</gap></param>
+            <param name="buttonBarRight"><gap>18</gap></param>
+        </map></param>
+    </theme>
+    <theme name="fileselector-folderMRUpopup" ref="-defaults">
+        <param name="background"><image>-borderH</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="listbox" ref="listbox">
+            <param name="background"><image>none</image></param>
+            <param name="border"><border>0</border></param>
+        </theme>
+    </theme>
+    <theme name="fileselector-filesMRUpopup" ref="-defaults">
+        <param name="background"><image>-borderH</image></param>
+        <param name="border"><border>2</border></param>
+        <theme name="dialoglayout" ref="dialoglayout">
+            <theme name="listbox" ref="listbox">
+                <param name="background"><image>none</image></param>
+                <param name="border"><border>0</border></param>
+            </theme>
+            <theme name="buttonOk" ref="button">
+                <param name="text"><string>OK</string></param>
+                <param name="minWidth"><int>80</int></param>
+            </theme>
+            <theme name="buttonCancel" ref="button">
+                <param name="text"><string>Cancel</string></param>
+                <param name="minWidth"><int>80</int></param>
+            </theme>
+        </theme>
+    </theme>
+
+    <theme name="graph" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>-borderC</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="minWidth"><int>100</int></param>
+        <param name="minHeight"><int>100</int></param>
+        <param name="sizeMultipleX"><int>1</int></param>
+        <param name="sizeMultipleY"><int>1</int></param>
+        <param name="lineStyles"><map>
+            <param name="default"><map>
+                <param name="color"><color>black</color></param>
+                <param name="width"><float>1.0</float></param>
+            </map></param>
+        </map></param>
+        <theme name="grapharea" ref="-defaults"/>
+    </theme>
+
+    <theme name="valueadjuster" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>none</image></param>
+        <theme name="decButton" ref="button">
+            <param name="text"><string>-</string></param>
+            <param name="border"><border>0</border></param>
+            <param name="minWidth"><int>16</int></param>
+        </theme>
+        <theme name="incButton" ref="button">
+            <param name="text"><string>+</string></param>
+            <param name="border"><border>0</border></param>
+            <param name="minWidth"><int>16</int></param>
+        </theme>
+        <theme name="valueDisplay" ref="button">
+            <param name=""><image>valueadjuster.display.*</image></param>
+            <param name="textAlignment"><enum type="alignment">center</enum></param>
+        </theme>
+        <theme name="valueEdit" ref="editfield"/>
+        <param name="width"><int>100</int></param>
+        <param name="useMouseWheel"><bool>true</bool></param>
+        <param name="displayPrefix"><string/></param>
+    </theme>
+
+    <theme name="progressbar" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>-borderE</image></param>
+        <param name="progressImage"><image>-gradC</image></param>
+        <param name="border"><border>2</border></param>
+        <param name="minWidth"><int>100</int></param>
+    </theme>
+
+    <theme name="colorselector" ref="dialoglayout" allowWildcard="true">
+        <theme name="label" ref="label"/>
+        <theme name="colorarea1d" ref="-defaults">
+            <param name="background"><image>-borderC</image></param>
+            <param name="border"><border>2</border></param>
+            <param name="minWidth"><int>30</int></param>
+            <param name="minHeight"><int>128</int></param>
+            <param name=""><image>colorselector.*</image></param>
+        </theme>
+        <theme name="colorarea2d" ref="-defaults">
+            <param name="background"><image>-borderC</image></param>
+            <param name="border"><border>2</border></param>
+            <param name="minWidth"><int>128</int></param>
+            <param name="minHeight"><int>128</int></param>
+            <param name=""><image>colorselector.*</image></param>
+        </theme>
+        <theme name="valueadjuster" ref="valueadjuster">
+            <param name="maxWidth"><int>32767</int></param>
+        </theme>
+        <theme name="previewLabel" ref="label">
+            <param name="text"><string>Current color:</string></param>
+        </theme>
+        <theme name="preview" ref="-defaults">
+            <param name="background"><image>-borderC</image></param>
+            <param name="border"><border>2</border></param>
+            <param name="minWidth"><int>64</int></param>
+            <param name="minHeight"><int>64</int></param>
+            <theme name="colorarea" ref="-defaults">
+                <param name="background"><image>white</image></param>
+            </theme>
+        </theme>
+        <theme name="hexColorEditField" ref="editfield">
+            <param name="tooltip"><string>Current color in ARGB hex format</string></param>
+        </theme>
+    </theme>
+
+    <theme name="resizableframe-title" ref="-defaults" allowWildcard="true">
+        <param name="background"><image>frame.resizeable-title</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="titleAreaTop"><int>4</int></param>
+        <param name="titleAreaLeft"><int>6</int></param>
+        <param name="titleAreaRight"><int>-24</int></param>
+        <param name="titleAreaBottom"><int>20</int></param>
+        <param name="hasCloseButton"><bool>true</bool></param>
+        <param name="closeButtonX"><int>-22</int></param>
+        <param name="closeButtonY"><int>6</int></param>
+        <param name="hasResizeHandle"><bool>false</bool></param>
+        <param name="resizeHandleX"><int>-18</int></param>
+        <param name="resizeHandleY"><int>-18</int></param>
+        <param name="fadeColorInactive"><color>white</color></param>
+        <param name="fadeDurationActivate"><int>0</int></param>
+        <param name="fadeDurationDeactivate"><int>0</int></param>
+        <param name="fadeDurationShow"><int>0</int></param>
+        <param name="fadeDurationHide"><int>0</int></param>
+        <theme name="title" ref="label">
+            <param name="textAlignment"><enum type="alignment">left</enum></param>
+            <param name="font"><fontDef filename="Font/font.fnt" color="white">
+                <fontParam unless="keyboardFocus | hasOpenPopups" color="#d4d0c8"/>
+            </fontDef></param>
+        </theme>
+        <theme name="closeButton" ref="button">
+            <param name=""><image>frame.closebutton.*</image></param>
+            <param name="minWidth"><int>16</int></param>
+            <param name="minHeight"><int>14</int></param>
+        </theme>
+        <theme name="resizeHandle" ref="-defaults">
+            <param name="background"><image>frame.resizeIcon</image></param>
+        </theme>
+    </theme>
+    <theme name="resizableframe" ref="resizableframe-title" allowWildcard="true">
+        <param name="border"><border>background.border</border></param>
+        <param name="hasCloseButton"><bool>false</bool></param>
+        <param name="titleAreaBottom"><int>4</int></param>
+    </theme>
+    <theme name="resizableframe-resizeHandle" ref="resizableframe-title" allowWildcard="true">
+        <param name="hasResizeHandle"><bool>true</bool></param>
+    </theme>
+    <theme name="popupmenu-button" ref="-defaults">
+        <param name=""><image>popupmenu.button.*</image></param>
+        <param name="font"><font>popupmenu-button</font></param>
+        <param name="border"><border>5,2</border></param>
+    </theme>
+    <theme name="menumanager" ref="-defaults">
+        <theme name="menupopup" ref="dialoglayout">
+            <param name="background"><image>-borderA</image></param>
+            <param name="border"><border>background.border</border></param>
+            <theme name="button" ref="popupmenu-button"/>
+            <theme name="submenu" ref="popupmenu-button"/>
+            <theme name="spacer" ref="-defaults">
+                <param name="background"><image>popupmenu.separator</image></param>
+            </theme>
+            <param name="namedGaps"><map>
+                <param name="menuitem"><gap>0</gap></param>
+            </map></param>
+        </theme>
+    </theme>
+
+    <theme name="tabbedpane" ref="-defaults" allowWildcard="true">
+        <theme name="tabbox" ref="-defaults">
+            <theme name="tabbutton" ref="togglebutton"/>
+            <param name="spacing"><int>0</int></param>
+            <param name="alignment"><enum type="alignment">BOTTOMLEFT</enum></param>
+        </theme>
+        <theme name="container" ref="-defaults"/>
+        <param name="inputMap"><inputMapDef>
+            <action name="nextTab">CTRL TAB</action>
+            <action name="prevTab">CTRL SHIFT TAB</action>
+        </inputMapDef></param>
+    </theme>
+
+    <theme name="textpageframe" ref="resizableframe">
+        <param name="background"><image>none</image></param>
+
+        <theme name="fpscounter" ref="-defaults">
+            <param name="tooltip"><string>Current FPS</string></param>
+        </theme>
+
+        <theme name="textframe" ref="resizableframe">
+            <theme name="scrollpane" ref="scrollpane">
+                <param name="border"><border>background.border</border></param>
+                <param name="background"><image>none</image></param>
+            </theme>
+            <param name="background"><image>none</image></param>
+        </theme>
+        <param name="font"><font>questionatari16</font></param>
+        <param name="maxWidth"><int>730</int></param>
+        <param name="maxHeight"><int>200</int></param>
+    </theme>
+
+    <theme name="textpageframeanswer" ref="resizableframe">
+        <param name="background"><image>none</image></param>
+
+        <theme name="fpscounter" ref="-defaults">
+            <param name="tooltip"><string>Current FPS</string></param>
+        </theme>
+
+        <theme name="textframe" ref="resizableframe">
+            <theme name="scrollpane" ref="scrollpane">
+                <param name="border"><border>background.border</border></param>
+                <param name="background"><image>none</image></param>
+            </theme>
+            <param name="background"><image>none</image></param>
+        </theme>
+        <param name="font"><font>questionatari8</font></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="maxHeight"><int>300</int></param>
+    </theme>
+	
+	<theme name="textarea" ref="-defaults">
+                    <param name="fonts"><map>
+                        <param name="default"><fontDef filename="questionatari12.fnt" color="#FFFFFF"/></param>
+                        <param name="link"><fontDef filename="Font/font.fnt" underlineOffset="1">
+                            <fontParam if="hover" underline="true"/>
+                        </fontDef></param>
+                        <param name="big"><fontDef filename="questionatari12.fnt" color="#FFFFFF"/></param>
+                        <param name="code"><fontDef filename="scoretotal12.fnt"/></param>
+                        <param name="codeBold"><fontDef filename="questionatari12.fnt"/></param>
+                <param name="name"><fontDef filename="scoretotal12.fnt"/></param>
+                <param name="red"><fontDef filename="questionatari16red.fnt"/></param>
+                <param name="green"><fontDef filename="greenatari14.fnt"/></param>
+                <param name="small"><fontDef filename="questionatari8.fnt" color="white"/></param>
+                    </map></param>
+                    <param name="images"><map>
+                        <param name="frame"><image>evilframe.background</image></param>
+                        <param name="smiley"><image>smiley</image></param>
+                        <param name="ul-bullet"><image>textarea.ul-bullet</image></param>
+                        <param name="q7.png"><image>q7.png</image></param>
+                    </map></param>
+    
+                    <param name="mouseCursor.link"><cursor>cursor.finger</cursor></param>
+                    <theme name="" ref="*"/>
+                    <param name="background"><image>none</image></param>
+        <param name="font"><font>questionatari16</font></param>
+        <param name="maxWidth"><int>730</int></param>
+        <param name="maxHeight"><int>200</int></param>
+    </theme>
+	
+	<theme name="answerarea" ref="-defaults">
+                    <param name="fonts"><map>
+                        <param name="default"><fontDef filename="questionatari12.fnt" color="#FFFFFF"/></param>
+                        <param name="link"><fontDef filename="Font/font.fnt" underlineOffset="1">
+                            <fontParam if="hover" underline="true"/>
+                        </fontDef></param>
+                        <param name="big"><fontDef filename="questionatari12.fnt" color="#FFFFFF"/></param>
+                        <param name="code"><fontDef filename="scoretotal12.fnt"/></param>
+                        <param name="codeBold"><fontDef filename="questionatari12.fnt"/></param>
+                <param name="name"><fontDef filename="scoretotal12.fnt"/></param>
+                <param name="red"><fontDef filename="questionatari16red.fnt"/></param>
+                <param name="green"><fontDef filename="greenatari14.fnt"/></param>
+                <param name="small"><fontDef filename="questionatari8.fnt" color="white"/></param>
+                    </map></param>
+                    <param name="images"><map>
+                        <param name="frame"><image>evilframe.background</image></param>
+                        <param name="smiley"><image>smiley</image></param>
+                        <param name="ul-bullet"><image>textarea.ul-bullet</image></param>
+                        <param name="q7.png"><image>q7.png</image></param>
+                    </map></param>
+    
+                    <param name="mouseCursor.link"><cursor>cursor.finger</cursor></param>
+                    <theme name="" ref="*"/>
+                    <param name="background"><image>none</image></param>
+        <param name="font"><font>questionatari16</font></param>
+        <param name="maxWidth"><int>700</int></param>
+        <param name="minHeight"><int>350</int></param>
+        <param name="minWidth"><int>700</int></param>
+        <param name="maxHeight"><int>350</int></param>
+    </theme>
+
+    <theme name="questiontextarea" ref="-defaults">
+        <param name="images">
+            <map>
+            </map>
+        </param>
+        <param name="fonts">
+            <map>
+                <param name="default"><font>questionatari16</font></param>
+            </map>
+        </param>
+        <param name="font"><font>questionatari16</font></param>
+    </theme>
+
+    <theme name="trusttextarea" ref="-defaults">
+        <param name="images">
+            <map>
+            </map>
+        </param>
+        <param name="fonts">
+            <map>
+                <param name="default"><font>whiteatari14</font></param>
+                <param name="big"><font>questionatari16bl</font></param>
+            
+                <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+                <param name="highlight"><font>scoretotal12</font></param>
+                <param name="name"><font>scoreatari12</font></param>
+            </map>
+        </param>
+        <param name="font"><font>whiteatari14</font></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+
+    <theme name="verdicttextarea" ref="-defaults">
+        <param name="images">
+            <map>
+            </map>
+        </param>
+        <param name="fonts">
+            <map>
+                <param name="default"><font>questionatari8</font></param>
+                <param name="big"><font>questionatari9y</font></param>
+            
+                <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+                <param name="highlight"><font>questionatari9y</font></param>
+                <param name="name"><font>questionatari9y</font></param>
+            </map>
+        </param>
+        <param name="font"><font>questionatari8</font></param>
+        <param name="background"><image>none</image></param>
+        <param name="textAlignment"><enum type="alignment">CENTER</enum></param>
+    </theme>
+	
+	<fontDef name="playnormal" filename="Font/font.fnt" color="white">
+        <fontParam if="error" color="red"/>
+        <fontParam if="disabled" color="gray"/>
+        <fontParam if="textSelection" color="blue"/>
+    </fontDef>
+    <fontDef name="playblack" filename="Font/font.fnt" color="black"/>
+    <fontDef name="playwhite" filename="Font/font.fnt" color="#FFFFFF"/>
+    <fontDef name="playred" filename="Font/font.fnt" color="red"/>
+    <fontDef name="playgreen" filename="Font/font.fnt" color="#87FF87"/>
+    <fontDef name="playblue" filename="Font/font.fnt" color="blue"/>
+    <fontDef name="playlink" filename="Font/font.fnt" color="blue" underlineOffset="1">
+        <fontParam if="hover" color="blue" underline="true"/>
+    </fontDef>
+
+    <inputMapDef name="play-defaultInputMap">
+        <action name="selectAll">ctrl A</action>
+        <action name="cut">ctrl X</action>
+        <action name="copy">ctrl C</action>
+        <action name="paste">ctrl V</action>
+    </inputMapDef>
+
+    <theme name="play-defaults">
+        <param name="background"><image>none</image></param>
+        <param name="overlay"><image>none</image></param>
+        <param name="font"><font>playnormal</font></param>
+        <param name="textAlignment"><enum type="alignment">left</enum></param>
+        <param name="minWidth"><int>0</int></param>
+        <param name="minHeight"><int>0</int></param>
+        <param name="maxWidth"><int>0</int></param>
+        <param name="maxHeight"><int>0</int></param>
+        <param name="inputMap"><inputMap>play-defaultInputMap</inputMap></param>
+    </theme>
+
+    <theme name="playtooltipwindow" ref="play-defaults">
+        <param name="background"><image>tooltip.background</image></param>
+        <param name="border"><border>5</border></param>
+        <param name="fadeInTime"><int>0</int></param>
+        <theme name="label" ref="play-defaults">
+            <param name="font"><font>playblack</font></param>
+        </theme>
+    </theme>
+
+    <theme name="playresizableframe" ref="play-defaults" allowWildcard="true">
+        <param name="background"><image>frame.background</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="titleAreaTop"><int>1</int></param>
+        <param name="titleAreaLeft"><int>8</int></param>
+        <param name="titleAreaRight"><int>-8</int></param>
+        <param name="titleAreaBottom"><int>15</int></param>
+        <param name="hasCloseButton"><bool>false</bool></param>
+        <param name="closeButtonX"><int>0</int></param>
+        <param name="closeButtonY"><int>0</int></param>
+        <param name="hasResizeHandle"><bool>false</bool></param>
+        <param name="resizeHandleX"><int>0</int></param>
+        <param name="resizeHandleY"><int>0</int></param>
+        <param name="fadeColorInactive"><color>white</color></param>
+        <param name="fadeDurationActivate"><int>0</int></param>
+        <param name="fadeDurationDeactivate"><int>0</int></param>
+        <param name="fadeDurationShow"><int>0</int></param>
+        <param name="fadeDurationHide"><int>0</int></param>
+        <param name="mouseCursor"><cursor>arrow.*</cursor></param>
+        <theme name="title" ref="play-defaults">
+            <param name="textAlignment"><enum type="alignment">left</enum></param>
+            <param name="font"><font>whiteatari14</font></param>
+        </theme>
+        <theme name="closeButton" ref="play-defaults"/>
+        <theme name="resizeHandle" ref="play-defaults"/>
+    </theme>
+
+    <theme name="playvscrollbar" ref="play-defaults" allowWildcard="true">
+        <theme name="upbutton" ref="play-defaults">
+            <param name=""><image>vscrollbar.upbutton.*</image></param>
+            <param name="minHeight"><int>9</int></param>
+        </theme>
+        <theme name="downbutton" ref="play-defaults">
+            <param name=""><image>vscrollbar.downbutton.*</image></param>
+            <param name="minHeight"><int>9</int></param>
+        </theme>
+        <theme name="thumb" ref="play-defaults">
+            <param name=""><image>vscrollbar.thumb.*</image></param>
+        </theme>
+        <param name="scaleThumb"><bool>true</bool></param>
+        <param name="minWidth"><int>9</int></param>
+        <param name="minHeight"><int>48</int></param>
+    </theme>
+
+    <theme name="playhscrollbar" ref="play-defaults" allowWildcard="true">
+        <!-- dummy -->
+        <theme name="leftbutton" ref="play-defaults"/>
+        <theme name="rightbutton" ref="play-defaults"/>
+        <theme name="thumb" ref="play-defaults"/>
+        <param name="scaleThumb"><bool>false</bool></param>
+    </theme>
+
+    <theme name="playscrollpane" ref="play-defaults" allowWildcard="true">
+        <theme name="hscrollbar" ref="playhscrollbar"/>  <!-- not used -->
+        <theme name="vscrollbar" ref="playvscrollbar"/>
+        <param name="minWidth"><int>100</int></param>
+        <param name="minHeight"><int>100</int></param>
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="maxHeight"><int>32767</int></param>
+        <param name="hasDragButton"><bool>false</bool></param>
+        <param name="autoScrollArea"><int>5</int></param>
+        <param name="autoScrollSpeed"><int>10</int></param>
+        <param name="scrollbarsAlwaysVisible"><bool>true</bool></param>
+    </theme>
+
+    <theme name="playeditfield" ref="play-defaults" allowWildcard="true">
+        <param name=""><image>editfield.*</image></param>
+        <param name="border"><border>background.border</border></param>
+        <param name="passwordChar"><int>0x25CF</int></param>
+        <param name="maxWidth"><int>32767</int></param>
+        <param name="columns"><int>5</int></param>
+        <theme name="renderer" ref="play-defaults"/>
+        <param name="autocompletion-height"><int>150</int></param>
+    </theme>
+
+
+        <theme name="chatframe" ref="playresizableframe">
+            <theme name="content" ref="play-defaults">
+                <param name="defaultGap"><dimension>5,5</dimension></param>
+                <param name="smallGap"><dimension>8,8</dimension></param>
+                <param name="mediumGap"><dimension>10,10</dimension></param>
+                <param name="largeGap"><dimension>15,15</dimension></param>
+                <param name="namedGaps"><map/></param>
+
+                <theme name="scrollpane" ref="playscrollpane">
+                    <param name="background"><image>tooltip.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+
+                    <theme name="textarea" ref="play-defaults">
+                        <param name="fonts"><map>
+                            <param name="default"><font>playwhite</font></param>
+                            <param name="color0"><font>playred</font></param>
+                            <param name="color1"><font>playgreen</font></param>
+                            <param name="color2"><font>playblue</font></param>
+                            <param name="link"><font>playlink</font></param>
+                        </map></param>
+                        <param name="images"><map>
+                            <param name="smiley"><image>smiley</image></param>
+                        </map></param>
+                        <param name="classes"><map>
+                        </map></param>
+                        <theme name="image" ref="play-defaults"/>
+                        <param name="mouseCursor.link"><cursor>cursor.finger</cursor></param>
+                    </theme>
+                </theme>
+                
+                <theme name="editfield" ref="playeditfield">
+                    <param name="background"><image>tooltip.background</image></param>
+                    <param name="border"><border>background.border</border></param>
+                </theme>
+            </theme>
+        </theme>
+</themes>

@@ -37,9 +37,9 @@ public class NetworkListener extends Listener{
 	private final int no_of_games = 4;
 	// tile assignment, set this to equal the total tile szie.
 	private final int easyTilesMax = 8;
-	private final int mediumTilesMax = 8;
+	private final int mediumTilesMax = 18;
 	private final int hardTilesMax = 6;
-	private final int gameTilesMax = 10;
+	private final int gameTilesMax = 0;
 	// game ids
 	private final int bidgame = 1;
 	private final int trustgame = 2;
