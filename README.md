@@ -10,9 +10,8 @@ and play the game.
 
 Note: The code is in dire need of refactoring, however it is currently stable.
 
-==========================================
 The aim of the project:
-==========================================
+========================
 Although there is a growing interest in books and published materials 
 relating to rationality, there is an absence of software applications 
 that provide an evaluation of a user's rational behaviour. This project 
@@ -34,6 +33,6 @@ project objectives have been successfully met.
 
 =============================================================================
 
-FULL DISSERTATION WRITE-UP AVAILABNLE AT http://shahabrostami.com
+FULL DISSERTATION WRITE-UP AVAILABLE AT http://shahabrostami.com
 
 ==============================================================================
